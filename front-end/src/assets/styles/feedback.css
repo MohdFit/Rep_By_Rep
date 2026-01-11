@@ -1,0 +1,273 @@
+/* ===== Modal Overlay ===== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  font-family: "Poppins", sans-serif;
+}
+
+/* ===== Feedback Modal Container ===== */
+.feedback-modal {
+  background-color: #fff;
+  width: 100%;
+  max-width: 480px;
+  border-radius: 12px;
+  padding: 35px 28px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  position: relative;
+  color: #111;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease-in-out;
+}
+
+/* ===== Modal Title ===== */
+.feedback-title {
+  width: 100%;
+  display: flex;
+  justify-content: center; /* horizontal center */
+  align-items: center; /* vertical center */
+  margin-bottom: 30px;
+}
+
+.feedback-title h2 {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500; /* Medium */
+  font-size: 24px;
+  line-height: 1.4;
+  color: #111;
+  text-align: center; /* ensure center */
+  margin: 0;
+}
+
+/* ===== Product Card ===== */
+.feedback-product {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background-color: #fff;
+  padding: 5px 5px;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  margin: 25px 20px 25px 20px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+.feedback-product img {
+  width: 90px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.feedback-product .product-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.feedback-product .product-info h4 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: #111;
+}
+
+.feedback-product .product-info p {
+  margin: 3px 0 0 0;
+  font-size: 11px;
+  font-weight: 400;
+  color: #555;
+}
+
+/* ===== Rating Section ===== */
+.feedback-rating p {
+  margin: 12px 0 5px 0;
+  font-weight: 500;
+  color: #111;
+  font-size: 13px;
+  text-align: center;
+}
+
+/* ===== Stars (Empty by default) ===== */
+.feedback-rating .stars {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.feedback-rating .stars span {
+  font-size: 50px;
+  cursor: pointer;
+  color: #fff; /* interior white */
+  text-shadow: 0 0 0 #000; /* black border */
+  transition: color 0.2s ease;
+}
+
+/* Hover or selected stars fill with orange */
+.feedback-rating .stars span.selected,
+.feedback-rating .stars span:hover,
+.feedback-rating .stars span:hover ~ span {
+  color: #ff9900; /* orange fill */
+  text-shadow: none;
+}
+
+/* ===== Comment Box ===== */
+.feedback-comment-box {
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* space between paragraph and textarea */
+  margin-top: 20px; /* space from stars */
+  width: 100%;
+}
+
+.comment-paragraph {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #111; /* visible black text */
+  display: block;
+  text-align: left; /* change to center if needed */
+  margin: 0;
+}
+
+/* ===== Comment Textarea ===== */
+.feedback-modal textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: 14px 16px;
+  font-size: 14px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  resize: none;
+  outline: none;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  font-family: "Poppins", sans-serif;
+  color: #111;
+  font-weight: 400;
+  background-color: #fff;
+}
+
+.feedback-modal textarea::placeholder {
+  color: #aaa;
+  font-size: 13px;
+}
+
+/* ===== Action Buttons ===== */
+.feedback-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.feedback-actions button {
+  padding: 8px 18px;
+  border-radius: 6px;
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.2s;
+}
+
+.feedback-actions button:first-child {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  color: #333;
+}
+
+.feedback-actions button:first-child:hover {
+  background-color: #f2f2f2;
+}
+
+.feedback-actions button:last-child {
+  background: linear-gradient(90deg, #ff9900, #ff7700);
+  color: #fff;
+}
+
+.feedback-actions button:last-child:hover {
+  opacity: 0.9;
+}
+
+/* ===== Responsive Design ===== */
+@media (max-width: 768px) {
+  .feedback-modal {
+    width: 90%;
+    padding: 25px 18px;
+  }
+
+  .feedback-title h2 {
+    font-size: 20px;
+  }
+
+  .feedback-product {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .feedback-product img {
+    width: 75px;
+    height: 75px;
+  }
+
+  .feedback-product .product-info h4 {
+    font-size: 13px;
+  }
+
+  .feedback-product .product-info p {
+    font-size: 12px;
+  }
+
+  .feedback-rating .stars span {
+    font-size: 30px;
+  }
+
+  .feedback-modal textarea {
+    font-size: 13px;
+    min-height: 130px;
+  }
+
+  .feedback-actions button {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .feedback-modal {
+    width: 95%;
+    padding: 20px 12px;
+  }
+
+  .feedback-title h2 {
+    font-size: 18px;
+  }
+
+  .feedback-product img {
+    width: 65px;
+    height: 65px;
+  }
+
+  .feedback-rating .stars span {
+    font-size: 26px;
+  }
+
+  .feedback-modal textarea {
+    font-size: 12px;
+    min-height: 120px;
+  }
+
+  .feedback-actions button {
+    font-size: 11px;
+    padding: 5px 10px;
+  }
+}
