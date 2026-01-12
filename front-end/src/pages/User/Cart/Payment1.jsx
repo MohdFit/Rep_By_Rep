@@ -60,7 +60,6 @@ export default function Payment1({ onClose, onBack, onNext }) {
   return (
     <div className="fixed inset-0 bg-black/40 flex justify-center items-center z-50">
       <div className="bg-white rounded-2xl w-[600px] h-[600px] p-6 relative shadow-lg font-poppins">
-        {/* Top section */}
         <div className="flex justify-between items-center mb-6">
           <button onClick={onBack}>
             <ArrowLeft className="w-6 h-6 text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-400" />
@@ -73,7 +72,6 @@ export default function Payment1({ onClose, onBack, onNext }) {
           </button>
         </div>
 
-        {/* Steps indicator */}
         <div className="flex justify-center space-x-3 mb-8">
           {[1, 2, 3].map((n) => (
             <div
@@ -89,9 +87,7 @@ export default function Payment1({ onClose, onBack, onNext }) {
           ))}
         </div>
 
-        {/* Form grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-          {/* First Name */}
           <input
             name="firstName"
             value={formData.firstName}
@@ -99,7 +95,6 @@ export default function Payment1({ onClose, onBack, onNext }) {
             placeholder="First Name"
             className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400"
           />
-          {/* Last Name */}
           <input
             name="lastName"
             value={formData.lastName}
@@ -107,7 +102,6 @@ export default function Payment1({ onClose, onBack, onNext }) {
             placeholder="Last Name"
             className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400"
           />
-          {/* Email */}
           <input
             name="email"
             type="email"
@@ -116,7 +110,6 @@ export default function Payment1({ onClose, onBack, onNext }) {
             placeholder="Email Address"
             className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400 col-span-1 sm:col-span-2"
           />
-          {/* Address */}
           <textarea
             name="address"
             value={formData.address}
@@ -125,14 +118,12 @@ export default function Payment1({ onClose, onBack, onNext }) {
             className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400 h-[70px] col-span-1 sm:col-span-2"
           />
           
-          {/* Payment Section */}
           <div className="flex flex-col">
             <h3 className="text-[20px] font-semibold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-400 mb-2">
               Select Payment Method
             </h3>
 
             <div className="space-y-2">
-              {/* Credit/Debit */}
               <label className="flex items-center space-x-2">
                 <input
                   type="radio"
@@ -142,20 +133,17 @@ export default function Payment1({ onClose, onBack, onNext }) {
                 <span>Credit Card or Debit Card</span>
               </label>
 
-              {/* Paypal */}
               <label className="flex items-center space-x-2 opacity-50 cursor-not-allowed">
                 <input type="radio" disabled />
                 <span>Paypal</span>
               </label>
 
-              {/* Bank Transfer */}
               <label className="flex items-center space-x-2 opacity-50 cursor-not-allowed">
                 <input type="radio" disabled />
                 <span>Bank Transfer</span>
               </label>
             </div>
           </div>
-          {/* Mobile */}
           <input
             name="phone"
             type="text"
@@ -166,7 +154,6 @@ export default function Payment1({ onClose, onBack, onNext }) {
           />
         </div>
 
-        {/* Next Button */}
         <div className="flex justify-end mt-6">
           <button
             onClick={validateAndNext}
@@ -179,3 +166,4 @@ export default function Payment1({ onClose, onBack, onNext }) {
     </div>
   );
 }
+

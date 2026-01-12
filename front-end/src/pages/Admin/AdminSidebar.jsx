@@ -2,7 +2,6 @@ import { NavLink } from 'react-router-dom';
 import { LayoutDashboard, ShoppingBag, Package, Users, MessageSquare, Settings, LogOut, UserCircle } from 'lucide-react';
 
 export default function AdminSidebar() {
-  // We no longer need useState for activeItem
 
   const menuItems = [
     { name: "Dashboard", icon: <LayoutDashboard size={18} />, path: "/admin/dashboard" },
@@ -32,7 +31,6 @@ export default function AdminSidebar() {
           <NavLink
             key={item.name}
             to={item.path}
-            // NavLink gives us 'isActive' for free
             className={({ isActive }) =>
               `w-full flex items-center gap-3 px-6 py-2.5 text-sm transition ${
                 isActive
@@ -56,3 +54,4 @@ export default function AdminSidebar() {
     </aside>
   );
 }
+

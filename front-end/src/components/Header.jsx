@@ -19,7 +19,6 @@ function Header({
           show ? "justify-center" : "justify-between"
         }`}
       >
-        {/* Mobile Menu/Search Buttons */}
         {!show && (
           <ul className="sm:hidden flex mr-[54px] space-x-2">
             <li className="w-[18px]">
@@ -45,13 +44,11 @@ function Header({
           </ul>
         )}
 
-        {/* Logo */}
         <div className="flex flex-col items-center">
           <Link to="/">
             <img src="/images/logo.png" alt="logo" className="h-[20px]" />
           </Link>
 
-          {/* Mobile Menu */}
           {show === "menu" && (
             <ul className="mt-2">
               <li>
@@ -72,7 +69,6 @@ function Header({
             </ul>
           )}
 
-          {/* Mobile Search */}
           {show === "search" && (
             <div className="p-[2px] rounded-[16px] bg-gradient-to-r from-orange-600 to-orange-500 my-4 relative">
               <input
@@ -89,7 +85,6 @@ function Header({
           )}
         </div>
 
-        {/* Desktop Menu */}
         <ul className="justify-between items-center space-x-7 hidden sm:flex">
           <li>
             <Link to="/men">MEN</Link>
@@ -102,10 +97,8 @@ function Header({
           </li>
         </ul>
 
-        {/* Right Icons */}
         {!show && (
           <div className="flex justify-between items-center space-x-2 bg-white">
-            {/* Desktop Search Input */}
             <div className="p-[2px] rounded-[16px] bg-gradient-to-r from-orange-600 to-orange-500 hidden sm:block">
               <input
                 type="text"
@@ -114,7 +107,6 @@ function Header({
               />
             </div>
 
-            {/* Icons */}
             <Link to="/wishlist" aria-label="Wishlist">
               <img src={heartIcon} alt="" />
             </Link>
@@ -127,7 +119,6 @@ function Header({
           </div>
         )}
 
-        {/* Close Button for Mobile Menu/Search */}
         {show && (
           <button
             type="button"
@@ -144,3 +135,4 @@ function Header({
 }
 
 export default memo(Header);
+

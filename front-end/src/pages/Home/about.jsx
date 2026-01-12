@@ -4,9 +4,9 @@ export default function Bio() {
   return (
     <section className="bg-[#11131B] text-white px-12 sm:px-16 py-16">
       <div className="mx-auto">
-        {/* Desktop Layout - Grid */}
+        
         <div className="hidden sm:grid sm:grid-cols-5 gap-12 items-center">
-          {/* Left Content */}
+          
           <div className="sm:col-span-3 space-y-6">
             <h2 className="text-2xl font-bold text-center">
               From Personal Training To A Lifestyle
@@ -36,7 +36,7 @@ export default function Bio() {
             </p>
           </div>
           
-          {/* Right Image */}
+          
           <div className="sm:col-span-2 flex justify-center sm:justify-end">
             <img
               src={coach}
@@ -46,7 +46,7 @@ export default function Bio() {
           </div>
         </div>
 
-        {/* Mobile Layout - Text Wrapping Around Image */}
+        
         <div className="sm:hidden space-y-6">
           <h2 className="text-xl font-bold text-center">
             From Personal Training To A Lifestyle
@@ -57,14 +57,14 @@ export default function Bio() {
           </h3>
           
           <div className="relative">
-            {/* Floating Image */}
+            
             <img
               src={coach}
               alt="Coach Asaad"
               className="float-right ml-4 mb-4 rounded-2xl shadow-lg w-40 h-48 object-cover"
             />
             
-            {/* Text Content */}
+            
             <p className="text-sm leading-relaxed text-justify">
               I'm Asaad Hamawi, A Transformation Coach And Founder Of Rep By Rep —
               A Highly Customized Online Coaching Platform Designed To Fit Your Lifestyle,

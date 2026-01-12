@@ -10,11 +10,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-/* @layer components {
-  .container {
-    @apply w[357px] 
-  }
-} */
 #root {
   min-height: 100vh;
 }

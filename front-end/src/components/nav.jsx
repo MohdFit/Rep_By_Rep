@@ -27,16 +27,13 @@ export default function Navbar() {
 
   return (
     <nav className="w-full bg-[#11131B] text-white px-6 py-4 flex items-center justify-between relative z-50">
-      {/* Left - Logo */}
       <div className="flex items-center">
-        {/* Mobile Logo */}
         <img
           src={logo2}
           alt="Mobile Logo"
           className="h-6 w-auto object-contain cursor-pointer sm:hidden"
           onClick={() => navigate("/")}
         />
-        {/* Desktop Logo */}
         <img
           src={logo}
           alt="Desktop Logo"
@@ -45,7 +42,6 @@ export default function Navbar() {
         />
       </div>
 
-      {/* Middle - Links (Desktop Only) */}
       <ul className="hidden sm:flex gap-10 text-lg font-medium">
         <li className="cursor-pointer hover:text-orange-500">
           <Link to="/">Home</Link>
@@ -61,9 +57,7 @@ export default function Navbar() {
         </li>
       </ul>
 
-      {/* Right - Icons */}
       <div className="flex items-center gap-6 text-lg">
-        {/* User Dropdown */}
         <div className="relative" ref={dropdownRef}>
           <FaRegUser 
             className="cursor-pointer hover:text-orange-500" 
@@ -107,7 +101,6 @@ export default function Navbar() {
         
         <FaShoppingBag className="cursor-pointer hover:text-orange-500" />
 
-        {/* Hamburger Menu (Mobile Only) */}
         <button
           className="sm:hidden text-2xl"
           onClick={() => setIsOpen(!isOpen)}
@@ -116,7 +109,6 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Mobile Menu */}
       {isOpen && (
         <div className="absolute top-full left-0 w-full bg-[#11131B]/90 backdrop-blur-sm text-white flex flex-col px-6 py-6 z-40 shadow-lg rounded-b-2xl animate-slideDown">
           <ul className="flex flex-col gap-6 text-lg font-medium">
@@ -138,3 +130,4 @@ export default function Navbar() {
     </nav>
   );
 }
+

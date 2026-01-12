@@ -1,15 +1,11 @@
 
 import React, { useState } from 'react';
-// CHANGED: Added icons needed for the new form
 import { Search, ChevronDown, Edit2, Trash2, Plus, Check, UploadCloud } from 'lucide-react';
 import product1 from '../../assets/images/productWomen/woman.jpg'
 
 const ProductsDashboard = () => {
-  // --- STATE ---
-  // CHANGED: Added 'view' state to toggle between 'list' and 'form'
   const [view, setView] = useState('list');
 
-  // State for the list
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [products, setProducts] = useState([
@@ -25,11 +21,8 @@ const ProductsDashboard = () => {
     { id: 10, name: 'T-Shirt', category: 'WOMEN', sales: 40, rating: 4.6, status: 'ACTIVE', image: '👕' },
   ]);
 
-  // State for the form
-  // CHANGED: Added 'category' state for the form's conditional variants
   const [category, setCategory] = useState('');
 
-  // --- LIST LOGIC ---
   const categories = ['All', 'MEN', 'WOMEN', 'Training Programs'];
 
   const filteredProducts = products.filter(product => {
@@ -39,8 +32,6 @@ const ProductsDashboard = () => {
     return matchesSearch && matchesCategory;
   });
 
-  // --- FORM LOGIC ---
-  // CHANGED: Added function to render conditional variants based on category
   const renderVariants = () => {
     switch (category) {
       case 'Training Programs':
@@ -59,7 +50,7 @@ const ProductsDashboard = () => {
       case 'WOMEN':
         return (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {/* Sizes */}
+            
             <div className="space-y-3">
               <label className="block text-sm font-medium text-gray-700">Available Sizes</label>
               <div className="space-y-2">
@@ -76,7 +67,7 @@ const ProductsDashboard = () => {
                 </button>
               </div>
             </div>
-            {/* Colors */}
+            
             <div className="space-y-3">
               <label className="block text-sm font-medium text-gray-700">Available Colors</label>
               <div className="space-y-2">
@@ -97,13 +88,10 @@ const ProductsDashboard = () => {
     }
   };
 
-  // --- CONDITIONAL RENDER ---
-
-  // CHANGED: If view is 'form', render the Add New Product Form
   if (view === 'form') {
     return (
       <div className="min-h-screen bg-white-50 p-2 md:p-8">
-        {/* Header */}
+        
         <div className="flex justify-between items-center mb-6">
           <div>
             <h1 className="text-xl font-semibold text-orange-500 border-b-2 border-orange-500 pb-1 inline-block mb-4">Add New Product</h1>
@@ -117,13 +105,13 @@ const ProductsDashboard = () => {
           </button>
         </div>
 
-        {/* Form sections */}
+        
         <div className="space-y-6 max-w-7xl mx-auto">
-          {/* Product Details */}
+          
           <div className="bg-white p-4 md:p-6 rounded-lg shadow-2xl border border-gray-200">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Product Details</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {/* Left side inputs */}
+              
               <div className="md:col-span-2 space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Product Name</label>
@@ -154,7 +142,7 @@ const ProductsDashboard = () => {
                   </div>
                 </div>
               </div>
-              {/* Right side image upload */}
+              
               <div className="md:col-span-1">
                 <div className="w-full h-48 flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg text-gray-500 hover:border-orange-500 hover:text-orange-500 transition-colors cursor-pointer">
                   <UploadCloud size={32} />
@@ -164,13 +152,13 @@ const ProductsDashboard = () => {
             </div>
           </div>
 
-          {/* Variants */}
+          
           <div className="bg-white p-4 md:p-6 rounded-lg shadow-2xl border border-gray-200">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Variants</h3>
             {renderVariants()}
           </div>
 
-          {/* Pricing */}
+          
           <div className="bg-white p-4 md:p-6 rounded-lg shadow-2xl border border-gray-200">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Pricing</h3>
             <div className="grid grid-cols-2 gap-6">
@@ -187,10 +175,6 @@ const ProductsDashboard = () => {
                   Discount Price ($)
                 </label>
 
-                {/* 1. This new div holds the input and the text.
-    - 'relative' is the anchor for the "optional" text.
-    - 'w-64' sets the width for both the input and the text.
-  */}
                 <div className="relative w-64">
                   <input
                     type="text"
@@ -205,7 +189,7 @@ const ProductsDashboard = () => {
             </div>
           </div>
 
-          {/* Form Actions */}
+          
           <div className="flex justify-end gap-6 mt-8">
             <button
               onClick={() => setView('list')} // This button also goes back
@@ -255,13 +239,13 @@ const ProductsDashboard = () => {
   return (
     <div className="min-h-screen bg-white-50 p-4 md:p-8">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
+        
         <div className="mb-6 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
           <div>
             <h1 className="text-lg font-semibold text-orange-500 mb-1 pb-1 inline-block border-b-2 border-orange-500">Products & Courses</h1>
             <p className="text-lg text-[#0E1830]">Manage your store's products and training programs</p>
           </div>
-          {/* CHANGED: Added onClick to switch the view to 'form' */}
+          
           <button onClick={() => setView('form')} className="
   /* --- Layout & Spacing --- */
   text-white 
@@ -290,14 +274,14 @@ const ProductsDashboard = () => {
           </button>
         </div>
 
-        {/* Main Card */}
+        
         <div className="bg-white rounded-lg shadow">
-          {/* Card Header */}
+          
           <div className="p-6 flex items-center justify-between gap-4 shadow-2xl">
             <h2 className="text-xl font-bold text-gray-900">All Products</h2>
 
             <div className="flex flex-col sm:flex-row gap-3 lg:flex-1 sm:justify-end lg:max-w-xl">
-              {/* Search Bar */}
+              
               <div className="relative flex-1 sm:max-w-xs">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-orange-400" size={18} />
                 <input
@@ -309,7 +293,7 @@ const ProductsDashboard = () => {
                 />
               </div>
 
-              {/* Category Dropdown */}
+              
               <div className="relative sm:w-48">
                 <select
                   value={selectedCategory}
@@ -326,10 +310,10 @@ const ProductsDashboard = () => {
             </div>
           </div>
 
-          {/* Table */}
+          
           <div className="overflow-x-auto">
             <div className="min-w-full">
-              {/* Table Header */}
+              
               <div className="grid grid-cols-[2fr_1.2fr_0.8fr_0.8fr_1.2fr_1fr] gap-4 px-6 py-3 border-gray-200 bg-white">
                 <div className="text-lg font-Poppins text-gray-700">Product</div>
                 <div className="text-lg font-Poppins text-gray-700">Category</div>
@@ -339,14 +323,14 @@ const ProductsDashboard = () => {
                 <div className="text-lg font-Poppins text-gray-700">Actions</div>
               </div>
 
-              {/* Table Body */}
+              
               <div>
                 {filteredProducts.map((product, index) => (
                   <div
                     key={product.id}
                     className={`grid grid-cols-[2fr_1.2fr_0.8fr_0.8fr_1.2fr_1fr] gap-4 px-6 py-4 border-b border-gray-100 items-center ${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}
                   >
-                    {/* Product */}
+                    
                     <div className="flex items-center gap-3">
                       <img
                         src={product1}
@@ -356,19 +340,19 @@ const ProductsDashboard = () => {
                       <span className="text-sm text-gray-900">{product.name}</span>
                     </div>
 
-                    {/* Category */}
+                    
                     <div className="text-sm text-gray-700">{product.category}</div>
 
-                    {/* Sales */}
+                    
                     <div className="text-sm text-gray-700">{product.sales}</div>
 
-                    {/* Rating */}
+                    
                     <div className="flex items-center gap-1">
                       <span className="text-sm text-gray-700">{product.rating}</span>
                       <span className="text-yellow-400 text-sm">★</span>
                     </div>
 
-                    {/* Status */}
+                    
                     <div>
                       {product.status === 'ACTIVE' ? (
                         <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium">
@@ -380,7 +364,7 @@ const ProductsDashboard = () => {
                       ) : (
                         <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-xs font-medium">
                           <div className="w-4 h-4 rounded-full border-2 border-gray-600 flex items-center justify-center">
-                            {/* This is a simple way to make the INACTIVE icon */}
+                            
                             <div className="w-2 h-0.5 bg-gray-600 transform rotate-45 absolute"></div>
                             <div className="w-2 h-0.5 bg-gray-600 transform -rotate-45 absolute"></div>
                           </div>
@@ -389,7 +373,7 @@ const ProductsDashboard = () => {
                       )}
                     </div>
 
-                    {/* Actions */}
+                    
                     <div className="flex items-center gap-2">
                       <button className="w-8 h-8 flex items-center justify-center hover:bg-gray-100 rounded border border-gray-300 transition-colors" title="Edit">
                         <Edit2 size={14} className="text-gray-600" />
@@ -405,7 +389,7 @@ const ProductsDashboard = () => {
             </div>
           </div>
 
-          {/* Empty State */}
+          
           {filteredProducts.length === 0 && (
             <div className="p-12 text-center">
               <p className="text-gray-500 text-sm">No products found matching your criteria.</p>

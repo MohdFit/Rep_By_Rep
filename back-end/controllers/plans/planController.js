@@ -205,9 +205,44 @@ const deletePlan = async (req, res) => {
   }
 };
 
+// TOGGLE PLAN STATUS (Active/Inactive)
+const togglePlanStatus = async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    const plan = await Plan.findById(id);
+    if (!plan) {
+      return res.status(404).json({
+        success: false,
+        message: 'Plan not found'
+      });
+    }
+
+    plan.isActive = !plan.isActive;
+    await plan.save();
+
+    res.status(200).json({
+      success: true,
+      message: `Plan ${plan.isActive ? 'activated' : 'deactivated'} successfully`,
+      data: plan
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Error toggling plan status',
+      error: error.message
+    });
+  }
+};
+
 module.exports = {
   getAllPlans,
   getPlanById,
+  getPlansByLevel,
+  createPlan,
+  updatePlan,
+  deletePlan,
+  togglePlanStatus,
   getPlansByLevel,
   createPlan,
   updatePlan,

@@ -23,7 +23,6 @@ export default function StatsSection() {
   const [hasAnimated, setHasAnimated] = useState(false);
   const sectionRef = useRef(null);
 
-  // Extract numeric values from stats
   const targetValues = stats.map(stat => parseInt(stat.number.replace(/\D/g, '')));
 
   useEffect(() => {
@@ -32,7 +31,6 @@ export default function StatsSection() {
         if (entries[0].isIntersecting && !hasAnimated) {
           setHasAnimated(true);
           
-          // Animate counters
           targetValues.forEach((target, index) => {
             let start = 0;
             const duration = 2000; // 2 seconds
@@ -78,9 +76,9 @@ export default function StatsSection() {
               key={index}
               className="relative hover:scale-105 transition-transform duration-300"
             >
-              {/* Responsive SVG border */}
+              
               <div className="relative w-full pb-[70%] sm:pb-[54%]">
-                {/* pb-[54%] → keeps ~380:205 aspect ratio */}
+                
                 <svg
                   className="absolute inset-0 w-full h-full"
                   viewBox="0 0 380 205"
@@ -118,13 +116,13 @@ export default function StatsSection() {
                   />
                 </svg>
 
-                {/* Content */}
+                
                 <div className="absolute inset-0 flex items-center justify-center px-2 sm:px-6 text-white">
                   <div className="flex items-center gap-1 sm:gap-4">
                     <h3 className="text-sm sm:text-4xl lg:text-5xl font-bold">
                       {formatNumber(counters[index], stat.number)}
                     </h3>
-                    {/* Divider line using HTML/CSS */}
+                    
                     <div
                       className="w-0.5 h-4 sm:h-12"
                       style={{

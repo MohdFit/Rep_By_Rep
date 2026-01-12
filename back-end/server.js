@@ -8,36 +8,30 @@ const corsOptions = require('./config/corsOptions'); // fixed filename
 const path = require('path');
 require('dotenv').config();
 
-// connect to DB
 connectDB();
 
 const app = express();
 
-// Security headers
 app.use(helmet());
 
-// Rate limiter
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
     max: 100
 });
 app.use(limiter);
 
-// CORS
 app.use(cors(corsOptions));
 
-// Parse JSON and URL-encoded
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Routes (mounted properly)
 app.use('/api', require('./routes/auth'));
 app.use('/api', require('./routes/user'));
 app.use('/api', require('./routes/merch'));
 app.use('/api', require('./routes/plan'));
 app.use('/api', require('./routes/order'));
+app.use('/api', require('./routes/stats'));
 
-// Health check
 app.get('/health', (req, res) => {
     const healthCheck = {
         status: 'OK',
@@ -57,7 +51,6 @@ app.get('/health', (req, res) => {
     }
 });
 
-// 404 handler
 app.use((req, res) => {
     res.status(404);
     if (req.accepts('html')) {
@@ -69,7 +62,6 @@ app.use((req, res) => {
     }
 });
 
-// Start server
 const PORT = process.env.PORT || 5000;
 mongoose.connection.once('open', () => {
     console.log('Connected to MongoDB');

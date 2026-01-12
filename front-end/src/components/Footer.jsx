@@ -14,9 +14,7 @@ const Footer = () => {
     <footer className="bg-homepageColor text-white py-12 px-6">
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-row gap-8">
-          {/* Left Section - Newsletter */}
           <div className="max-w-sm">
-            {/* Logo */}
             <div className="mb-6">
               <img src={r} alt="Logo" />
             </div>
@@ -53,10 +51,8 @@ const Footer = () => {
             </p>
           </div>
 
-          {/* Right Section - Quick Links and Connect With Us */}
           <div className="flex-1">
             <div className="flex flex-row gap-8 justify-end">
-              {/* Quick Links */}
               <div className="text-right">
                 <h3 className="text-white font-semibold mb-6">Quick Links</h3>
                 <ul className="space-y-4">
@@ -95,7 +91,6 @@ const Footer = () => {
                 </ul>
               </div>
 
-              {/* Connect With Us */}
               <div className="text-right">
                 <h3 className="text-white font-semibold mb-6">
                   Connect With Us
@@ -114,7 +109,6 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Bottom Section */}
         <div className="mt-12 pt-8 border-t border-gray-700">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
             <p className="text-gray-400 text-sm">
@@ -132,3 +126,4 @@ const Footer = () => {
 };
 
 export default Footer;
+

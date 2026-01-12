@@ -2,7 +2,6 @@ import { CiDumbbell,CiApple ,CiLaptop,CiCalendar   } from "react-icons/ci";
 import { FaRegLightbulb } from "react-icons/fa";
 import { IoIosPodium } from "react-icons/io";
 
-// Constants
 const GRADIENT_STOPS = [
   { offset: "0", color: "#FF5800", opacity: "0.46" },
   { offset: "0.366978", color: "#FF7100", opacity: "0.515047" },
@@ -19,7 +18,6 @@ const RESPONSIVE_CLASSES = {
   description: "text-[10px] sm:text-sm text-gray-300 leading-relaxed"
 };
 
-// SVG Components
 function MobileSVG({ index }) {
   return (
     <svg
@@ -161,7 +159,7 @@ export default function ServicesSection() {
   return (
     <section className="bg-[#11131B] px-4 py-8 sm:py-16">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
+        
         <div className="text-center mb-8 sm:mb-12">
           <h2 className="text-2xl sm:text-4xl font-bold text-white mb-2 sm:mb-4">
             Unlock Your Full Potential
@@ -171,7 +169,7 @@ export default function ServicesSection() {
           </p>
         </div>
 
-        {/* Services Grid */}
+        
         <div className={RESPONSIVE_CLASSES.grid}>
           {services.map((service, index) => (
             <ServiceCard key={index} service={service} index={index} />

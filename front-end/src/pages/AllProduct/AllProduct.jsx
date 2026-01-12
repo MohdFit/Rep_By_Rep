@@ -1,4 +1,3 @@
-// import hero_section_img from "../../assets/images/allproducts/hero-image.jpg";
 import Header from "../../components/Header";
 import women from "../../assets/images/allproducts/women.png";
 import standing from "../../assets/images/allproducts/standing.png";
@@ -167,3 +166,4 @@ function AllProduct() {
   );
 }
 export default memo(AllProduct);
+

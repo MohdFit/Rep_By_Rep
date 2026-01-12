@@ -50,12 +50,10 @@ const planSchema = new mongoose.Schema({
 planSchema.index({ level: 1, isActive: 1 });
 planSchema.index({ price: 1 });
 
-// Find plans by level
 planSchema.statics.findByLevel = function(level) {
   return this.find({ level: level, isActive: true });
 };
 
-// find available plans within price range
 planSchema.statics.findAvailableInPriceRange = function(minPrice, maxPrice) {
   return this.find({
     price: { $gte: minPrice, $lte: maxPrice },

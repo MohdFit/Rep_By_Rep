@@ -5,7 +5,6 @@ const whitelist = [
 
 const corsOptions = {
     origin: (origin, callback) => {
-        // allow requests with no origin like mobile apps or curl
         if (!origin || whitelist.indexOf(origin) !== -1) {
             callback(null, true);
         } else {

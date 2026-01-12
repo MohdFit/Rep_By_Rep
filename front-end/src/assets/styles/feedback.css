@@ -1,4 +1,3 @@
-/* ===== Modal Overlay ===== */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -13,7 +12,6 @@
   font-family: "Poppins", sans-serif;
 }
 
-/* ===== Feedback Modal Container ===== */
 .feedback-modal {
   background-color: #fff;
   width: 100%;
@@ -29,7 +27,6 @@
   transition: all 0.3s ease-in-out;
 }
 
-/* ===== Modal Title ===== */
 .feedback-title {
   width: 100%;
   display: flex;
@@ -48,7 +45,6 @@
   margin: 0;
 }
 
-/* ===== Product Card ===== */
 .feedback-product {
   display: flex;
   align-items: center;
@@ -161,7 +157,6 @@
   font-size: 13px;
 }
 
-/* ===== Action Buttons ===== */
 .feedback-actions {
   display: flex;
   justify-content: flex-end;
@@ -198,7 +193,6 @@
   opacity: 0.9;
 }
 
-/* ===== Responsive Design ===== */
 @media (max-width: 768px) {
   .feedback-modal {
     width: 90%;

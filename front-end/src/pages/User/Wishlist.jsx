@@ -35,7 +35,7 @@ export default function Wishlist() {
           Your Favourite Picks
         </h2>
 
-        {/* Wishlist Grid */}
+        
         <div
           className="
             grid 
@@ -63,7 +63,7 @@ export default function Wishlist() {
                     add to bag
                   </a>
 
-                  {/* Gradient Heart */}
+                  
                   <div className="w-6 h-6 bg-gradient-to-r from-red-500 to-orange-400 mask-heart">
                   <img
                       src={heart}
@@ -77,7 +77,7 @@ export default function Wishlist() {
           ))}
         </div>
 
-        {/* Pagination - Desktop */}
+        
         <div className="hidden sm:flex justify-center space-x-4 items-center mt-[100px]">
           {Array.from({ length: totalPages }, (_, i) => (
             <span
@@ -102,7 +102,7 @@ export default function Wishlist() {
           )}
         </div>
 
-        {/* Pagination - Mobile (Dots) */}
+        
         <div className="flex sm:hidden justify-center space-x-2 mt-10">
           {Array.from({ length: totalPages }, (_, i) => (
             <button
@@ -121,3 +121,4 @@ export default function Wishlist() {
     </>
   );
 }
+

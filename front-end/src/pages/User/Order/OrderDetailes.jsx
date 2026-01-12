@@ -53,7 +53,7 @@ const OrderDetailsModal = ({ order, onClose }) => {
   return (
     <div className="modal-overlay">
       <div className="modal-container">
-        {/* ===== Header ===== */}
+        
         <div className="modal-header">
           <h2>Order #{order.id}</h2>
           <span className={`status ${getStatusClass(order.status)}`}>
@@ -62,7 +62,7 @@ const OrderDetailsModal = ({ order, onClose }) => {
         </div>
         <hr />
 
-        {/* ===== Order Progress ===== */}
+        
         <div className="order-progress">
           <div>
             <img className="order-icon" src={Order} alt="order" />
@@ -116,7 +116,7 @@ const OrderDetailsModal = ({ order, onClose }) => {
           </ul>
         </div>
 
-        {/* ===== Products Cards ===== */}
+        
         <div className="product-cards">
           {order.products && order.products.length > 0 ? (
             order.products.map((product, index) => (
@@ -206,7 +206,7 @@ const OrderDetailsModal = ({ order, onClose }) => {
         </div>
         <hr />
 
-        {/* ===== Payment & Address ===== */}
+        
         <div className="bottom-section">
           <div>
             <div className="inner">
@@ -230,7 +230,7 @@ const OrderDetailsModal = ({ order, onClose }) => {
           </div>
         </div>
 
-        {/* ===== Summary ===== */}
+        
         <div className="summary">
           <p>
             <strong>Total Amount:</strong> $
@@ -246,12 +246,12 @@ const OrderDetailsModal = ({ order, onClose }) => {
           <p className="date">Ordered on {order.date}</p>
         </div>
 
-        {/* ===== Close Button ===== */}
+        
         <button className="close-btn" onClick={onClose}>
           ×
         </button>
 
-        {/* ===== Feedback Modal ===== */}
+        
         {feedbackModalOpen && selectedProduct && (
           <div className="modal-overlay">
             <div className="modal-container feedback-modal">
@@ -305,3 +305,4 @@ const OrderDetailsModal = ({ order, onClose }) => {
 };
 
 export default OrderDetailsModal;
+

@@ -53,7 +53,7 @@ export default function CartPage() {
       <Header />
 
       <div className="px-4 sm:px-[83px] mt-12 mb-24 font-poppins">
-        {/* Header row (hidden on mobile) */}
+        
         <div className="hidden sm:grid grid-cols-12 gap-4 border-b border-gray-300 pb-4 mb-4 text-gray-700 font-semibold">
           <div className="col-span-6">PRODUCT</div>
           <div className="col-span-2 text-right">UNIT PRICE</div>
@@ -61,14 +61,12 @@ export default function CartPage() {
           <div className="col-span-2 text-right">PRICE</div>
         </div>
 
-        {/* Cart items */}
         <div className="flex flex-col space-y-6">
           {cartItems.map((item) => (
             <div
               key={item.id}
               className="border-b border-gray-300 pb-4 flex flex-col sm:grid sm:grid-cols-12 sm:gap-4"
             >
-              {/* Product section */}
               <div className="col-span-6 flex flex-col sm:flex-row sm:items-center space-y-3 sm:space-y-0 sm:space-x-4">
                 <button
                   onClick={() => removeItem(item.id)}
@@ -93,12 +91,10 @@ export default function CartPage() {
                 </div>
               </div>
 
-              {/* Unit price */}
               <div className="col-span-2 text-right font-medium text-lg mt-2 sm:mt-8">
                 ${item.unitPrice.toFixed(2)}
               </div>
 
-              {/* Quantity controls */}
               <div className="col-span-2 flex justify-center items-center space-x-1 mt-2 sm:mt-0">
                 <button
                   onClick={() => changeQuantity(item.id, -1)}
@@ -117,7 +113,6 @@ export default function CartPage() {
                 </button>
               </div>
 
-              {/* Total price */}
               <div className="col-span-2 text-right font-medium text-lg mt-2 sm:mt-8">
                 ${(item.unitPrice * item.quantity).toFixed(2)}
               </div>
@@ -125,9 +120,7 @@ export default function CartPage() {
           ))}
         </div>
 
-        {/* Voucher + Summary Section */}
         <div className="mt-12 flex flex-col md:flex-row justify-between items-start md:items-start gap-8">
-          {/* Voucher Box */}
           <div className="w-full sm:w-[320px] rounded-lg p-4 bg-white shadow-sm">
             <h3 className="text-lg font-medium text-gray-800 mb-3">
               Voucher Code
@@ -144,7 +137,6 @@ export default function CartPage() {
             </div>
           </div>
 
-          {/* Summary Box */}
           <div className="w-full sm:w-[360px] rounded-lg p-6 bg-white shadow-sm font-poppins space-y-3 ml-auto">
             <div className="flex justify-between text-[16px] text-gray-700">
               <span>Subtotal</span>
@@ -214,3 +206,4 @@ export default function CartPage() {
     </>
   );
 }
+

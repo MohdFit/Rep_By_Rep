@@ -68,7 +68,7 @@ export default function Register() {
       className="min-h-screen w-full bg-cover bg-center flex flex-col justify-end sm:flex-row sm:justify-end sm:items-end px-6"
       style={{ backgroundImage: `url(${imageUrl})` }}
     >
-      {/* ---------------- Mobile Card (< sm) ---------------- */}
+      
       <div className="block sm:hidden w-full max-w-md text-white flex flex-col gap-10 mb-0">
         <div className="flex justify-center mb-4">
           <img src={logoUrl} alt="Logo" className="h-10" />
@@ -78,7 +78,7 @@ export default function Register() {
           Join us today and reach your goals!
         </h2>
 
-        {/* Toggle Buttons */}
+        
         <div className="flex bg-white rounded-full p-3 w-full">
           <button
             onClick={() => handleNavigate("/login")}
@@ -152,7 +152,7 @@ export default function Register() {
         </div>
       </div>
 
-      {/* ---------------- Desktop / Tablet Card (sm+) ---------------- */}
+      
       <div className="hidden sm:flex w-full max-w-2xl bg-white text-gray-800 rounded-t-2xl shadow-lg flex-col gap-10 p-12 mr-10 mb-0">
         <div className="flex justify-center">
           <img src={logoUrl} alt="Logo" className="h-16" />
@@ -162,7 +162,7 @@ export default function Register() {
           Join us today and reach your goals!
         </h2>
 
-        {/* Toggle Buttons */}
+        
         <div className="flex bg-gray-100 rounded-full p-3 w-full">
           <button
             onClick={() => handleNavigate("/login")}
@@ -238,3 +238,4 @@ export default function Register() {
     </div>
   );
 }
+

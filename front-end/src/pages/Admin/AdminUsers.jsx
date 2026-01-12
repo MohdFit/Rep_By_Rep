@@ -1,17 +1,3 @@
-// export default function AdminUsers() {
-//   return (
-//      <main className="flex-1 p-6">
-//       <div className="mb-6">
-//         <h1 className="text-xl font-semibold text-orange-500 border-b-2 border-orange-500 pb-1 inline-block mb-4">
-//           Users Management
-//         </h1>
-//         <p className="text-sm text-gray-500 pb-1">
-//           Manage customer accounts and user data
-//         </p>
-//       </div>
-//     </main>
-//   );
-// }
 import React, { useState } from 'react';
 import { Search, Phone, XCircle, Check, X } from 'lucide-react';
 
@@ -40,7 +26,7 @@ const AdminUsers = () => {
   return (
     <div className="min-h-screen bg-white-50 p-4 md:p-8">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
+        
         <div className="mb-6">
           <h1 className="text-lg font-semibold text-orange-500 mb-1 border-b-2 border-orange-500 pb-2 inline-block">
             Users Management
@@ -48,13 +34,13 @@ const AdminUsers = () => {
           <p className="text-sm text-gray-500 mt-2">Manage customer accounts and user data</p>
         </div>
 
-        {/* Main Card */}
+        
         <div className="bg-white rounded-lg shadow">
-          {/* Card Header */}
+          
           <div className="p-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 shadow-2xl">
             <h2 className="text-xl font-bold text-gray-900">All Users</h2>
             
-            {/* Search Bar */}
+            
             <div className="relative w-full sm:w-auto sm:min-w-[300px]">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-orange-400" size={18} />
               <input
@@ -67,10 +53,10 @@ const AdminUsers = () => {
             </div>
           </div>
 
-          {/* Table */}
+          
           <div className="overflow-x-auto">
             <div className="min-w-full">
-              {/* Table Header */}
+              
               <div className="grid grid-cols-[2.5fr_1.5fr_1.2fr_1fr] gap-4 px-6 py-3  border-gray-200 bg-white">
                 <div className="text-lg font-Poppins text-gray-700">User</div>
                 <div className="text-lg font-Poppins text-gray-700">Joined Date</div>
@@ -78,14 +64,14 @@ const AdminUsers = () => {
                 <div className="text-lg font-Poppins text-gray-700">Actions</div>
               </div>
 
-              {/* Table Body */}
+              
               <div>
                 {filteredUsers.map((user) => (
                   <div 
                     key={user.id} 
                     className="grid grid-cols-[2.5fr_1.5fr_1.2fr_1fr] gap-4 px-6 py-4 border-b border-gray-100 items-center hover:bg-gray-50 transition-colors"
                   >
-                    {/* User */}
+                    
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 bg-orange-200 rounded-full flex items-center justify-center flex-shrink-0">
                         <span className="text-orange-600 text-lg">👤</span>
@@ -96,10 +82,10 @@ const AdminUsers = () => {
                       </div>
                     </div>
 
-                    {/* Joined Date */}
+                    
                     <div className="text-sm text-gray-700">{user.joinedDate}</div>
 
-                    {/* Status */}
+                    
                     <div>
                       {user.status === 'ACTIVE' ? (
                         <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium">
@@ -118,7 +104,7 @@ const AdminUsers = () => {
                       )}
                     </div>
 
-                    {/* Actions */}
+                    
                     <div className="flex items-center gap-2">
                       <button className="w-9 h-6 flex items-center justify-center hover:bg-green-100 rounded-sm border border-gray-300 transition-colors" title="Call">
                         <Phone size={16} className="text-gray-600" />
@@ -133,7 +119,7 @@ const AdminUsers = () => {
             </div>
           </div>
 
-          {/* Mobile Card View */}
+          
           <div className="block sm:hidden">
             {filteredUsers.map((user) => (
               <div key={user.id} className="p-4 border-b border-gray-100">
@@ -177,7 +163,7 @@ const AdminUsers = () => {
             ))}
           </div>
 
-          {/* Empty State */}
+          
           {filteredUsers.length === 0 && (
             <div className="p-12 text-center">
               <p className="text-gray-500 text-sm">No users found matching your criteria.</p>

@@ -8,9 +8,7 @@ import box from "../../assets/images/allproducts/box.png";
 import FooterWhite from "../../components/FooterWhite";
 
 function InnerPageWorkout() {
-  // Pagination state for reccomendations section
   const [activePage, setActivePage] = useState(0);
-  // Example data (can replace this with real products from backend)
   const products = [
     { name: "T-Shirt", price: 20, img: box },
     { name: "Shorts", price: 25, img: box },
@@ -25,7 +23,6 @@ function InnerPageWorkout() {
     { name: "Jacket", price: 75, img: box },
     { name: "Sports Bra", price: 35, img: box },
   ];
-  // Show 4 items per page
   const itemsPerPage = 4;
   const totalPages = Math.ceil(products.length / itemsPerPage);
   const startIndex = activePage * itemsPerPage;
@@ -39,14 +36,14 @@ function InnerPageWorkout() {
     <div className="px-4 sm:px-20 mt-12 sm:mt-16">
       <Header className="relative" />
 
-      {/* Workout Section */}
+      
       <div className="mt-12 sm:mt-20 grid sm:grid-cols-2 grid-cols-1 gap-12 sm:gap-x-[153px] max-w-[1122px] mx-auto">
-        {/* Image */}
+        
         <div>
           <img src={workout} alt="workout" className="w-full rounded-xl" />
         </div>
 
-        {/* Info Card */}
+        
         <div className="relative max-w-[350px] font-poppins flex flex-col justify-between h-full">
           <div>
             <h2 className="sm:text-[40px] text-2xl font-normal text-textColor">
@@ -71,9 +68,9 @@ function InnerPageWorkout() {
             </div>
           </div>
 
-          {/* Bottom Buttons + Line + Add To Bag */}
+          
           <div className="mt-6 flex flex-col items-end space-y-2">
-            {/* Icons */}
+            
             <div className="flex space-x-4">
               <button>
                 <img src={upload} alt="upload" className="w-6 h-6" />
@@ -83,13 +80,13 @@ function InnerPageWorkout() {
               </button>
             </div>
 
-            {/* Gradient line */}
+            
             <div className="w-[340px] h-1 flex">
               <div className="w-1/2 bg-gradient-to-r from-red-500 to-orange-400"></div>
               <div className="w-1/2 bg-gray-300"></div>
             </div>
 
-            {/* Add to Bag */}
+            
             <div className="w-[340px]">
               <div className="bg-gradient-to-r from-red-500 to-orange-400 p-[2px] rounded-2xl">
                 <button className="w-full py-2 bg-white rounded-2xl font-inter font-bold text-black">
@@ -101,35 +98,35 @@ function InnerPageWorkout() {
         </div>
       </div>
 
-      {/* Customer Reviews Section */}
+      
       <section className="mt-32 px-4 sm:px-0">
         <h2 className="text-3xl sm:text-4xl font-inter font-semibold text-center text-textColor mb-12">
           What Our Customers Are Saying
         </h2>
 
-        {/* Cards */}
+        
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
           {[...Array(6)].map((_, idx) => (
             <div
               key={idx}
               className="bg-gray-200 border border-gray-300 rounded-2xl p-6 flex flex-col items-center text-center h-[360px] sm:h-[500px] max-w-[380px]"
             >
-              {/* Avatar */}
+              
               <div className="w-20 h-20 rounded-full p-[2px] bg-gradient-to-r from-red-500 to-orange-400 mb-4">
                 <div className="w-full h-full bg-gray-400 rounded-full overflow-hidden"></div>
               </div>
 
-              {/* Name */}
+              
               <h3 className="font-poppins font-medium text-lg mb-2">John Doe</h3>
 
-              {/* Stars */}
+              
               <div className="flex space-x-1 mb-4">
                 {[...Array(5)].map((_, starIdx) => (
                   <img key={starIdx} src={star} alt="star" className="w-5 h-5" />
                 ))}
               </div>
 
-              {/* Review Text */}
+              
               <p className="font-poppins text-gray-700 text-sm sm:text-base">
                 "This is a sample review. Really great experience!"
               </p>
@@ -138,7 +135,7 @@ function InnerPageWorkout() {
         </div>
 
 
-        {/* Pagination */}
+        
         <div className="flex justify-center items-center mt-12 space-x-2">
           <button className="text-gray-400 hover:text-black">&#8592;</button>
           {[1, 2, 3].map((page) => (
@@ -156,14 +153,14 @@ function InnerPageWorkout() {
           <button className="text-gray-400 hover:text-black">&#8594;</button>
         </div>
       </section>
-      {/* YOU MIGHT ALSO LIKE Section */}
+      
       <section className="mt-24 px-4 sm:px-20 font-poppins">
-        {/* Title */}
+        
         <h2 className="text-center font-bold text-[36px] sm:text-[48px] mb-12 text-textColor">
           YOU MIGHT ALSO LIKE
         </h2>
 
-        {/* Cards */}
+        
         <div className="grid grid-cols-1 sm:grid-cols-4 gap-8">
           {[...Array(4)].map((_, idx) => (
             <div key={idx} className="relative text-white font-poppins">
@@ -196,7 +193,7 @@ function InnerPageWorkout() {
           ))}
         </div>
 
-        {/* Pagination Dots */}
+        
         <div className="flex justify-center items-center mt-10 space-x-3">
           {Array.from({ length: totalPages }).map((_, idx) => (
             <button
@@ -218,3 +215,4 @@ function InnerPageWorkout() {
 }
 
 export default InnerPageWorkout;
+

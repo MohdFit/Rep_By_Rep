@@ -58,7 +58,7 @@ export default function AccountSettings() {
   return (
     <Layout>
       <div className="account-settings-container">
-        {/* Profile Information Section */}
+        
         <div className="section">
           <h2 className="section-title">Profile Information</h2>
 
@@ -144,7 +144,7 @@ export default function AccountSettings() {
           </form>
         </div>
 
-        {/* Change Password Section */}
+        
         <div className="section">
           <h2 className="section-title">Change Password</h2>
           <p className="desc">
@@ -192,3 +192,4 @@ export default function AccountSettings() {
     </Layout>
   );
 }
+

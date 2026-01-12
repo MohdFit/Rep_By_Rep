@@ -80,15 +80,15 @@ const AdminReviews = () => {
   return (
     <div className="p-4 bg-white-100">
       <div className="max-w-8xl">
-        {/* Header */}
+        
         <div className="mb-6">
           <h1 className="text-xl font-semibold text-orange-500 border-b-2 border-orange-500 pb-1 inline-block mb-4">Reviews & Feedback</h1>
           <p className="text-lg text-black-500 pb-1">Moderate customer reviews and ratings</p>
         </div>
 
-        {/* Stats Cards */}
+        
         <div className="grid grid-cols-4 gap-4 mb-8">
-          {/* Changed p-4 to p-3 and md:p-6 to md:p-4 */}
+          
           <div className="bg-white p-5 rounded-lg border flex flex-col rounded-2xl shadow-lg items-center justify-center" style={{
             width: "250px",
             height: "174px",
@@ -97,7 +97,7 @@ const AdminReviews = () => {
             <div className="text-sm text-gray-600">Total Reviews</div>
           </div>
 
-          {/* Changed p-4 to p-3 and md:p-6 to md:p-4 */}
+          
           <div className="bg-white p-5 rounded-lg border flex flex-col rounded-2xl shadow-lg items-center justify-center" style={{
             width: "250px",
             height: "174px",
@@ -109,7 +109,7 @@ const AdminReviews = () => {
             <div className="text-sm text-gray-600">Average Rating</div>
           </div>
 
-          {/* Changed p-4 to p-3 and md:p-6 to md:p-4 */}
+          
           <div className="bg-white p-5 rounded-lg border flex flex-col rounded-2xl shadow-lg items-center justify-center" style={{
             width: "250px",
             height: "174px",
@@ -118,7 +118,7 @@ const AdminReviews = () => {
             <div className="text-sm text-gray-600">Pending Review</div>
           </div>
 
-          {/* Changed p-4 to p-3 and md:p-6 to md:p-4 */}
+          
           <div className="bg-white p-5 rounded-lg border flex flex-col rounded-2xl shadow-lg items-center justify-center" style={{
             width: "250px",
             height: "174px",
@@ -128,16 +128,16 @@ const AdminReviews = () => {
           </div>
         </div>
 
-        {/* Filters */}
+        
         <div className="p-6 flex items-center justify-between gap-4 ">
 
-          {/* This stays on the LEFT */}
+          
           <h2 className="text-2xl font-bold text-gray-900">All Reviews</h2>
 
-          {/* This group is pushed to the RIGHT by "justify-between" */}
+          
           <div className="flex flex-col sm:flex-row gap-3 lg:flex-1 sm:justify-end lg:max-w-xl">
 
-            {/* Search */}
+            
             <div className="relative flex-1 sm:flex-initial">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
               <input
@@ -149,7 +149,7 @@ const AdminReviews = () => {
               />
             </div>
 
-            {/* Status Filter */}
+            
             <div className="relative">
               <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
               <select
@@ -166,13 +166,13 @@ const AdminReviews = () => {
           </div>
         </div>
 
-        {/* Reviews List */}
+        
 
 
         <div className="space-y-4">
           {filteredReviews.map((review) => (
             <div key={review.id} className="bg-white rounded-lg border border-gray-200 p-4 md:p-6 shadow-2xl">
-              {/* Header */}
+              
               <div className="flex justify-between items-start mb-4">
                 <div>
                   <h3 className="font-semibold text-gray-900">{review.author}</h3>
@@ -183,9 +183,9 @@ const AdminReviews = () => {
                 </span>
               </div>
 
-              {/* Content */}
+              
               <div className="flex flex-col sm:flex-row gap-4">
-                {/* Product Image */}
+                
                 <div className="flex-shrink-0">
                   <img
                     src={review.image}
@@ -194,7 +194,7 @@ const AdminReviews = () => {
                   />
                 </div>
 
-                {/* Review Content */}
+                
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between mb-2">
                     <h4 className="font-medium text-gray-900">{review.product}</h4>
@@ -203,14 +203,14 @@ const AdminReviews = () => {
                     </div>
                   </div>
 
-                  {/* CHANGED: Replaced text-gray-700 with your new color */}
+                  
                   <p className="text-[#0E1830] text-sm text-Poppins leading-relaxed max-w-2xl">
                     "{review.text}"
                   </p>
                 </div>
               </div>
 
-              {/* Actions */}
+              
               <div className="flex justify-end gap-2 mt-4 pt-2 border-gray-100">
                 <button
                   onClick={() => handleStatusChange(review.id, 'approved')}
@@ -235,7 +235,7 @@ const AdminReviews = () => {
           ))}
         </div>
 
-        {/* Empty State */}
+        
         {filteredReviews.length === 0 && (
           <div className="bg-white rounded-lg border border-gray-200 p-12 text-center">
             <p className="text-gray-500">No reviews found matching your criteria.</p>
@@ -248,5 +248,6 @@ const AdminReviews = () => {
 };
 
 export default AdminReviews;
+
 
 

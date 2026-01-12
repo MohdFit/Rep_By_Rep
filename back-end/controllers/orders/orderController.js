@@ -126,8 +126,242 @@ const orderController = {
       session.endSession();
     }
   },
+
+  // GET ALL ORDERS (Admin)
+  getAllOrders: async (req, res) => {
+    try {
+      const { status, page = 1, limit = 10, sortBy = 'createdAt', sortOrder = 'desc' } = req.query;
+      
+      const query = {};
+      if (status) query.status = status;
+
+      const orders = await Order.find(query)
+        .populate('userId', 'name email')
+        .populate({
+          path: 'orderItems',
+          populate: { path: 'productId' }
+        })
+        .sort({ [sortBy]: sortOrder === 'desc' ? -1 : 1 })
+        .limit(limit * 1)
+        .skip((page - 1) * limit);
+
+      const count = await Order.countDocuments(query);
+
+      res.status(200).json({
+        success: true,
+        data: orders,
+        totalPages: Math.ceil(count / limit),
+        currentPage: page,
+        totalOrders: count
+      });
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        message: 'Failed to fetch orders',
+        error: error.message
+      });
+    }
+  },
+
+  // GET USER ORDERS
+  getUserOrders: async (req, res) => {
+    try {
+      const { userId } = req.params;
+      
+      const orders = await Order.find({ userId })
+        .populate({
+          path: 'orderItems',
+          populate: { path: 'productId' }
+        })
+        .sort({ createdAt: -1 });
+
+      res.status(200).json({
+        success: true,
+        data: orders,
+        count: orders.length
+      });
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        message: 'Failed to fetch user orders',
+        error: error.message
+      });
+    }
+  },
+
+  // GET ORDER BY ID
+  getOrderById: async (req, res) => {
+    try {
+      const { orderId } = req.params;
+      
+      const order = await Order.findById(orderId)
+        .populate('userId', 'name email phone')
+        .populate({
+          path: 'orderItems',
+          populate: { path: 'productId' }
+        });
+
+      if (!order) {
+        return res.status(404).json({
+          success: false,
+          message: 'Order not found'
+        });
+      }
+
+      res.status(200).json({
+        success: true,
+        data: order
+      });
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        message: 'Failed to fetch order',
+        error: error.message
+      });
+    }
+  },
+
+  // UPDATE ORDER STATUS (Admin)
+  updateOrderStatus: async (req, res) => {
+    try {
+      const { orderId } = req.params;
+      const { status } = req.body;
+
+      const validStatuses = ['Pending', 'Processing', 'Shipping', 'Delivered', 'Cancelled'];
+      if (!validStatuses.includes(status)) {
+        return res.status(400).json({
+          success: false,
+          message: 'Invalid status. Must be one of: ' + validStatuses.join(', ')
+        });
+      }
+
+      const order = await Order.findByIdAndUpdate(
+        orderId,
+        { status },
+        { new: true, runValidators: true }
+      ).populate('userId', 'name email');
+
+      if (!order) {
+        return res.status(404).json({
+          success: false,
+          message: 'Order not found'
+        });
+      }
+
+      res.status(200).json({
+        success: true,
+        message: 'Order status updated successfully',
+        data: order
+      });
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        message: 'Failed to update order status',
+        error: error.message
+      });
+    }
+  },
+
+  // DELETE ORDER (Admin)
+  deleteOrder: async (req, res) => {
+    const session = await mongoose.startSession();
+    
+    try {
+      session.startTransaction();
+      
+      const { orderId } = req.params;
+      
+      const order = await Order.findById(orderId);
+      if (!order) {
+        await session.abortTransaction();
+        return res.status(404).json({
+          success: false,
+          message: 'Order not found'
+        });
+      }
+
+      // Delete associated order items
+      await OrderItem.deleteMany({ _id: { $in: order.orderItems } }, { session });
+      
+      // Delete the order
+      await Order.findByIdAndDelete(orderId, { session });
+      
+      await session.commitTransaction();
+
+      res.status(200).json({
+        success: true,
+        message: 'Order deleted successfully'
+      });
+    } catch (error) {
+      await session.abortTransaction();
+      res.status(500).json({
+        success: false,
+        message: 'Failed to delete order',
+        error: error.message
+      });
+    } finally {
+      session.endSession();
+    }
+  },
+
+  // GET ORDER STATISTICS (Admin Dashboard)
+  getOrderStats: async (req, res) => {
+    try {
+      const totalOrders = await Order.countDocuments();
+      const pendingOrders = await Order.countDocuments({ status: 'Pending' });
+      const processingOrders = await Order.countDocuments({ status: 'Processing' });
+      const shippingOrders = await Order.countDocuments({ status: 'Shipping' });
+      const deliveredOrders = await Order.countDocuments({ status: 'Delivered' });
+      const cancelledOrders = await Order.countDocuments({ status: 'Cancelled' });
+
+      // Calculate total revenue
+      const revenueResult = await Order.aggregate([
+        { $match: { status: { $ne: 'Cancelled' } } },
+        { $group: { _id: null, totalRevenue: { $sum: '$total' } } }
+      ]);
+      const totalRevenue = revenueResult[0]?.totalRevenue || 0;
+
+      // Recent orders (last 5)
+      const recentOrders = await Order.find()
+        .populate('userId', 'name email')
+        .populate({
+          path: 'orderItems',
+          populate: { path: 'productId' }
+        })
+        .sort({ createdAt: -1 })
+        .limit(5);
+
+      res.status(200).json({
+        success: true,
+        data: {
+          totalOrders,
+          pendingOrders,
+          processingOrders,
+          shippingOrders,
+          deliveredOrders,
+          cancelledOrders,
+          totalRevenue: totalRevenue.toFixed(2),
+          recentOrders,
+          statusBreakdown: {
+            Pending: pendingOrders,
+            Processing: processingOrders,
+            Shipping: shippingOrders,
+            Delivered: deliveredOrders,
+            Cancelled: cancelledOrders
+          }
+        }
+      });
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        message: 'Failed to fetch order statistics',
+        error: error.message
+      });
+    }
+  }
 }
 
 
 module.exports = orderController;
+
 

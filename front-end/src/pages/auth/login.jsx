@@ -1,4 +1,3 @@
-// front-end/src/pages/auth/Login.jsx
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import Cookies from "js-cookie";
@@ -65,7 +64,7 @@ export default function Login() {
       className="min-h-screen w-full bg-cover bg-center flex flex-col justify-end sm:flex-row sm:justify-end sm:items-end px-6"
       style={{ backgroundImage: `url(${imageUrl})` }}
     >
-      {/* ---------------- Mobile Card (< sm) ---------------- */}
+      
       <div className="block sm:hidden w-full max-w-md text-white flex flex-col gap-10 mb-0">
         <div className="flex justify-center mb-4">
           <img src={logoUrl} alt="Logo" className="h-10" />
@@ -75,7 +74,7 @@ export default function Login() {
           Welcome back! Let's keep pushing your limits
         </h2>
 
-        {/* Toggle Buttons */}
+        
         <div className="flex bg-white rounded-full p-3 w-full">
           <button
             onClick={() => handleNavigate("/login")}
@@ -145,7 +144,7 @@ export default function Login() {
         </div>
       </div>
 
-      {/* ---------------- Desktop / Tablet Card (sm+) ---------------- */}
+      
       <div className="hidden sm:flex w-full max-w-2xl bg-white text-gray-800 rounded-t-2xl shadow-lg flex-col gap-10 p-12 mr-10 mt-4 mb-0">
         <div className="flex justify-center">
           <img src={logoUrl} alt="Logo" className="h-16" />
@@ -155,7 +154,7 @@ export default function Login() {
           Welcome back! Let's keep pushing your limits
         </h2>
 
-        {/* Toggle Buttons */}
+        
         <div className="flex bg-gray-100 rounded-full p-3 w-full">
           <button
             onClick={() => handleNavigate("/login")}
@@ -230,3 +229,4 @@ export default function Login() {
     </div>
   );
 }
+

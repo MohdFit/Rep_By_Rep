@@ -10,17 +10,12 @@ import ProductWomen from "./pages/productWomen/ProductWomen";
 import ProductNowIn from "./pages/productNowIn/ProductNowIn";
 import ProductPlans from "./pages/productPlans/ProductPlans";
 
-//user imports
-
 import OrderDetails from "./pages/User/Order/OrderDetailes";
 import FeedbackModal from "./pages/User/Order/FeedbackModal";
 import Order from "./pages/User/Order/MyOrders";
 import Cart from "./pages/User/Cart/Cart";
 import Wishlist from "./pages/User/Wishlist";
 import AccountSettings from "./pages/User/AccountSetting";
-
-
-//admin imports
 
 import AdminDashboard from "./pages/Admin/AdminDashboard";
 import AdminLayout from "./pages/Admin/AdminLayout";
@@ -75,3 +70,4 @@ function App() {
 }
 
 export default App;
+

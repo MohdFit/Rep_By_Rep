@@ -12,7 +12,6 @@ export default function FooterWhite() {
   return (
     <footer className="bg-[#FBF4F2] text-[#0E1830]">
       <div className="mx-auto max-w-[1274px] px-[17px] sm:px-[83px] py-12 sm:py-16">
-        {/* ===== 12-col grid with spacer for custom spacing ===== */}
         <div
           className="
             grid grid-cols-1 sm:grid-cols-12
@@ -22,7 +21,6 @@ export default function FooterWhite() {
             text-center sm:text-left
           "
         >
-          {/* Left: brand + newsletter (6/12) */}
           <div className="w-full sm:col-span-6">
             <div className="mb-6">
               <img
@@ -38,7 +36,6 @@ export default function FooterWhite() {
               features and releases.
             </h3>
 
-            {/* Email form */}
             <form
               onSubmit={(e) => e.preventDefault()}
               className="mt-5 flex w-full max-w-[420px] gap-2 mx-auto sm:mx-0"
@@ -63,10 +60,8 @@ export default function FooterWhite() {
             </p>
           </div>
 
-          {/* Spacer column (1/12) -> increases gap between left & middle */}
           <div className="hidden sm:block sm:col-span-1" />
 
-          {/* Middle: Quick Links (2/12) -> a bit narrower */}
           <div className="w-full sm:col-span-2">
             <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-3 text-[15px]">
@@ -93,7 +88,6 @@ export default function FooterWhite() {
             </ul>
           </div>
 
-          {/* Right: Connect (3/12) -> a bit wider & closer to middle */}
           <div className="w-full sm:col-span-3">
             <h4 className="text-lg font-semibold mb-4">Connect With Us</h4>
             <ul className="space-y-3 text-[15px]">
@@ -150,21 +144,19 @@ export default function FooterWhite() {
           </div>
         </div>
 
-        {/* Divider */}
         <div className="my-8 h-px bg-black/5" />
 
-        {/* Bottom row */}
         <div
           className="
            
- flex  sm:flex-row
- items-center sm:items-center
- justify-between sm:justify-between
- gap-3
- text-[12px] text-[#6B7280]
- text-center sm:text-left
+            flex  sm:flex-row
+            items-center sm:items-center
+            justify-between sm:justify-between
+            gap-3
+            text-[12px] text-[#6B7280]
+            text-center sm:text-left
  
-          "
+                    "
         >
           <p>© 2025 Relume. All rights reserved.</p>
           <div className="flex items-center gap-8">
@@ -180,3 +172,4 @@ export default function FooterWhite() {
     </footer>
   );
 }
+

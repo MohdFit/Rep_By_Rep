@@ -3,7 +3,6 @@ import before from "../../assets/images/before.png"
 
 
 export default function TransformationsSection() {
-  // This will be populated with actual transformation data
   const transformations = [
     {
       id: 1,
@@ -18,35 +17,34 @@ What Really Made The Difference Was How Simple And Sustainable The Plan Was.
 No Guesswork, No Extreme Dieting — Just Smart, Proven Methods That Actually Work.
 Now I Look In The Mirror And See A Completely Different Person — More Confident, Healthier, And Proud Of The Progress I've Made."`
     }
-    // More transformations can be added here
   ];
 
   return (
     <section className="bg-[#11131B] px-4 py-8 sm:py-16">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
+        
         <div className="text-center mb-4 sm:mb-8">
           <h2 className="text-2xl sm:text-4xl font-bold text-white mb-2">
             TRANSFORMATIONS
           </h2>
         </div>
 
-        {/* Transformations Grid */}
+        
         <div className="grid grid-cols-1 gap-8 sm:gap-12">
           {transformations.map((transformation) => (
             <div key={transformation.id} className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-12 items-start">
-              {/* Before/After Images */}
+              
               <div className="relative overflow-hidden">
                 {transformation.beforeImage && transformation.afterImage ? (
                   <div className="relative bg-[#11131B] flex justify-center">
-                    {/* Before Image */}
+                    
                     <div className="relative">
                       <img
                         src={transformation.beforeImage}
                         alt="Before transformation"
                         className="rounded-lg"
                       />
-                      {/* Before Label */}
+                      
                       <div className="absolute inset-x-0 top-2/3 text-center">
                         <span className="text-white text-4xl font-bold">
                           BEFORE
@@ -54,14 +52,14 @@ Now I Look In The Mirror And See A Completely Different Person — More Confiden
                       </div>
                     </div>
                     
-                    {/* After Image - positioned lower and overlapping */}
+                    
                     <div className="relative -ml-24 mt-40">
                       <img
                         src={transformation.afterImage}
                         alt="After transformation"
                         className="rounded-lg"
                       />
-                      {/* After Label */}
+                      
                       <div className="absolute inset-x-0 bottom-12 text-center">
                         <span className="text-white text-4xl font-bold">
                           AFTER
@@ -79,7 +77,7 @@ Now I Look In The Mirror And See A Completely Different Person — More Confiden
                 )}
               </div>
 
-              {/* Testimonial */}
+              
               <div className="flex flex-col justify-center sm:mt-8">
                 <div className="text-white">
                   <blockquote className="text-sm sm:text-2xl leading-relaxed mb-6 sm:mb-8 whitespace-pre-line">

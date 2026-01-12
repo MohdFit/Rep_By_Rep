@@ -51,7 +51,6 @@ function Products() {
   const [slider, setSlider] = useState(0);
 
   return (
-    // Set CSS variable here; cards inherit it and use translate-x-[var(--tx)]
     <div
       className="flex gap-[11px] sm:gap-5 relative overflow-hidden"
       style={{ "--tx": `${-slider * 100}%` }}
@@ -79,3 +78,4 @@ function Products() {
 }
 
 export default memo(Products);
+

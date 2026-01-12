@@ -1,12 +1,9 @@
-// Payment3.jsx
 import { X, ArrowLeft } from "lucide-react";
 
 const Payment3 = ({ onBack, onClose, onHome }) => {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/40 z-50">
       <div className="bg-white w-[600px] h-[520px] rounded-2xl p-8 relative flex flex-col items-center">
-        
-        {/* Top Navigation */}
         <div className="flex justify-between items-center w-full mb-4">
           <ArrowLeft
             className="w-6 h-6 cursor-pointer text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-400"
@@ -21,7 +18,6 @@ const Payment3 = ({ onBack, onClose, onHome }) => {
           />
         </div>
 
-        {/* Step Circles */}
         <div className="flex justify-center gap-4 mb-6 w-full">
           {[1, 2, 3].map((num) => (
             <div
@@ -37,17 +33,13 @@ const Payment3 = ({ onBack, onClose, onHome }) => {
           ))}
         </div>
 
-        {/* Content */}
         <h3 className="font-poppins font-medium text-[24px] mb-6 text-center">
           Thank you for choosing us.
         </h3>
 
-        {/* Big Tick Box */}
         <div className="w-24 h-24 mb-6 flex items-center justify-center rounded-xl bg-gradient-to-r from-red-500 to-orange-400 text-white text-5xl">
           ✓
         </div>
-
-        {/* Confirmation Text */}
         <p className="font-poppins text-[16px] text-center mb-2">
           We're happy to confirm your payment
         </p>
@@ -55,7 +47,6 @@ const Payment3 = ({ onBack, onClose, onHome }) => {
           You'll receive an email shortly with your order details
         </p>
 
-        {/* Back to Home Button */}
         <button
         
           onClick={onHome}
@@ -69,3 +60,4 @@ const Payment3 = ({ onBack, onClose, onHome }) => {
 };
 
 export default Payment3;
+

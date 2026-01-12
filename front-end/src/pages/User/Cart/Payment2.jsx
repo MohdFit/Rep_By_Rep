@@ -17,7 +17,6 @@ const Payment2 = ({ onBack, onClose, onConfirm }) => {
   return (
     <div className="fixed inset-0 bg-black/40 flex justify-center items-center z-50">
       <div className="bg-white rounded-2xl w-[600px] h-[450px] p-6 relative shadow-lg font-poppins">
-        {/* Top Navigation */}
         <div className="flex justify-between items-center mb-4">
           <ArrowLeft
             className="w-6 h-6 cursor-pointer text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-400"
@@ -32,7 +31,6 @@ const Payment2 = ({ onBack, onClose, onConfirm }) => {
           />
         </div>
 
-        {/* Step Circles */}
         <div className="flex justify-center gap-4 mb-6">
           {[1, 2, 3].map((num) => (
             <div
@@ -48,16 +46,13 @@ const Payment2 = ({ onBack, onClose, onConfirm }) => {
           ))}
         </div>
 
-        {/* Body */}
         <div className="grid grid-cols-2 gap-6 items-center">
-          {/* Left: Card Image */}
           <img
-            src={Card} // Replace with your uploaded image path
+            src={Card}
             alt="Credit Card"
             className="w-full rounded-xl shadow-md"
           />
 
-          {/* Right: Form */}
           <div className="flex flex-col gap-3">
             <input
               type="text"
@@ -97,7 +92,6 @@ const Payment2 = ({ onBack, onClose, onConfirm }) => {
           </div>
         </div>
 
-        {/* Confirm Button */}
         <div className="flex justify-center mt-6">
           <button
             type="button"
@@ -113,3 +107,4 @@ const Payment2 = ({ onBack, onClose, onConfirm }) => {
 };
 
 export default Payment2;
+

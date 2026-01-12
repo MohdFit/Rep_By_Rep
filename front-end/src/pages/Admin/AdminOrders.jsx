@@ -276,8 +276,6 @@ const OrderDetailsPage = ({ order, onBack }) => {
                   style={{ zIndex: 1 }}
                 >
                   <div
-                    // --- NEW STYLE LOGIC ---
-                    // ONLY apply the image if it's the CURRENT step
                     style={
                       index === currentStatusIndex
                         ? {
@@ -285,17 +283,13 @@ const OrderDetailsPage = ({ order, onBack }) => {
                           backgroundSize: 'cover',
                           backgroundPosition: 'center',
                         }
-                        : {} // Past and Future steps get no inline style
+                        : {}
                     }
-                    // --- NEW CLASSNAME LOGIC ---
                     className={`w-12 h-12 rounded-full flex items-center justify-center font-semibold text-sm mb-3 transition-all duration-300 ${
-                      // Case 1: Past Step (e.g., Pending, when current is Shipped)
                       index < currentStatusIndex
                         ? 'bg-orange-500 text-white'
-                        // Case 2: Current Step (e.g., Shipped is Shipped)
                         : index === currentStatusIndex
-                          ? 'bg-orange-500 text-white' // Image is the background
-                          // Case 3: Future Step (e.g., Delivered, when current is Shipped)
+                          ? 'bg-orange-500 text-white'
                           : 'bg-gray-200 text-gray-400'
                       }`}
                   >
@@ -418,3 +412,4 @@ const OrderDetailsPage = ({ order, onBack }) => {
 };
 
 export default App;
+
