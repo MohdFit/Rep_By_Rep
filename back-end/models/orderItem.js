@@ -40,17 +40,17 @@ const orderItemSchema = new mongoose.Schema({
     type: String,
     enum: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
     required: function() {
-      return this.productType === 'Merch';
+      return this.productType === 'TShirt';
     }
   },
   
   selectedColor: {
     type: String,
     required: function() {
-      return this.productType === 'Merch';
-    }}
-  },
-  {
+      return this.productType === 'TShirt';
+    }
+  }
+}, {
   timestamps: true
 });
 
