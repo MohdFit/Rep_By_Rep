@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { CartProvider } from "./context/CartContext";
 
 import Login from "./pages/auth/login";
 import Register from "./pages/auth/register";
@@ -13,7 +14,7 @@ import ProductPlans from "./pages/productPlans/ProductPlans";
 import OrderDetails from "./pages/User/Order/OrderDetailes";
 import FeedbackModal from "./pages/User/Order/FeedbackModal";
 import Order from "./pages/User/Order/MyOrders";
-import Cart from "./pages/User/Cart/Cart";
+import Cart from "./pages/Cart/Cart";
 import Wishlist from "./pages/User/Wishlist";
 import AccountSettings from "./pages/User/AccountSetting";
 
@@ -27,9 +28,10 @@ import AdminSettings from "./pages/Admin/AdminSettings";
 
 function App() {
   return (
-    <BrowserRouter>
-      <div>
-        <Routes>
+    <CartProvider>
+      <BrowserRouter>
+        <div>
+          <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/" element={<Home />} />
@@ -66,6 +68,7 @@ function App() {
         </Routes>
       </div>
     </BrowserRouter>
+    </CartProvider>
   );
 }
 

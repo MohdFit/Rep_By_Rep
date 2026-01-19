@@ -61,10 +61,10 @@ shippingCost: {
   status: {
     type: String,
     enum: {
-      values: ['pending', 'processing', 'completed', 'failed', 'refunded', 'cancelled'],
+      values: ['Pending', 'Processing', 'Shipping', 'Delivered', 'Cancelled'],
       message: 'Invalid order status'
     },
-    default: 'pending',
+    default: 'Pending',
     index: true
   },
   paidAt: Date,
