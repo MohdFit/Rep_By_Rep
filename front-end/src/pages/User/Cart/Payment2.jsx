@@ -14,6 +14,11 @@ const Payment2 = ({ onBack, onClose, onConfirm }) => {
     }
   };
 
+  const handleConfirm = () => {
+    // Pass payment method to parent
+    onConfirm("credit");
+  };
+
   return (
     <div className="fixed inset-0 bg-black/40 flex justify-center items-center z-50">
       <div className="bg-white rounded-2xl w-[600px] h-[450px] p-6 relative shadow-lg font-poppins">
@@ -95,7 +100,7 @@ const Payment2 = ({ onBack, onClose, onConfirm }) => {
         <div className="flex justify-center mt-6">
           <button
             type="button"
-            onClick={onConfirm}
+            onClick={handleConfirm}
             className="bg-gradient-to-r from-red-500 to-orange-400 text-white font-medium font-poppins py-2 px-6 rounded-xl hover:opacity-90 transition-all"
           >
             Confirm

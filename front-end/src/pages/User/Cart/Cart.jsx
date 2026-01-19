@@ -32,6 +32,10 @@ export default function CartPage() {
     },
   ]);
 
+  // Store shipping data from Payment1
+  const [shippingData, setShippingData] = useState(null);
+  const [paymentMethod, setPaymentMethod] = useState(null);
+
   const changeQuantity = (id, delta) => {
     setCartItems((prev) =>
       prev.map((item) =>
@@ -48,6 +52,14 @@ export default function CartPage() {
 
   const [isPaymentOpen, setIsPaymentOpen] = useState(false);
   const [currentStep, setCurrentStep] = useState(1); // 1 = Payment1, 2 = Payment2, 3 = Payment3
+
+  // Calculate totals
+  const subtotal = cartItems.reduce(
+    (sum, item) => sum + item.unitPrice * item.quantity,
+    0
+  );
+  const shippingFee = 5;
+  const total = subtotal + shippingFee;
   return (
     <>
       <Header />
@@ -176,7 +188,10 @@ export default function CartPage() {
               <Payment1
                 onClose={() => setIsPaymentOpen(false)}
                 onBack={() => setIsPaymentOpen(false)}
-                onNext={() => setCurrentStep(2)}
+                onNext={(data) => {
+                  setShippingData(data);
+                  setCurrentStep(2);
+                }}
               />
             )}
 
@@ -184,12 +199,19 @@ export default function CartPage() {
               <Payment2
                 onClose={() => setIsPaymentOpen(false)}
                 onBack={() => setCurrentStep(1)}
-                onConfirm={() => setCurrentStep(3)}
+                onConfirm={(method) => {
+                  setPaymentMethod(method);
+                  setCurrentStep(3);
+                }}
               />
             )}
 
             {isPaymentOpen && currentStep === 3 && (
               <Payment3
+                shippingData={shippingData}
+                paymentMethod={paymentMethod}
+                cartItems={cartItems}
+                orderTotal={total}
                 onClose={() => {setIsPaymentOpen(false); setCurrentStep(1);}}
                 onBack={() => setCurrentStep(2)}
                 onConfirm={() => setIsPaymentOpen(false)}

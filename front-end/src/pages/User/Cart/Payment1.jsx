@@ -43,7 +43,8 @@ export default function Payment1({ onClose, onBack, onNext }) {
       return;
     }
 
-    onNext();
+    // Pass formData to parent
+    onNext(formData);
   };
 
   useEffect(() => {
