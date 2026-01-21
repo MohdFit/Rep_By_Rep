@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaShoppingBag, FaRegUser } from "react-icons/fa";
 import { HiMenu, HiX } from "react-icons/hi";
@@ -10,6 +10,15 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const navLinks = useMemo(
+    () => [
+      { label: "Home", path: "/" },
+      { label: "About", path: "/about" },
+      { label: "Contact Us", path: "/contact" },
+      { label: "Training Programs", path: "/programs" },
+    ],
+    []
+  );
   
   // Mock user state
   const [user, setUser] = useState(null); // null if not logged in
@@ -25,6 +34,24 @@ export default function Navbar() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const toggleUserDropdown = useCallback(() => {
+    setUserDropdownOpen((open) => !open);
+  }, []);
+
+  const toggleMenu = useCallback(() => {
+    setIsOpen((open) => !open);
+  }, []);
+
+  const closeMenu = useCallback(() => setIsOpen(false), []);
+
+  const handleNavigate = useCallback(
+    (path) => {
+      closeMenu();
+      navigate(path);
+    },
+    [closeMenu, navigate]
+  );
+
   return (
     <nav className="w-full bg-[#11131B] text-white px-6 py-4 flex items-center justify-between relative z-50">
       <div className="flex items-center">
@@ -32,36 +59,29 @@ export default function Navbar() {
           src={logo2}
           alt="Mobile Logo"
           className="h-6 w-auto object-contain cursor-pointer sm:hidden"
-          onClick={() => navigate("/")}
+          onClick={() => handleNavigate("/")}
         />
         <img
           src={logo}
           alt="Desktop Logo"
           className="w-auto object-contain cursor-pointer hidden sm:block"
-          onClick={() => navigate("/")}
+          onClick={() => handleNavigate("/")}
         />
       </div>
 
       <ul className="hidden sm:flex gap-10 text-lg font-medium">
-        <li className="cursor-pointer hover:text-orange-500">
-          <Link to="/">Home</Link>
-        </li>
-        <li className="cursor-pointer hover:text-orange-500">
-          <Link to="/about">About</Link>
-        </li>
-        <li className="cursor-pointer hover:text-orange-500">
-          <Link to="/contact">Contact Us</Link>
-        </li>
-        <li className="cursor-pointer hover:text-orange-500">
-          <Link to="/allproducts">Shop</Link>
-        </li>
+        {navLinks.map((item) => (
+          <li key={item.path} className="cursor-pointer hover:text-orange-500">
+            <Link to={item.path}>{item.label}</Link>
+          </li>
+        ))}
       </ul>
 
       <div className="flex items-center gap-6 text-lg">
         <div className="relative" ref={dropdownRef}>
-          <FaRegUser 
-            className="cursor-pointer hover:text-orange-500" 
-            onClick={() => setUserDropdownOpen(!userDropdownOpen)}
+          <FaRegUser
+            className="cursor-pointer hover:text-orange-500"
+            onClick={toggleUserDropdown}
           />
           
           {userDropdownOpen && (
@@ -103,7 +123,7 @@ export default function Navbar() {
 
         <button
           className="sm:hidden text-2xl"
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={toggleMenu}
         >
           {isOpen ? <HiX /> : <HiMenu />}
         </button>
@@ -112,18 +132,17 @@ export default function Navbar() {
       {isOpen && (
         <div className="absolute top-full left-0 w-full bg-[#11131B]/90 backdrop-blur-sm text-white flex flex-col px-6 py-6 z-40 shadow-lg rounded-b-2xl animate-slideDown">
           <ul className="flex flex-col gap-6 text-lg font-medium">
-            <li className="cursor-pointer hover:text-orange-500">
-              <Link to="/" onClick={() => setIsOpen(false)}>Home</Link>
-            </li>
-            <li className="cursor-pointer hover:text-orange-500">
-              <Link to="/about" onClick={() => setIsOpen(false)}>About</Link>
-            </li>
-            <li className="cursor-pointer hover:text-orange-500">
-              <Link to="/contact" onClick={() => setIsOpen(false)}>Contact Us</Link>
-            </li>
-            <li className="cursor-pointer hover:text-orange-500">
-              <Link to="/allproducts" onClick={() => setIsOpen(false)}>Shop</Link>
-            </li>
+            {navLinks.map((item) => (
+              <li key={item.path} className="cursor-pointer hover:text-orange-500">
+                <button
+                  type="button"
+                  onClick={() => handleNavigate(item.path)}
+                  className="w-full text-left"
+                >
+                  {item.label}
+                </button>
+              </li>
+            ))}
           </ul>
         </div>
       )}

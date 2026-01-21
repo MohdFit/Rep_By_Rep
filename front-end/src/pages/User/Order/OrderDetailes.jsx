@@ -5,12 +5,11 @@ import CreditCard from "../../../assets/images/OrderDetails/CreditCard.png";
 import MapPin from "../../../assets/images/OrderDetails/MapPin.png";
 import cardMan from "../../../assets/images/OrderDetails/cardMan.jpg";
 import cardWomen from "../../../assets/images/OrderDetails/cardWomen.jpg";
+import ReviewForm from "../../../components/ReviewForm";
 
 const OrderDetailsModal = ({ order, onClose }) => {
   const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const [rating, setRating] = useState(0);
-  const [comment, setComment] = useState("");
 
   if (!order) return null;
 
@@ -31,23 +30,12 @@ const OrderDetailsModal = ({ order, onClose }) => {
 
   const openFeedbackModal = (product) => {
     setSelectedProduct(product);
-    setRating(0);
-    setComment("");
     setFeedbackModalOpen(true);
   };
 
   const closeFeedbackModal = () => {
     setFeedbackModalOpen(false);
     setSelectedProduct(null);
-  };
-
-  const submitFeedback = () => {
-    console.log("Feedback submitted", {
-      productId: selectedProduct.id,
-      rating,
-      comment,
-    });
-    closeFeedbackModal();
   };
 
   return (
@@ -253,49 +241,24 @@ const OrderDetailsModal = ({ order, onClose }) => {
 
         
         {feedbackModalOpen && selectedProduct && (
-          <div className="modal-overlay">
-            <div className="modal-container feedback-modal">
-              <h2>Leave Your Feedback</h2>
-
-              <div className="feedback-product">
-                <img src={selectedProduct.image} alt={selectedProduct.name} />
-                <div className="product-info">
-                  <h4>{selectedProduct.name}</h4>
-                  <p>
-                    Size: {selectedProduct.size} • {selectedProduct.color}
-                  </p>
-                </div>
-              </div>
-
-              <div className="feedback-rating">
-                <p>How would you rate this product?</p>
-                <div className="stars">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <span
-                      key={star}
-                      onClick={() => setRating(star)}
-                      style={{
-                        cursor: "pointer",
-                        color: star <= rating ? "#ff9900" : "#ccc",
-                        fontSize: "24px",
-                      }}
-                    >
-                      ★
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              <textarea
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
-                placeholder="Share your thoughts about this product..."
-              ></textarea>
-
-              <div className="feedback-actions">
-                <button onClick={closeFeedbackModal}>Cancel</button>
-                <button onClick={submitFeedback}>Submit Feedback</button>
-              </div>
+          <div className="modal-overlay" onClick={closeFeedbackModal}>
+            <div className="modal-container feedback-modal" onClick={(e) => e.stopPropagation()}>
+              <button 
+                className="close-btn" 
+                onClick={closeFeedbackModal}
+                style={{ position: 'absolute', top: '10px', right: '10px', fontSize: '24px', background: 'none', border: 'none', cursor: 'pointer', color: '#fff' }}
+              >
+                ×
+              </button>
+              <ReviewForm
+                productId={selectedProduct.id || selectedProduct._id}
+                orderId={order._raw?._id || order.id}
+                onReviewSubmitted={() => {
+                  closeFeedbackModal();
+                  // Optional: show success message
+                  console.log('Review submitted successfully');
+                }}
+              />
             </div>
           </div>
         )}

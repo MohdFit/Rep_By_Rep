@@ -6,7 +6,7 @@ export default function AdminSidebar() {
   const menuItems = [
     { name: "Dashboard", icon: <LayoutDashboard size={18} />, path: "/admin/dashboard" },
     { name: "Orders", icon: <ShoppingBag size={18} />, path: "/admin/orders" },
-    { name: "Products & Courses", icon: <Package size={18} />, path: "/admin/products" },
+    { name: "Training Programs", icon: <Package size={18} />, path: "/admin/products" },
     { name: "Users", icon: <Users size={18} />, path: "/admin/users" },
     { name: "Reviews & Feedback", icon: <MessageSquare size={18} />, path: "/admin/reviews" },
     { name: "Settings", icon: <Settings size={18} />, path: "/admin/settings" },

@@ -4,11 +4,6 @@ import { CartProvider } from "./context/CartContext";
 import Login from "./pages/auth/login";
 import Register from "./pages/auth/register";
 import Home from "./pages/Home/Home";
-import AllProduct from "./pages/AllProduct/AllProduct";
-import ProductMen from "./pages/productMen/ProductMen";
-import InnerPageWorkout from "./pages/InnerPage/InnerPageWorkout";
-import ProductWomen from "./pages/productWomen/ProductWomen";
-import ProductNowIn from "./pages/productNowIn/ProductNowIn";
 import ProductPlans from "./pages/productPlans/ProductPlans";
 
 import OrderDetails from "./pages/User/Order/OrderDetailes";
@@ -35,12 +30,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/" element={<Home />} />
-          <Route path="/allproducts" element={<AllProduct />} />
-          <Route path="/men" element={<ProductMen />} />
-          <Route path="/women" element={<ProductWomen />} />
-          <Route path="/nowin" element={<ProductNowIn />} />
-          <Route path="/plans" element={<ProductPlans />} />
-          <Route path="innerPage/workout" element={<InnerPageWorkout />} />
+          <Route path="/programs" element={<ProductPlans />} />
           <Route path="user/wishlist" element={<Wishlist />} />
           <Route path="user/cart" element={<Cart />} />
 

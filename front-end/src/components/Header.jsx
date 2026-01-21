@@ -52,18 +52,13 @@ function Header({
           {show === "menu" && (
             <ul className="mt-2">
               <li>
-                <Link to="/men" onClick={() => setShow(null)}>
-                  Men
-                </Link>
-              </li>
-              <li>
-                <Link to="/women" onClick={() => setShow(null)}>
-                  Women
-                </Link>
-              </li>
-              <li>
                 <Link to="/programs" onClick={() => setShow(null)}>
                   Training Programs
+                </Link>
+              </li>
+              <li>
+                <Link to="/" onClick={() => setShow(null)}>
+                  Home
                 </Link>
               </li>
             </ul>
@@ -76,7 +71,7 @@ function Header({
                 placeholder="Search For..."
                 className="w-[368px] h-[32px] rounded-[14px] pl-2 bg-white placeholder-gray-400 text-black outline-none"
               />
-              <img
+              <img 
                 src={searchIcon}
                 alt=""
                 className="absolute right-[9px] bottom-[9px]"
@@ -87,13 +82,10 @@ function Header({
 
         <ul className="justify-between items-center space-x-7 hidden sm:flex">
           <li>
-            <Link to="/men">MEN</Link>
+            <Link to="/">HOME</Link>
           </li>
           <li>
-            <Link to="/women">WOMEN</Link>
-          </li>
-          <li>
-            <Link to="/programs">Training Programs</Link>
+            <Link to="/programs">TRAINING PROGRAMS</Link>
           </li>
         </ul>
 

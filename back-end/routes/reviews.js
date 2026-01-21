@@ -17,7 +17,7 @@ router.get('/:reviewId', reviewController.getReviewById);
 router.post('/', authenticate, reviewController.createReview);
 
 // Get user's reviews
-router.get('/user/:userId', reviewController.getUserReviews);
+router.get('/user/:userId', authenticate, reviewController.getUserReviews);
 
 // Update review (user can only update their own)
 router.put('/:reviewId', authenticate, reviewController.updateReview);

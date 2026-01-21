@@ -34,8 +34,15 @@ exports.createReview = async (req, res) => {
       });
     }
 
-    // Check if product exists
-    const product = await TShirt.findById(productId) || await Plan.findById(productId);
+    // Check if product exists and determine type
+    let product = await Plan.findById(productId);
+    let productType = 'Plan';
+    
+    if (!product) {
+      product = await TShirt.findById(productId);
+      productType = 'TShirt';
+    }
+    
     if (!product) {
       return res.status(404).json({
         success: false,
@@ -56,6 +63,7 @@ exports.createReview = async (req, res) => {
     const newReview = new Review({
       userId,
       productId,
+      productType,
       orderId,
       rating,
       title,
