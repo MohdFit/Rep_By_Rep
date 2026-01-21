@@ -1,6 +1,6 @@
-const Cart = require('../../models/cart');
-const TShirt = require('../../models/merch');
-const Plan = require('../../models/plan');
+const Cart = require('../models/cart');
+const TShirt = require('../models/merch');
+const Plan = require('../models/plan');
 
 const cartController = {
   // Add item to cart

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getProductReviews } from '../../services/reviewService';
+import { getProductReviews } from '../services/reviewService';
 import './productReviews.css';
 
 const ProductReviews = ({ productId }) => {

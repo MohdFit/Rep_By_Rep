@@ -7,6 +7,7 @@ import FooterWhite from "../../components/FooterWhite";
 import { getAllPlans } from "../../services/productService";
 import { useCart } from "../../context/CartContext";
 import ProductReviews from "../../components/ProductReviews";
+import heart from "../../assets/icons/heart-white.png";
 
 function ProductPlans() {
   const [plans, setPlans] = useState([]);

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { createReview } from '../../services/reviewService';
+import { createReview } from '../services/reviewService';
 import './reviewForm.css';
 
 const ReviewForm = ({ productId, orderId, onReviewSubmitted }) => {
