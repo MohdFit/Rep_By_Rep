@@ -6,7 +6,7 @@ const Footer = () => {
 
   const handleSubscribe = (e) => {
     e.preventDefault();
-    console.log("Subscribing email:", email);
+    // Handle email subscription
     setEmail("");
   };
 
@@ -66,7 +66,7 @@ const Footer = () => {
                   </li>
                   <li>
                     <a
-                      href="/about"
+                      href="#"
                       className="text-gray-300 hover:text-customOrange1 transition-colors duration-300"
                     >
                       About
@@ -74,7 +74,7 @@ const Footer = () => {
                   </li>
                   <li>
                     <a
-                      href="/contact"
+                      href="#"
                       className="text-gray-300 hover:text-customOrange1 transition-colors duration-300"
                     >
                       Contact US
@@ -82,7 +82,7 @@ const Footer = () => {
                   </li>
                   <li>
                     <a
-                      href="/shop"
+                      href="/programs"
                       className="text-gray-300 hover:text-customOrange1 transition-colors duration-300"
                     >
                       Shop

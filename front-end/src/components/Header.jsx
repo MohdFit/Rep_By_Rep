@@ -99,13 +99,13 @@ function Header({
               />
             </div>
 
-            <Link to="/wishlist" aria-label="Wishlist">
+            <Link to="/user/wishlist" aria-label="Wishlist">
               <img src={heartIcon} alt="" />
             </Link>
-            <Link to="/cart" aria-label="Cart">
+            <Link to="/user/cart" aria-label="Cart">
               <img src={shoppingCartIcon} alt="" />
             </Link>
-            <Link to="/account" aria-label="Account">
+            <Link to="/user/account-settings" aria-label="Account">
               <img src={userIcon} alt="" />
             </Link>
           </div>

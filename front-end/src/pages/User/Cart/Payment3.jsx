@@ -51,7 +51,6 @@ const Payment3 = ({ onBack, onClose, onHome, shippingData, paymentMethod, cartIt
         localStorage.removeItem("cart");
         
         // Show success message
-        console.log("Order created successfully", response.data);
       } else {
         setError(response.message || "Failed to create order");
       }

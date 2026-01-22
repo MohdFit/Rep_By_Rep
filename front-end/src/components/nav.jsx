@@ -13,14 +13,10 @@ export default function Navbar() {
   const navLinks = useMemo(
     () => [
       { label: "Home", path: "/" },
-      { label: "About", path: "/about" },
-      { label: "Contact Us", path: "/contact" },
       { label: "Training Programs", path: "/programs" },
     ],
     []
   );
-  
-  // Mock user state
   const [user, setUser] = useState(null); // null if not logged in
 
   // Close dropdown when clicking outside

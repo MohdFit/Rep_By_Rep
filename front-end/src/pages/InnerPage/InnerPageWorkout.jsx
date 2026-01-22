@@ -4,32 +4,11 @@ import workout from "../../assets/images/InnerPageWorkout/backworkout.png";
 import star from "../../assets/images/InnerPageWorkout/Star.png";
 import upload from "../../assets/images/InnerPageWorkout/upload.png";
 import heart from "../../assets/images/InnerPageWorkout/heart.png";
-import box from "../../assets/images/allproducts/box.png";
 import FooterWhite from "../../components/FooterWhite";
 
 function InnerPageWorkout() {
   const [activePage, setActivePage] = useState(0);
-  const products = [
-    { name: "T-Shirt", price: 20, img: box },
-    { name: "Shorts", price: 25, img: box },
-    { name: "Sneakers", price: 60, img: box },
-    { name: "Hoodie", price: 40, img: box },
-    { name: "Cap", price: 15, img: box },
-    { name: "Leggings", price: 30, img: box },
-    { name: "Water Bottle", price: 10, img: box },
-    { name: "Gym Bag", price: 50, img: box },
-    { name: "Tank Top", price: 18, img: box },
-    { name: "Socks", price: 8, img: box },
-    { name: "Jacket", price: 75, img: box },
-    { name: "Sports Bra", price: 35, img: box },
-  ];
-  const itemsPerPage = 4;
-  const totalPages = Math.ceil(products.length / itemsPerPage);
-  const startIndex = activePage * itemsPerPage;
-  const displayedItems = products.slice(startIndex, startIndex + itemsPerPage);
-
-
-
+  const totalPages = 3; // Static pagination for placeholder items
 
   return (
     <>
@@ -165,21 +144,21 @@ function InnerPageWorkout() {
           {[...Array(4)].map((_, idx) => (
             <div key={idx} className="relative text-white font-poppins">
               <img
-                src={box} // replace with your actual image
-                alt="Product"
+                src={workout}
+                alt="Training Program"
                 className="w-full rounded-2xl object-cover"
               />
 
               <div className="absolute bottom-0 left-0 w-full sm:p-4 p-2 bg-gradient-to-t from-black/70 via-black/20 to-transparent rounded-b-2xl">
-                <h3 className="sm:text-2xl text-base font-semibold">T-Shirt</h3>
-                <p className="font-medium sm:text-sm text-[10px]">20$</p>
+                <h3 className="sm:text-2xl text-base font-semibold">Training Program</h3>
+                <p className="font-medium sm:text-sm text-[10px]">$29</p>
 
                 <div className="flex justify-between items-center mt-[6px] sm:mt-[18px]">
                   <a
-                    href="#"
+                    href="/programs"
                     className="block px-[15px] text-xs font-semibold bg-[#FBF4F24D]/30 sm:px-[10px] p-[7px] sm:w-[180px] text-center border border-customOrange1 rounded-[17px] uppercase"
                   >
-                    add to bag
+                    View Program
                   </a>
 
                   <img

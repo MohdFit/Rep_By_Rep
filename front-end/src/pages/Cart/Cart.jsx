@@ -113,7 +113,7 @@ const Cart = () => {
 
       <div className="cart-actions">
         <button className="checkout-btn">Proceed to Checkout</button>
-        <a href="/products" className="continue-shopping">Continue Shopping</a>
+        <a href="/programs" className="continue-shopping">Continue Shopping</a>
       </div>
     </div>
   );
