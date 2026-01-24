@@ -33,6 +33,7 @@ app.use('/api', require('./routes/order'));
 app.use('/api', require('./routes/stats'));
 app.use('/api/cart', require('./routes/cart'));
 app.use('/api/reviews', require('./routes/reviews'));
+app.use('/api/wishlist', require('./routes/wishlist'));
 
 app.get('/health', (req, res) => {
     const healthCheck = {

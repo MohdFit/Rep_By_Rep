@@ -1,65 +1,67 @@
 // front-end/src/pages/User/Cart/Cart.jsx
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useCart } from "../../../context/CartContext";
 import Header from "../../../components/Header";
 import FooterWhite from "../../../components/FooterWhite";
-import box from "../../../assets/images/allproducts/box.png"; // example product image
+import box from "../../../assets/images/allproducts/box.png"; // placeholder image
 import Payment1 from "./Payment1";
 import Payment2 from "./Payment2";
 import Payment3 from "./Payment3";
 
 export default function CartPage() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { cart, updateCartItem, removeFromCart, clearCart, loading } = useCart();
 
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      name: "T-Shirt",
-      color: "Red",
-      size: "M",
-      unitPrice: 20,
-      quantity: 1,
-      img: box,
-    },
-    {
-      id: 2,
-      name: "Hoodie",
-      color: "Blue",
-      size: "L",
-      unitPrice: 35,
-      quantity: 2,
-      img: box,
-    },
-  ]);
+  // Use real cart items from context; fall back to empty list
+  const cartItems = Array.isArray(cart?.items) ? cart.items : [];
 
   // Store shipping data from Payment1
   const [shippingData, setShippingData] = useState(null);
   const [paymentMethod, setPaymentMethod] = useState(null);
 
-  const changeQuantity = (id, delta) => {
-    setCartItems((prev) =>
-      prev.map((item) =>
-        item.id === id
-          ? { ...item, quantity: Math.max(1, item.quantity + delta) }
-          : item
-      )
-    );
+  const changeQuantity = async (item, delta) => {
+    const newQty = Math.max(1, (item.quantity || 1) + delta);
+    try {
+      await updateCartItem(item._id || item.id, newQty);
+    } catch (err) {
+      // Optionally show a toast
+    }
   };
 
-  const removeItem = (id) => {
-    setCartItems((prev) => prev.filter((item) => item.id !== id));
+  const removeItem = async (item) => {
+    try {
+      await removeFromCart(item._id || item.id);
+    } catch (err) {
+      // Optionally show a toast
+    }
   };
 
   const [isPaymentOpen, setIsPaymentOpen] = useState(false);
   const [currentStep, setCurrentStep] = useState(1); // 1 = Payment1, 2 = Payment2, 3 = Payment3
 
   // Calculate totals
+  const getUnitPrice = (item) => item.unitPrice ?? item.price ?? item.product?.price ?? 0;
   const subtotal = cartItems.reduce(
-    (sum, item) => sum + item.unitPrice * item.quantity,
+    (sum, item) => sum + getUnitPrice(item) * (item.quantity || 1),
     0
   );
   const shippingFee = 5;
   const total = subtotal + shippingFee;
+
+  // Auto-open checkout when deep-linked with ?checkout=true
+  useEffect(() => {
+    try {
+      const params = new URLSearchParams(location.search);
+      if (params.get('checkout') === 'true') {
+        setIsPaymentOpen(true);
+        setCurrentStep(1);
+      }
+    } catch (_) {
+      // no-op: if URL parsing fails, ignore
+    }
+  }, [location.search]);
   return (
     <>
       <Header />
@@ -74,51 +76,55 @@ export default function CartPage() {
         </div>
 
         <div className="flex flex-col space-y-6">
-          {cartItems.map((item) => (
+          {loading && (
+            <div className="text-center text-gray-600">Loading your cart...</div>
+          )}
+          {!loading && cartItems.length === 0 && (
+            <div className="text-center text-gray-700">Your cart is empty. Add a training plan from Programs.</div>
+          )}
+          {!loading && cartItems.map((item) => (
             <div
-              key={item.id}
+              key={item._id || item.id}
               className="border-b border-gray-300 pb-4 flex flex-col sm:grid sm:grid-cols-12 sm:gap-4"
             >
               <div className="col-span-6 flex flex-col sm:flex-row sm:items-center space-y-3 sm:space-y-0 sm:space-x-4">
                 <button
-                  onClick={() => removeItem(item.id)}
+                  onClick={() => removeItem(item)}
                   className="w-8 h-8 rounded-full bg-orange-100 text-orange-500 flex items-center justify-center font-bold text-lg self-start sm:self-auto"
                 >
                   ×
                 </button>
 
                 <img
-                  src={item.img}
-                  alt={item.name}
+                  src={item.product?.image || item.image || box}
+                  alt={item.product?.name || item.name || 'Plan'}
                   className="w-24 h-24 object-cover rounded-lg"
                 />
 
                 <div className="flex flex-col">
                   <span className="font-semibold text-[20px] sm:text-[24px]">
-                    {item.name}
+                    {item.product?.name || item.name || 'Training Plan'}
                   </span>
-                  <span className="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm mt-1 self-start">
-                    {item.color} / {item.size}
-                  </span>
+                  {/* Plans do not have size/color; omit for a cleaner UI */}
                 </div>
               </div>
 
               <div className="col-span-2 text-right font-medium text-lg mt-2 sm:mt-8">
-                ${item.unitPrice.toFixed(2)}
+                ${getUnitPrice(item).toFixed(2)}
               </div>
 
               <div className="col-span-2 flex justify-center items-center space-x-1 mt-2 sm:mt-0">
                 <button
-                  onClick={() => changeQuantity(item.id, -1)}
+                  onClick={() => changeQuantity(item, -1)}
                   className="px-2 py-1 bg-gradient-to-r from-red-500 to-orange-400 text-white rounded"
                 >
                   -
                 </button>
                 <span className="px-3 py-1 border rounded">
-                  {item.quantity}
+                  {item.quantity || 1}
                 </span>
                 <button
-                  onClick={() => changeQuantity(item.id, 1)}
+                  onClick={() => changeQuantity(item, 1)}
                   className="px-2 py-1 bg-gradient-to-r from-red-500 to-orange-400 text-white rounded"
                 >
                   +
@@ -126,7 +132,7 @@ export default function CartPage() {
               </div>
 
               <div className="col-span-2 text-right font-medium text-lg mt-2 sm:mt-8">
-                ${(item.unitPrice * item.quantity).toFixed(2)}
+                ${(getUnitPrice(item) * (item.quantity || 1)).toFixed(2)}
               </div>
             </div>
           ))}
@@ -155,7 +161,7 @@ export default function CartPage() {
               <span>
                 $
                 {cartItems
-                  .reduce((sum, item) => sum + item.unitPrice * item.quantity, 0)
+                  .reduce((sum, item) => sum + getUnitPrice(item) * (item.quantity || 1), 0)
                   .toFixed(2)}
               </span>
             </div>
@@ -173,9 +179,9 @@ export default function CartPage() {
                 $
                 {(
                   cartItems.reduce(
-                    (sum, item) => sum + item.unitPrice * item.quantity,
+                    (sum, item) => sum + getUnitPrice(item) * (item.quantity || 1),
                     0
-                  ) + 5
+                  ) + shippingFee
                 ).toFixed(2)}
               </span>
             </div>

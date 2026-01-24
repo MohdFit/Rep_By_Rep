@@ -106,26 +106,27 @@ const OrderDetailsModal = ({ order, onClose }) => {
 
         
         <div className="product-cards">
-          {order.products && order.products.length > 0 ? (
-            order.products.map((product, index) => (
+          {(order._raw?.orderItems || []).length > 0 ? (
+            order._raw.orderItems.map((item, index) => (
               <div className="product-card" key={index}>
                 <img
                   className="product-image"
-                  src={product.image}
-                  alt={product.name}
+                  src={item.product?.image || cardMan}
+                  alt={item.product?.title || 'Training Plan'}
                 />
                 <div className="product-details">
-                  <h4>{product.name}</h4>
-                  <p>
-                    Size: {product.size} • {product.color}
-                  </p>
-                  <p>Quantity: {product.quantity}</p>
+                  <h4>{item.product?.title || 'Training Plan'}</h4>
+                  <p>Quantity: {item.quantity || 1}</p>
                 </div>
                 <div className="product-action">
-                  <span className="price">{product.price} $</span>
+                  <span className="price">{(item.unitPrice || 0).toFixed(2)} $</span>
                   <button
                     className="feedback-btn"
-                    onClick={() => openFeedbackModal(product)}
+                    onClick={() => openFeedbackModal({
+                      id: item.product?._id || item._id,
+                      name: item.product?.title || 'Training Plan',
+                      image: item.product?.image || cardMan
+                    })}
                   >
                     Leave Feedback
                   </button>
@@ -133,63 +134,7 @@ const OrderDetailsModal = ({ order, onClose }) => {
               </div>
             ))
           ) : (
-            <div className="products-section">
-              <div className="product-card">
-                <img src={cardMan} alt="product-1" className="product-image" />
-                <div className="product-info">
-                  <h4>Sports T-Shirt</h4>
-                  <p>Size: M</p>
-                  <p>Qty: 1</p>
-                </div>
-                <div className="side-right">
-                  <div className="product-price">$20.00</div>
-                  <button
-                    className="feedback-btn"
-                    onClick={() =>
-                      openFeedbackModal({
-                        id: 1,
-                        name: "Sports T-Shirt",
-                        image: cardMan,
-                        size: "M",
-                        color: "Red",
-                      })
-                    }
-                  >
-                    Leave Feedback
-                  </button>
-                </div>
-              </div>
-
-              <div className="product-card">
-                <img
-                  src={cardWomen}
-                  alt="product-2"
-                  className="product-image"
-                />
-                <div className="product-info">
-                  <h4>Running Shorts</h4>
-                  <p>Size: L</p>
-                  <p>Qty: 1</p>
-                </div>
-                <div className="side-right">
-                  <div className="product-price">$20.00</div>
-                  <button
-                    className="feedback-btn"
-                    onClick={() =>
-                      openFeedbackModal({
-                        id: 2,
-                        name: "Running Shorts",
-                        image: cardWomen,
-                        size: "L",
-                        color: "Blue",
-                      })
-                    }
-                  >
-                    Leave Feedback
-                  </button>
-                </div>
-              </div>
-            </div>
+            <div className="products-section">No items for this order.</div>
           )}
         </div>
         <hr />
@@ -201,20 +146,14 @@ const OrderDetailsModal = ({ order, onClose }) => {
               <img src={CreditCard} alt="CreditCard" />
               <h4>Payment Info</h4>
             </div>
-            <p className="contantP">Visa ending in 4242</p>
+            <p className="contantP">{order._raw?.paymentMethod || '—'}</p>
           </div>
           <div>
             <div className="inner">
               <img src={MapPin} alt="MapPin" />
               <h4>Delivery Address</h4>
             </div>
-            <p className="contantP">
-              123 Fitness St
-              <br />
-              Amman, CA 90210
-              <br />
-              Jordan
-            </p>
+            <p className="contantP">{order._raw?.shippingAddress || '—'}</p>
           </div>
         </div>
 
@@ -222,14 +161,9 @@ const OrderDetailsModal = ({ order, onClose }) => {
         <div className="summary">
           <p>
             <strong>Total Amount:</strong> $
-            {order.products && order.products.length > 0
-              ? order.products
-                  .reduce(
-                    (sum, p) => sum + parseFloat(p.price) * (p.quantity || 1),
-                    0
-                  )
-                  .toFixed(2)
-              : 40.0}
+            {typeof order._raw?.total === 'number'
+              ? order._raw.total.toFixed(2)
+              : Number(order._raw?.total || 0).toFixed(2)}
           </p>
           <p className="date">Ordered on {order.date}</p>
         </div>

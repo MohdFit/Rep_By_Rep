@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
 import overlay from "../../assets/images/productPlans/Overlay.png";
 import box from "../../assets/images/productPlans/men.jpg";
@@ -8,6 +9,7 @@ import { getAllPlans } from "../../services/productService";
 import { useCart } from "../../context/CartContext";
 import ProductReviews from "../../components/ProductReviews";
 import heart from "../../assets/icons/heart-white.png";
+import wishlistService from "../../services/wishlistService";
 
 function ProductPlans() {
   const [plans, setPlans] = useState([]);
@@ -15,6 +17,7 @@ function ProductPlans() {
   const [error, setError] = useState(null);
   const [selectedPlan, setSelectedPlan] = useState(null);
   const { addToCart } = useCart();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPlans = async () => {
@@ -41,6 +44,31 @@ function ProductPlans() {
     } catch (error) {
       console.error('Error adding to cart:', error);
       alert('Failed to add to cart');
+    }
+  };
+
+  const handleBuyNow = async (plan) => {
+    try {
+      // Ensure the plan is in the cart, then deep-link to checkout
+      await addToCart(plan._id, 'Plan', 1);
+      navigate('/user/cart?checkout=true');
+    } catch (error) {
+      console.error('Error processing Buy Now:', error);
+      alert('Failed to start checkout');
+    }
+  };
+
+  const handleAddToWishlist = async (plan) => {
+    try {
+      const res = await wishlistService.addToWishlist(plan._id);
+      if (res?.success) {
+        alert('Added to wishlist');
+      } else {
+        alert(res?.message || 'Failed to add to wishlist');
+      }
+    } catch (error) {
+      console.error('Error adding to wishlist:', error);
+      alert('Failed to add to wishlist');
     }
   };
 
@@ -89,11 +117,17 @@ function ProductPlans() {
                     >
                       add to bag
                     </button>
+                    <button
+                      onClick={(e) => { e.stopPropagation(); handleBuyNow(plan); }}
+                      className="hidden sm:block ml-2 px-[15px] text-xs font-semibold bg-orange-500 sm:px-[10px] p-[7px] sm:w-[180px] text-center border border-orange-500 rounded-[17px] uppercase hover:bg-orange-600 transition"
+                    >
+                      buy now
+                    </button>
                     <img
                       src={heart}
                       className="sm:w-[30px] sm:h-[30px] w-[15px] h-[14px] cursor-pointer hover:opacity-80"
                       alt="wishlist"
-                      onClick={(e) => e.stopPropagation()}
+                      onClick={(e) => { e.stopPropagation(); handleAddToWishlist(plan); }}
                     />
                   </div>
                 </div>
@@ -153,6 +187,20 @@ function ProductPlans() {
                   className="w-full px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-lg transition"
                 >
                   Add to Bag
+                </button>
+                <button
+                  onClick={() => handleAddToWishlist(selectedPlan)}
+                  className="w-full mt-3 px-6 py-3 bg-[#FBF4F24D] border border-customOrange1 hover:bg-customOrange1 text-white font-semibold rounded-lg transition"
+                >
+                  Add to Wishlist
+                </button>
+                <button
+                  onClick={() => {
+                    handleBuyNow(selectedPlan);
+                  }}
+                  className="w-full mt-3 px-6 py-3 bg-gradient-to-r from-red-500 to-orange-500 hover:opacity-90 text-white font-semibold rounded-lg transition"
+                >
+                  Buy Now
                 </button>
               </div>
 

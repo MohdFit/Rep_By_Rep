@@ -1,24 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import FooterWhite from "../../components/FooterWhite";
 import heart from "../../assets/images/InnerPageWorkout/heart.png";
 import box from "../../assets/images/allproducts/box.png";
+import wishlistService from "../../services/wishlistService";
+import { useCart } from "../../context/CartContext";
 
 export default function Wishlist() {
-  const [wishlistItems, setWishlistItems] = useState([
-    { id: 1, name: "T-Shirt", price: 20, img: box },
-    { id: 2, name: "Hoodie", price: 35, img: box },
-    { id: 3, name: "Sneakers", price: 60, img: box },
-    { id: 4, name: "Shorts", price: 25, img: box },
-    { id: 5, name: "Cap", price: 15, img: box },
-    { id: 6, name: "Socks", price: 8, img: box },
-    { id: 7, name: "Leggings", price: 30, img: box },
-    { id: 8, name: "Tank Top", price: 18, img: box },
-    { id: 9, name: "Jacket", price: 75, img: box },
-    { id: 10, name: "Sports Bra", price: 35, img: box },
-    { id: 11, name: "Water Bottle", price: 10, img: box },
-    { id: 12, name: "Gym Bag", price: 50, img: box },
-  ]);
+  const [wishlistItems, setWishlistItems] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const { addToCart } = useCart();
+
+  useEffect(() => {
+    const fetchWishlist = async () => {
+      try {
+        setLoading(true);
+        const res = await wishlistService.getWishlist();
+        if (res?.success) {
+          setWishlistItems(res.data || []);
+        } else {
+          setWishlistItems([]);
+        }
+      } catch (_) {
+        setWishlistItems([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchWishlist();
+  }, []);
 
   const [activePage, setActivePage] = useState(1);
   const itemsPerPage = 12;
@@ -26,6 +36,30 @@ export default function Wishlist() {
 
   const startIndex = (activePage - 1) * itemsPerPage;
   const displayedItems = wishlistItems.slice(startIndex, startIndex + itemsPerPage);
+
+  const handleAddToBag = async (item) => {
+    try {
+      const planId = item.product?._id || item.productId || item._id;
+      await addToCart(planId, 'Plan', 1);
+      // Optionally remove from wishlist after adding to cart
+      // await handleRemove(item);
+      alert('Added to cart!');
+    } catch (err) {
+      alert('Failed to add to cart');
+    }
+  };
+
+  const handleRemove = async (item) => {
+    try {
+      const id = item._id || item.id;
+      const res = await wishlistService.removeFromWishlist(id);
+      if (res?.success) {
+        setWishlistItems((prev) => prev.filter((w) => (w._id || w.id) !== id));
+      }
+    } catch (_) {
+      // silently fail for now
+    }
+  };
 
   return (
     <>
@@ -35,6 +69,15 @@ export default function Wishlist() {
           Your Favourite Picks
         </h2>
 
+        {loading && (
+          <div className="text-center text-gray-700">Loading your wishlist...</div>
+        )}
+        {!loading && wishlistItems.length === 0 && (
+          <div className="text-center text-gray-700 mb-8">
+            Your wishlist is empty. Explore Programs and add training plans you like.
+          </div>
+        )}
+        
         
         <div
           className="
@@ -46,31 +89,31 @@ export default function Wishlist() {
           {displayedItems.map((item) => (
             <div key={item.id} className="relative text-white font-poppins">
               <img
-                src={item.img}
-                alt={item.name}
+                src={item.product?.image || item.image || box}
+                alt={item.product?.title || item.name || 'Training Plan'}
                 className="w-full rounded-2xl object-cover"
               />
 
               <div className="absolute bottom-0 left-0 w-full sm:p-4 p-2 bg-gradient-to-t from-black/70 via-black/20 to-transparent rounded-b-2xl">
-                <h3 className="sm:text-2xl text-sm font-semibold">{item.name}</h3>
-                <p className="font-medium sm:text-sm text-[10px]">${item.price}</p>
+                <h3 className="sm:text-2xl text-sm font-semibold">{item.product?.title || item.name || 'Training Plan'}</h3>
+                <p className="font-medium sm:text-sm text-[10px]">${(item.product?.price || item.price || 0).toFixed(2)}</p>
 
                 <div className="flex justify-between items-center mt-[6px] sm:mt-[14px]">
-                  <a
-                    href="#"
+                  <button
+                    onClick={() => handleAddToBag(item)}
                     className="block px-[10px] sm:px-[15px] text-[9px] sm:text-xs font-semibold bg-[#FBF4F24D]/30 sm:w-[150px] text-center border border-customOrange1 rounded-[17px] uppercase"
                   >
                     add to bag
-                  </a>
+                  </button>
 
                   
-                  <div className="w-6 h-6 bg-gradient-to-r from-red-500 to-orange-400 mask-heart">
-                  <img
+                  <button className="w-6 h-6 bg-gradient-to-r from-red-500 to-orange-400 mask-heart" onClick={() => handleRemove(item)} aria-label="Remove from wishlist">
+                    <img
                       src={heart}
                       alt="wishlist-heart"
                       className="sm:w-[16px] sm:h-[16px] w-[10px] h-[10px]"
                     />
-                  </div>
+                  </button>
                 </div>
               </div>
             </div>

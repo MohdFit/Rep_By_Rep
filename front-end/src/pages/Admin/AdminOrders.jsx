@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Search, Eye, Package, Clock, CheckCircle, XCircle, ChevronDown } from 'lucide-react';
+import { getAllOrders } from '../../services/orderService';
 
 
 const App = () => {
@@ -29,20 +30,25 @@ const AdminOrders = ({ onViewOrder }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState('All Orders');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  const initialOrders = [
-    { id: '#ORD-2024-001', customer: 'Sarah Johnson', date: 'Jan 15, 2024', items: 2, status: 'Shipping', amount: 40 },
-    { id: '#ORD-2024-001', customer: 'Sarah Johnson', date: 'Jan 15, 2024', items: 2, status: 'Processing', amount: 50 },
-    { id: '#ORD-2024-001', customer: 'Sarah Johnson', date: 'Jan 15, 2024', items: 2, status: 'Delivered', amount: 50 },
-    { id: '#ORD-2024-001', customer: 'Sarah Johnson', date: 'Jan 15, 2024', items: 2, status: 'Processing', amount: 50 },
-    { id: '#ORD-2024-001', customer: 'Sarah Johnson', date: 'Jan 15, 2024', items: 2, status: 'Shipping', amount: 50 },
-    { id: '#ORD-2024-001', customer: 'Sarah Johnson', date: 'Jan 15, 2024', items: 2, status: 'Canceled', amount: 50 },
-    { id: '#ORD-2024-001', customer: 'Sarah Johnson', date: 'Jan 15, 2024', items: 2, status: 'Delivered', amount: 50 },
-    { id: '#ORD-2024-001', customer: 'Sarah Johnson', date: 'Jan 15, 2024', items: 2, status: 'Shipping', amount: 50 },
-    { id: '#ORD-2024-001', customer: 'Sarah Johnson', date: 'Jan 15, 2024', items: 2, status: 'Delivered', amount: 50 },
-    { id: '#ORD-2024-001', customer: 'Sarah Johnson', date: 'Jan 15, 2024', items: 2, status: 'Canceled', amount: 50 },
-    { id: '#ORD-2024-001', customer: 'Sarah Johnson', date: 'Jan 15, 2024', items: 2, status: 'Processing', amount: 50 },
-  ];
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        setLoading(true);
+        const res = await getAllOrders();
+        if (res.success) {
+          setOrders(res.data || []);
+        }
+      } catch (_) {
+        setOrders([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchOrders();
+  }, []);
 
   const statusOptions = ['All Orders', 'Shipping', 'Processing', 'Delivered', 'Canceled'];
 
@@ -66,12 +72,22 @@ const AdminOrders = ({ onViewOrder }) => {
     return icons[status] || null;
   };
 
-  const filteredOrders = initialOrders.filter(order => {
-    const matchesSearch = order.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      order.customer.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesStatus = statusFilter === 'All Orders' || order.status === statusFilter;
-    return matchesSearch && matchesStatus;
-  });
+  const filteredOrders = orders
+    .map(o => ({
+      _raw: o,
+      id: o.orderNumber || o._id || 'N/A',
+      customer: o.user?.name || o.userId || '—',
+      date: new Date(o.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+      items: o.orderItems?.length || 0,
+      status: o.status || 'Pending',
+      amount: typeof o.total === 'number' ? o.total : Number(o.total || 0)
+    }))
+    .filter(order => {
+      const matchesSearch = String(order.id).toLowerCase().includes(searchQuery.toLowerCase()) ||
+        String(order.customer).toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesStatus = statusFilter === 'All Orders' || order.status === statusFilter;
+      return matchesSearch && matchesStatus;
+    });
 
   return (
     <div className="min-h-screen bg-white-500 p-8">
@@ -142,7 +158,13 @@ const AdminOrders = ({ onViewOrder }) => {
                 </tr>
               </thead>
               <tbody>
-                {filteredOrders.map((order, index) => (
+                {loading && (
+                  <tr><td className="px-6 py-4" colSpan={7}>Loading orders...</td></tr>
+                )}
+                {!loading && filteredOrders.length === 0 && (
+                  <tr><td className="px-6 py-4" colSpan={7}>No orders found.</td></tr>
+                )}
+                {!loading && filteredOrders.map((order, index) => (
                   <tr key={index} className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
                     <td className="px-6 py-4">
                       <div className="text-sm font-medium text-gray-900 leading-tight">
@@ -170,7 +192,7 @@ const AdminOrders = ({ onViewOrder }) => {
                     <td className="px-6 py-4">
                       <div className="inline-block p-0.5 border border-gray-300 rounded-lg shadow-sm bg-white">
                         <button
-                          onClick={() => onViewOrder(order)}
+                          onClick={() => onViewOrder(order._raw)}
                           className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
                         >
                           <Eye className="w-4 h-4 text-gray-600" />
@@ -189,39 +211,26 @@ const AdminOrders = ({ onViewOrder }) => {
 };
 
 const OrderDetailsPage = ({ order, onBack }) => {
-  const [currentStatus, setCurrentStatus] = useState(order?.status.toLowerCase() || 'shipped');
+  const [currentStatus, setCurrentStatus] = useState(order?.status?.toLowerCase() || 'pending');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const orderData = {
-    orderId: order?.id || '#ORD-2024-004',
-    items: [
-      {
-        id: 1,
-        image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=100&h=100&fit=crop',
-        name: 'T-Shirt',
-        size: 'M',
-        color: 'Green',
-        price: 20,
-        quantity: 1
-      },
-      {
-        id: 2,
-        image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=100&h=100&fit=crop',
-        name: 'T-Shirt',
-        size: 'M',
-        color: 'Green',
-        price: 20,
-        quantity: 1
-      }
-    ],
+    orderId: order?.orderNumber || order?._id || 'N/A',
+    items: (order?.orderItems || []).map((it, idx) => ({
+      id: it._id || idx,
+      image: it.product?.image || '',
+      name: it.product?.title || 'Training Plan',
+      price: it.unitPrice || 0,
+      quantity: it.quantity || 1
+    })),
     customer: {
-      name: order?.customer || 'Sarah Johnson',
-      email: 'Sarah.j@email.com',
-      phone: '07 0000 0000',
-      address: '321 Jordan, Amman City, RC 13579',
-      paymentMethod: 'Visa',
-      orderDate: order?.date ? new Date(order.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : 'January 22nd, 2024',
-      totalAmount: order?.amount || 40
+      name: order?.user?.name || '—',
+      email: order?.user?.email || '—',
+      phone: order?.user?.phone || '—',
+      address: order?.shippingAddress || '—',
+      paymentMethod: order?.paymentMethod || '—',
+      orderDate: order?.createdAt ? new Date(order.createdAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : '—',
+      totalAmount: typeof order?.total === 'number' ? order.total : Number(order?.total || 0)
     }
   };
 
