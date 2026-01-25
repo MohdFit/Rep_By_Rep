@@ -4,13 +4,29 @@ import searchIcon from "../assets/images/allproducts/MagnifyingGlass.png";
 import userIcon from "../assets/images/allproducts/User.png";
 import shoppingCartIcon from "../assets/images/allproducts/ShoppingCart.png";
 import heartIcon from "../assets/images/allproducts/heart.png";
-import { useState, memo } from "react";
+import { useState, memo, useEffect } from "react";
 import { Link } from "react-router-dom";
+import wishlistService from "../services/wishlistService";
 
 function Header({
   className = " mt-[36px] sm:mt-[52px] px-[17px] sm:px-[83px]  relative min-h-[36px] ",
 }) {
   const [show, setShow] = useState(null);
+  const [wishlistCount, setWishlistCount] = useState(0);
+
+  useEffect(() => {
+    const fetchWishlistCount = async () => {
+      try {
+        const res = await wishlistService.getWishlist();
+        if (res?.success) {
+          setWishlistCount((res.data?.items || []).length);
+        }
+      } catch (_) {
+        setWishlistCount(0);
+      }
+    };
+    fetchWishlistCount();
+  }, []);
 
   return (
     <div className={className}>
@@ -99,8 +115,13 @@ function Header({
               />
             </div>
 
-            <Link to="/user/wishlist" aria-label="Wishlist">
+            <Link to="/user/wishlist" aria-label="Wishlist" className="relative">
               <img src={heartIcon} alt="" />
+              {wishlistCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-orange-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold">
+                  {wishlistCount}
+                </span>
+              )}
             </Link>
             <Link to="/user/cart" aria-label="Cart">
               <img src={shoppingCartIcon} alt="" />

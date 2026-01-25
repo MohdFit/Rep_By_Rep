@@ -41,8 +41,7 @@ export default function Wishlist() {
     try {
       const planId = item.product?._id || item.productId || item._id;
       await addToCart(planId, 'Plan', 1);
-      // Optionally remove from wishlist after adding to cart
-      // await handleRemove(item);
+      await handleRemove(item);
       alert('Added to cart!');
     } catch (err) {
       alert('Failed to add to cart');

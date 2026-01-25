@@ -16,6 +16,7 @@ function ProductPlans() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedPlan, setSelectedPlan] = useState(null);
+  const [wishlist, setWishlist] = useState([]);
   const { addToCart } = useCart();
   const navigate = useNavigate();
 
@@ -34,7 +35,18 @@ function ProductPlans() {
         setLoading(false);
       }
     };
+    const fetchWishlist = async () => {
+      try {
+        const res = await wishlistService.getWishlist();
+        if (res?.success) {
+          setWishlist((res.data?.items || []).map(it => String(it.productId)));
+        }
+      } catch (_) {
+        setWishlist([]);
+      }
+    };
     fetchPlans();
+    fetchWishlist();
   }, []);
 
   const handleAddToCart = async (plan) => {
@@ -44,6 +56,7 @@ function ProductPlans() {
     } catch (error) {
       console.error('Error adding to cart:', error);
       alert('Failed to add to cart');
+      
     }
   };
 
@@ -58,10 +71,13 @@ function ProductPlans() {
     }
   };
 
+  const isInWishlist = (planId) => wishlist.includes(String(planId));
+
   const handleAddToWishlist = async (plan) => {
     try {
       const res = await wishlistService.addToWishlist(plan._id);
       if (res?.success) {
+        setWishlist([...wishlist, String(plan._id)]);
         alert('Added to wishlist');
       } else {
         alert(res?.message || 'Failed to add to wishlist');
@@ -125,7 +141,7 @@ function ProductPlans() {
                     </button>
                     <img
                       src={heart}
-                      className="sm:w-[30px] sm:h-[30px] w-[15px] h-[14px] cursor-pointer hover:opacity-80"
+                      className={isInWishlist(plan._id) ? 'sm:w-[30px] sm:h-[30px] w-[15px] h-[14px] cursor-pointer hover:opacity-80 opacity-100 brightness-110' : 'sm:w-[30px] sm:h-[30px] w-[15px] h-[14px] cursor-pointer hover:opacity-80 opacity-60'}
                       alt="wishlist"
                       onClick={(e) => { e.stopPropagation(); handleAddToWishlist(plan); }}
                     />

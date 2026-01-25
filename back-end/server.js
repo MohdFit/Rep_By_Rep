@@ -27,7 +27,8 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/api', require('./routes/auth'));
 app.use('/api', require('./routes/user'));
-app.use('/api', require('./routes/merch'));
+// Merch routes disabled for plans-only setup
+// app.use('/api', require('./routes/merch'));
 app.use('/api', require('./routes/plan'));
 app.use('/api', require('./routes/order'));
 app.use('/api', require('./routes/stats'));
