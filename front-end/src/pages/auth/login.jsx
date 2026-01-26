@@ -23,6 +23,12 @@ export default function Login() {
   const navigate = useNavigate();
   const location = useLocation();
   const currentPath = location.pathname;
+  
+  // Get redirect parameter from URL or location state
+  const getRedirectPath = () => {
+    const params = new URLSearchParams(location.search);
+    return params.get('redirect') || location.state?.from || "/";
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -47,7 +53,9 @@ export default function Login() {
         });
       }
 
-      navigate("/home");
+      // Redirect to the page user originally wanted
+      const redirectTo = getRedirectPath();
+      navigate(redirectTo);
     } catch (err) {
       setError(err.response?.data?.message || "Login failed. Please try again.");
     } finally {

@@ -8,7 +8,7 @@ import FooterWhite from "../../components/FooterWhite";
 import { getAllPlans } from "../../services/productService";
 import { useCart } from "../../context/CartContext";
 import ProductReviews from "../../components/ProductReviews";
-import heart from "../../assets/icons/heart-white.png";
+import heart from "../../assets/images/productPlans/heart.png";
 import wishlistService from "../../services/wishlistService";
 
 function ProductPlans() {
@@ -36,6 +36,13 @@ function ProductPlans() {
       }
     };
     const fetchWishlist = async () => {
+      // Only fetch if user is logged in
+      const token = localStorage.getItem('token');
+      if (!token) {
+        setWishlist([]);
+        return;
+      }
+      
       try {
         const res = await wishlistService.getWishlist();
         if (res?.success) {

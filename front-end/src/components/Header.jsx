@@ -16,6 +16,13 @@ function Header({
 
   useEffect(() => {
     const fetchWishlistCount = async () => {
+      // Only fetch if user is logged in
+      const token = localStorage.getItem('token');
+      if (!token) {
+        setWishlistCount(0);
+        return;
+      }
+      
       try {
         const res = await wishlistService.getWishlist();
         if (res?.success) {

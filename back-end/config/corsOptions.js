@@ -1,6 +1,7 @@
 const whitelist = [
-    process.env.FRONTEND_URL, // e.g., http://localhost:3000
-    'https://www.yoursite.com',
+    'http://localhost:3000',
+    'http://localhost:3001',
+    process.env.FRONTEND_URL,
 ];
 
 const corsOptions = {

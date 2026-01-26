@@ -25,6 +25,12 @@ export default function Register() {
   const navigate = useNavigate();
   const location = useLocation();
   const currentPath = location.pathname;
+  
+  // Get redirect parameter from URL or location state
+  const getRedirectPath = () => {
+    const params = new URLSearchParams(location.search);
+    return params.get('redirect') || location.state?.from || "/";
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -49,7 +55,9 @@ export default function Register() {
         });
       }
 
-      navigate("/home");
+      // Redirect to the page user originally wanted
+      const redirectTo = getRedirectPath();
+      navigate(redirectTo);
     } catch (err) {
       setError(
         err.response?.data?.message || "Registration failed. Please try again."

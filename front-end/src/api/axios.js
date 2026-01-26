@@ -19,5 +19,21 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
+// Handle response errors (401)
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      // Token expired or invalid
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      // Save current page to redirect back after login
+      const currentPath = window.location.pathname;
+      window.location.href = `/login?redirect=${encodeURIComponent(currentPath)}`;
+    }
+    return Promise.reject(error);
+  }
+);
+
 export default api;
 
