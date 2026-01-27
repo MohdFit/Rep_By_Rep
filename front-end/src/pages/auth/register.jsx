@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import Cookies from "js-cookie";
+import { useAuth } from "../../context/AuthContext";
+import authUtils from "../../utils/authUtils";
 import api from "../../api/axios.js";
 
 import bgLaptop from "../../assets/images/gym-background.png";
@@ -13,6 +15,7 @@ export default function Register() {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState(
@@ -24,6 +27,7 @@ export default function Register() {
 
   const navigate = useNavigate();
   const location = useLocation();
+  const { login } = useAuth();
   const currentPath = location.pathname;
   
   // Get redirect parameter from URL or location state
@@ -44,24 +48,40 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    
+    // Validate inputs
+    const errors = authUtils.getRegistrationErrors(fullName, email, password, confirmPassword);
+    if (Object.keys(errors).length > 0) {
+      setError(Object.values(errors)[0]); // Show first error
+      return;
+    }
+
     setLoading(true);
 
     try {
       const response = await api.post("/register", { fullName, email, password });
 
-      if (response.data.data.tokens.accessToken) {
-        Cookies.set("Bearer", response.data.data.tokens.accessToken, {
-          expires: 7,
-        });
-      }
+      if (response.data.success && response.data.data) {
+        const { tokens, user } = response.data.data;
 
-      // Redirect to the page user originally wanted
-      const redirectTo = getRedirectPath();
-      navigate(redirectTo);
+        // Use AuthContext to store auth data
+        login(tokens, user);
+
+        // Also set cookie for optional use
+        if (tokens.accessToken) {
+          Cookies.set("Bearer", tokens.accessToken, {
+            expires: 7,
+          });
+        }
+
+        // Redirect to the page user originally wanted
+        const redirectTo = getRedirectPath();
+        navigate(redirectTo);
+      }
     } catch (err) {
-      setError(
-        err.response?.data?.message || "Registration failed. Please try again."
-      );
+      const errorMessage = err.response?.data?.message || "Registration failed. Please try again.";
+      setError(errorMessage);
+      console.error("Registration error:", err);
     } finally {
       setLoading(false);
     }
@@ -141,6 +161,16 @@ export default function Register() {
             required
           />
 
+          <label className="text-sm font-medium">Confirm Password</label>
+          <input
+            type="password"
+            placeholder="Confirm your password"
+            className="w-full rounded-full px-6 py-4 border border-orange-400 text-gray-800 focus:outline-none"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+          />
+        
           {error && <div className="text-red-400 text-sm">{error}</div>}
 
           <button

@@ -1,5 +1,6 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useAuth } from "../../context/AuthContext";
 import userAvatar from "../../assets/images/accountSetting/UserProfile.jpg";
 import "../../assets/styles/sidebar.css";
 import setting from "../../assets/images/accountSetting/setting.png";
@@ -9,24 +10,7 @@ import logout from "../../assets/images/accountSetting/Logout.png";
 export default function Sidebar() {
   const location = useLocation();
   const navigate = useNavigate();
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    const userData = localStorage.getItem('user');
-    if (userData) {
-      try {
-        setUser(JSON.parse(userData));
-      } catch (e) {
-        console.error("Failed to parse user data:", e);
-      }
-    }
-  }, []);
-
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    navigate('/login');
-  };
+  const { user, logout: logoutAuth } = useAuth();
 
   return (
     <div className="sidebar">
@@ -67,7 +51,10 @@ export default function Sidebar() {
         <span className=" vector">
           <img src={logout} alt="logout" />
         </span>
-        <button onClick={handleLogout}>Log out</button>
+        <button onClick={async () => {
+          await logoutAuth();
+          navigate('/login');
+        }}>Log out</button>
       </div>
     </div>
   );

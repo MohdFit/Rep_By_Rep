@@ -2,11 +2,13 @@ import { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaShoppingBag, FaRegUser } from "react-icons/fa";
 import { HiMenu, HiX } from "react-icons/hi";
+import { useAuth } from "../context/AuthContext";
 import logo from "../assets/images/homelogo.png"; // Desktop logo
 import logo2 from "../assets/images/test.png";    // Mobile logo
 
 export default function Navbar() {
   const navigate = useNavigate();
+  const { user, isAuthenticated, logout } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -17,19 +19,6 @@ export default function Navbar() {
     ],
     []
   );
-  const [user, setUser] = useState(null); // null if not logged in
-
-  // Load user from localStorage
-  useEffect(() => {
-    const userData = localStorage.getItem('user');
-    if (userData) {
-      try {
-        setUser(JSON.parse(userData));
-      } catch (e) {
-        setUser(null);
-      }
-    }
-  }, []);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -94,7 +83,7 @@ export default function Navbar() {
           
           {userDropdownOpen && (
             <div className="absolute right-0 top-full mt-2 w-48 bg-[#11131B] border border-gray-600 rounded-lg shadow-lg py-2 z-50">
-              {user ? (
+              {isAuthenticated && user ? (
                 <>
                   <div className="px-4 py-2 text-white border-b border-gray-600">
                     <p className="text-sm text-gray-300">Welcome Back!</p>
@@ -115,10 +104,8 @@ export default function Navbar() {
                     My Orders
                   </Link>
                   <button 
-                    onClick={() => {
-                      localStorage.removeItem('token');
-                      localStorage.removeItem('user');
-                      setUser(null);
+                    onClick={async () => {
+                      await logout();
                       setUserDropdownOpen(false);
                       navigate('/');
                     }}

@@ -34,20 +34,23 @@ const registerUser = async (req, res) => {
     const tokens = TokenService.generateTokenPair(newUser._id, newUser.role);
     const userResponse = newUser.toJSON();
 
-
     res.status(201).json({
-            success: true,
-            message: 'User registered successfully',
-            data: {
-                user: userResponse,
-                tokens
-            }
-        });
+      success: true,
+      message: 'User registered successfully',
+      data: {
+        user: userResponse,
+        tokens
+      }
+    });
 
-
-    } catch (error) {
+  } catch (error) {
     console.error('Registration error:', error);
-    }}
+    res.status(500).json({
+      success: false,
+      message: 'Internal server error during registration'
+    });
+  }
+}
 
 module.exports = {
   registerUser

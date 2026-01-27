@@ -1,5 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { CartProvider } from "./context/CartContext";
+import { AuthProvider } from "./context/AuthContext";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 import Login from "./pages/auth/login";
 import Register from "./pages/auth/register";
@@ -23,22 +25,25 @@ import AdminSettings from "./pages/Admin/AdminSettings";
 
 function App() {
   return (
-    <CartProvider>
-      <BrowserRouter>
-        <div>
-          <Routes>
+    <BrowserRouter>
+      <AuthProvider>
+        <CartProvider>
+          <div>
+            <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/" element={<Home />} />
           <Route path="/programs" element={<ProductPlans />} />
-          <Route path="/user/wishlist" element={<Wishlist />} />
-          <Route path="/user/cart" element={<Cart />} />
-          <Route path="/user/account-settings" element={<AccountSettings />} />
-          <Route path="/user/order-details" element={<OrderDetails />} />
-          <Route path="/user/feedback-model" element={<FeedbackModal />} />
-          <Route path="/user/orders" element={<Order />} />
+          
+          <Route path="/user/wishlist" element={<ProtectedRoute><Wishlist /></ProtectedRoute>} />
+          <Route path="/user/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
+          <Route path="/user/account-settings" element={<ProtectedRoute><AccountSettings /></ProtectedRoute>} />
+          <Route path="/user/order-details" element={<ProtectedRoute><OrderDetails /></ProtectedRoute>} />
+          <Route path="/user/feedback-model" element={<ProtectedRoute><FeedbackModal /></ProtectedRoute>} />
+          <Route path="/user/orders" element={<ProtectedRoute><Order /></ProtectedRoute>} />
+          <Route path="/user/my-orders" element={<ProtectedRoute><Order /></ProtectedRoute>} />
 
-          <Route path="/admin/*" element={<AdminLayout>
+          <Route path="/admin/*" element={<ProtectedRoute><AdminLayout>
               <Routes>
                 <Route path="dashboard" element={<AdminDashboard />} />
                 <Route path="orders" element={<AdminOrders />} />
@@ -47,14 +52,14 @@ function App() {
                 <Route path="reviews" element={<AdminReviews />} />
                 <Route path="settings" element={<AdminSettings />} />
               </Routes>
-            </AdminLayout>
-          }
+            </AdminLayout></ProtectedRoute>}
         />
 
         </Routes>
-      </div>
+          </div>
+        </CartProvider>
+      </AuthProvider>
     </BrowserRouter>
-    </CartProvider>
   );
 }
 

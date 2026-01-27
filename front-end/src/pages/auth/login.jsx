@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import Cookies from "js-cookie";
+import { useAuth } from "../../context/AuthContext";
+import authUtils from "../../utils/authUtils";
 import api from "../../api/axios";
 
 import bgLaptop from "../../assets/images/gym-background.png";
@@ -22,6 +24,7 @@ export default function Login() {
 
   const navigate = useNavigate();
   const location = useLocation();
+  const { login } = useAuth();
   const currentPath = location.pathname;
   
   // Get redirect parameter from URL or location state
@@ -42,22 +45,40 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    
+    // Validate inputs
+    const errors = authUtils.getLoginErrors(email, password);
+    if (Object.keys(errors).length > 0) {
+      setError(Object.values(errors)[0]); // Show first error
+      return;
+    }
+
     setLoading(true);
 
     try {
       const response = await api.post("/login", { email, password });
 
-      if (response.data.data.tokens.accessToken) {
-        Cookies.set("Bearer", response.data.data.tokens.accessToken, {
-          expires: 7,
-        });
-      }
+      if (response.data.success && response.data.data) {
+        const { tokens, user } = response.data.data;
 
-      // Redirect to the page user originally wanted
-      const redirectTo = getRedirectPath();
-      navigate(redirectTo);
+        // Use AuthContext to store auth data
+        login(tokens, user);
+
+        // Also set cookie for optional use
+        if (tokens.accessToken) {
+          Cookies.set("Bearer", tokens.accessToken, {
+            expires: 7,
+          });
+        }
+
+        // Redirect to the page user originally wanted
+        const redirectTo = getRedirectPath();
+        navigate(redirectTo);
+      }
     } catch (err) {
-      setError(err.response?.data?.message || "Login failed. Please try again.");
+      const errorMessage = err.response?.data?.message || "Login failed. Please try again.";
+      setError(errorMessage);
+      console.error("Login error:", err);
     } finally {
       setLoading(false);
     }

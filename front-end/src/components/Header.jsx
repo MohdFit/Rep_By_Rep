@@ -6,6 +6,7 @@ import shoppingCartIcon from "../assets/images/allproducts/ShoppingCart.png";
 import heartIcon from "../assets/images/allproducts/heart.png";
 import { useState, memo, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import wishlistService from "../services/wishlistService";
 
 function Header({
@@ -13,19 +14,9 @@ function Header({
 }) {
   const [show, setShow] = useState(null);
   const [wishlistCount, setWishlistCount] = useState(0);
-  const [user, setUser] = useState(null);
+  const { user } = useAuth();
 
   useEffect(() => {
-    // Get user from localStorage
-    const userData = localStorage.getItem('user');
-    if (userData) {
-      try {
-        setUser(JSON.parse(userData));
-      } catch (e) {
-        setUser(null);
-      }
-    }
-    
     const fetchWishlistCount = async () => {
       // Only fetch if user is logged in
       const token = localStorage.getItem('token');
@@ -45,7 +36,6 @@ function Header({
     };
     fetchWishlistCount();
   }, []);
-
   return (
     <div className={className}>
       <header
