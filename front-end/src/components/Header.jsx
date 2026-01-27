@@ -13,8 +13,19 @@ function Header({
 }) {
   const [show, setShow] = useState(null);
   const [wishlistCount, setWishlistCount] = useState(0);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
+    // Get user from localStorage
+    const userData = localStorage.getItem('user');
+    if (userData) {
+      try {
+        setUser(JSON.parse(userData));
+      } catch (e) {
+        setUser(null);
+      }
+    }
+    
     const fetchWishlistCount = async () => {
       // Only fetch if user is logged in
       const token = localStorage.getItem('token');
@@ -133,8 +144,13 @@ function Header({
             <Link to="/user/cart" aria-label="Cart">
               <img src={shoppingCartIcon} alt="" />
             </Link>
-            <Link to="/user/account-settings" aria-label="Account">
+            <Link to="/user/account-settings" aria-label="Account" className="flex items-center gap-2">
               <img src={userIcon} alt="" />
+              {user && (
+                <span className="hidden sm:block text-sm font-medium text-gray-700">
+                  {user.fullName || user.name || user.email?.split('@')[0]}
+                </span>
+              )}
             </Link>
           </div>
         )}

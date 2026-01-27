@@ -19,6 +19,18 @@ export default function Navbar() {
   );
   const [user, setUser] = useState(null); // null if not logged in
 
+  // Load user from localStorage
+  useEffect(() => {
+    const userData = localStorage.getItem('user');
+    if (userData) {
+      try {
+        setUser(JSON.parse(userData));
+      } catch (e) {
+        setUser(null);
+      }
+    }
+  }, []);
+
   // Close dropdown when clicking outside
   useEffect(() => {
     function handleClickOutside(event) {
@@ -85,14 +97,34 @@ export default function Navbar() {
               {user ? (
                 <>
                   <div className="px-4 py-2 text-white border-b border-gray-600">
-                    <p className="text-sm text-gray-300">Welcome</p>
-                    <p className="font-medium">{user.username}</p>
+                    <p className="text-sm text-gray-300">Welcome Back!</p>
+                    <p className="font-medium">{user.fullName || user.name || user.email?.split('@')[0]}</p>
                   </div>
-                  <button 
-                    onClick={() => setUser(null)} // replace with logout logic
-                    className="w-full text-left px-4 py-2 text-white hover:bg-gray-700 hover:text-orange-500"
+                  <Link 
+                    to="/user/account-settings" 
+                    className="block px-4 py-2 text-white hover:bg-gray-700 hover:text-orange-500"
+                    onClick={() => setUserDropdownOpen(false)}
                   >
-                    Logout
+                    Account Settings
+                  </Link>
+                  <Link 
+                    to="/user/my-orders" 
+                    className="block px-4 py-2 text-white hover:bg-gray-700 hover:text-orange-500"
+                    onClick={() => setUserDropdownOpen(false)}
+                  >
+                    My Orders
+                  </Link>
+                  <button 
+                    onClick={() => {
+                      localStorage.removeItem('token');
+                      localStorage.removeItem('user');
+                      setUser(null);
+                      setUserDropdownOpen(false);
+                      navigate('/');
+                    }}
+                    className="w-full text-left px-4 py-2 text-white hover:bg-gray-700 hover:text-orange-500 border-t border-gray-600"
+                  >
+                    Log out
                   </button>
                 </>
               ) : (
@@ -100,12 +132,14 @@ export default function Navbar() {
                   <Link 
                     to="/login" 
                     className="block px-4 py-2 text-white hover:bg-gray-700 hover:text-orange-500"
+                    onClick={() => setUserDropdownOpen(false)}
                   >
                     Login
                   </Link>
                   <Link 
                     to="/register" 
                     className="block px-4 py-2 text-white hover:bg-gray-700 hover:text-orange-500"
+                    onClick={() => setUserDropdownOpen(false)}
                   >
                     Register
                   </Link>

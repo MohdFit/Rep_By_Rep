@@ -238,10 +238,17 @@ export default function Register() {
 
         <p className="text-center text-sm text-gray-500">or continue with</p>
         <div className="flex justify-center gap-4">
-          <img src="/facebook-icon.png" alt="Facebook" className="h-8 w-8" />
-          <img src="/apple-icon.png" alt="Apple" className="h-8 w-8" />
-          <img src="/google-icon.png" alt="Google" className="h-8 w-8" />
+          <button className="hover:opacity-80" disabled>
+            <img src="/facebook-icon.png" alt="Facebook" className="h-8 w-8" />
+          </button>
+          <button className="hover:opacity-80" disabled>
+            <img src="/apple-icon.png" alt="Apple" className="h-8 w-8" />
+          </button>
+          <button className="hover:opacity-80" disabled>
+            <img src="/google-icon.png" alt="Google" className="h-8 w-8" />
+          </button>
         </div>
+        <p className="text-center text-xs text-gray-400 mt-2">Social login coming soon</p>
       </div>
     </div>
   );

@@ -1,5 +1,11 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import r from "../assets/images/footer/r.png";
+import iconInsta from "../assets/images/allproducts/instgram.png";
+import iconMail from "../assets/images/allproducts/mail.png";
+import iconPhone from "../assets/images/allproducts/phone.png";
+import iconYoutube from "../assets/images/allproducts/youtube.png";
+import iconTiktok from "../assets/images/allproducts/tiktok.png";
 //bg-homepageColor
 const Footer = () => {
   const [email, setEmail] = useState("");
@@ -57,36 +63,36 @@ const Footer = () => {
                 <h3 className="text-white font-semibold mb-6">Quick Links</h3>
                 <ul className="space-y-4">
                   <li>
-                    <a
-                      href="/"
+                    <Link
+                      to="/"
                       className="text-gray-300 hover:text-customOrange1 transition-colors duration-300"
                     >
                       HOME PAGE
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a
-                      href="#"
+                    <Link
+                      to="/#about"
                       className="text-gray-300 hover:text-customOrange1 transition-colors duration-300"
                     >
                       About
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a
-                      href="#"
+                    <Link
+                      to="/#contact"
                       className="text-gray-300 hover:text-customOrange1 transition-colors duration-300"
                     >
                       Contact US
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a
-                      href="/programs"
+                    <Link
+                      to="/programs"
                       className="text-gray-300 hover:text-customOrange1 transition-colors duration-300"
                     >
                       Shop
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </div>
@@ -96,13 +102,36 @@ const Footer = () => {
                   Connect With Us
                 </h3>
                 <div className="space-y-4">
-                  <div className="text-gray-300 text-sm">
-                    Hamawisaad@Gmail.Com
+                  <div className="flex items-center justify-end gap-3 text-gray-300 text-sm">
+                    <a href="mailto:Hamawisaad@Gmail.Com" className="hover:text-customOrange1 transition-colors">
+                      Hamawisaad@Gmail.Com
+                    </a>
+                    <img src={iconMail} alt="Email" className="w-5 h-5 object-contain flex-shrink-0" />
                   </div>
-                  <div className="text-gray-300 text-sm">+962796728300</div>
-                  <div className="text-gray-300 text-sm">@Assadhamawi</div>
-                  <div className="text-gray-300 text-sm">@Assadhamawi</div>
-                  <div className="text-gray-300 text-sm">@Assadhamawi</div>
+                  <div className="flex items-center justify-end gap-3 text-gray-300 text-sm">
+                    <a href="tel:+962796728300" className="hover:text-customOrange1 transition-colors">
+                      +962796728300
+                    </a>
+                    <img src={iconPhone} alt="Phone" className="w-5 h-5 object-contain flex-shrink-0" />
+                  </div>
+                  <div className="flex items-center justify-end gap-3 text-gray-300 text-sm">
+                    <a href="https://instagram.com/Assadhamawi" target="_blank" rel="noopener noreferrer" className="hover:text-customOrange1 transition-colors">
+                      @Assadhamawi
+                    </a>
+                    <img src={iconInsta} alt="Instagram" className="w-5 h-5 object-contain flex-shrink-0" />
+                  </div>
+                  <div className="flex items-center justify-end gap-3 text-gray-300 text-sm">
+                    <a href="https://youtube.com/@Assadhamawi" target="_blank" rel="noopener noreferrer" className="hover:text-customOrange1 transition-colors">
+                      @Assadhamawi
+                    </a>
+                    <img src={iconYoutube} alt="YouTube" className="w-5 h-5 object-contain flex-shrink-0" />
+                  </div>
+                  <div className="flex items-center justify-end gap-3 text-gray-300 text-sm">
+                    <a href="https://tiktok.com/@Assadhamawi" target="_blank" rel="noopener noreferrer" className="hover:text-customOrange1 transition-colors">
+                      @Assadhamawi
+                    </a>
+                    <img src={iconTiktok} alt="TikTok" className="w-5 h-5 object-contain flex-shrink-0" />
+                  </div>
                 </div>
               </div>
             </div>
@@ -112,11 +141,15 @@ const Footer = () => {
         <div className="mt-12 pt-8 border-t border-gray-700">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
             <p className="text-gray-400 text-sm">
-              © 2025 Relume. All Rights Reserved.
+              © 2025 Rep By Rep. PCM.
             </p>
             <div className="flex gap-8">
-              <span className="text-gray-400 text-sm">Lorem Ipsum</span>
-              <span className="text-gray-400 text-sm">Lorem Ipsum</span>
+              <Link to="/terms" className="text-gray-400 text-sm hover:text-customOrange1 transition-colors">
+                Terms of Service
+              </Link>
+              <Link to="/privacy" className="text-gray-400 text-sm hover:text-customOrange1 transition-colors">
+                Privacy Policy
+              </Link>
             </div>
           </div>
         </div>

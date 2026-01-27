@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Layout from "./Layout";
 import "../../assets/styles/accountSetting.css";
 import userAvatar from "../../assets/images/accountSetting/UserProfile.jpg";
@@ -18,6 +18,24 @@ export default function AccountSettings() {
   });
 
   const [isEditing, setIsEditing] = useState(false);
+
+  // Load user data from localStorage
+  useEffect(() => {
+    const userData = localStorage.getItem('user');
+    if (userData) {
+      try {
+        const parsed = JSON.parse(userData);
+        setUser({
+          name: parsed.fullName || parsed.name || "",
+          email: parsed.email || "",
+          phone: parsed.phone || "",
+          address: parsed.address || "",
+        });
+      } catch (e) {
+        console.error("Failed to parse user data:", e);
+      }
+    }
+  }, []);
 
   const handleProfileChange = (e) => {
     const { name, value } = e.target;

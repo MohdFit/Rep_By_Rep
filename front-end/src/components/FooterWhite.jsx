@@ -1,5 +1,6 @@
 // src/components/FooterWhite.jsx
 import React from "react";
+import { Link } from "react-router-dom";
 
 import footer from "../assets/images/footer/r.png";
 import iconInsta from "../assets/images/allproducts/instgram.png";
@@ -66,24 +67,24 @@ export default function FooterWhite() {
             <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-3 text-[15px]">
               <li>
-                <a href="#" className="hover:text-orange-600">
+                <Link to="/" className="hover:text-orange-600">
                   HOME PAGE
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-orange-600">
+                <Link to="/#about" className="hover:text-orange-600">
                   About
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-orange-600">
+                <Link to="/#contact" className="hover:text-orange-600">
                   Contact Us
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-orange-600">
+                <Link to="/programs" className="hover:text-orange-600">
                   Shop
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -92,7 +93,7 @@ export default function FooterWhite() {
             <h4 className="text-lg font-semibold mb-4">Connect With Us</h4>
             <ul className="space-y-3 text-[15px]">
               <li className="flex items-center justify-center sm:justify-start gap-3">
-                <img src={iconMail} alt="" className="w-4 h-4 object-contain" />
+                <img src={iconMail} alt="Email" className="w-5 h-5 object-contain flex-shrink-0" />
                 <a
                   href="mailto:Hamawiasaad@gmail.com"
                   className="hover:text-orange-600"
@@ -103,8 +104,8 @@ export default function FooterWhite() {
               <li className="flex items-center justify-center sm:justify-start gap-3">
                 <img
                   src={iconPhone}
-                  alt=""
-                  className="w-4 h-4 object-contain"
+                  alt="Phone"
+                  className="w-5 h-5 object-contain flex-shrink-0"
                 />
                 <a href="tel:+962796728300" className="hover:text-orange-600">
                   +962 796 728 300
@@ -113,30 +114,30 @@ export default function FooterWhite() {
               <li className="flex items-center justify-center sm:justify-start gap-3">
                 <img
                   src={iconInsta}
-                  alt=""
-                  className="w-4 h-4 object-contain"
+                  alt="Instagram"
+                  className="w-5 h-5 object-contain flex-shrink-0"
                 />
-                <a href="#" className="hover:text-orange-600">
+                <a href="https://instagram.com/Assadhamawi" target="_blank" rel="noopener noreferrer" className="hover:text-orange-600">
                   @Assadhamawi
                 </a>
               </li>
               <li className="flex items-center justify-center sm:justify-start gap-3">
                 <img
                   src={iconYoutube}
-                  alt=""
-                  className="w-4 h-4 object-contain"
+                  alt="YouTube"
+                  className="w-5 h-5 object-contain flex-shrink-0"
                 />
-                <a href="#" className="hover:text-orange-600">
+                <a href="https://youtube.com/@Assadhamawi" target="_blank" rel="noopener noreferrer" className="hover:text-orange-600">
                   @Assadhamawi
                 </a>
               </li>
               <li className="flex items-center justify-center sm:justify-start gap-3">
                 <img
                   src={iconTiktok}
-                  alt=""
-                  className="w-4 h-4 object-contain"
+                  alt="TikTok"
+                  className="w-5 h-5 object-contain flex-shrink-0"
                 />
-                <a href="#" className="hover:text-orange-600">
+                <a href="https://tiktok.com/@Assadhamawi" target="_blank" rel="noopener noreferrer" className="hover:text-orange-600">
                   @Assadhamawi
                 </a>
               </li>
@@ -158,14 +159,14 @@ export default function FooterWhite() {
  
                     "
         >
-          <p>© 2025 Relume. All rights reserved.</p>
+          <p>© 2025 Rep By Rep. by PCM.</p>
           <div className="flex items-center gap-8">
-            <a href="#" className="hover:text-orange-600">
-              Lorem ipsum
-            </a>
-            <a href="#" className="hover:text-orange-600">
-              Lorem ipsum
-            </a>
+            <Link to="/terms" className="hover:text-orange-600">
+              Terms of Service
+            </Link>
+            <Link to="/privacy" className="hover:text-orange-600">
+              Privacy Policy
+            </Link>
           </div>
         </div>
       </div>
