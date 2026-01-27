@@ -135,9 +135,10 @@ export default function Register() {
           <input
             type="text"
             placeholder="Enter your full name"
-            className="w-full rounded-full px-6 py-4 border border-orange-400 text-gray-800 focus:outline-none"
+            className="w-full rounded-full px-6 py-4 border-2 border-orange-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 focus:outline-none transition-all text-gray-800"
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
+            disabled={loading}
             required
           />
 
@@ -145,9 +146,10 @@ export default function Register() {
           <input
             type="email"
             placeholder="Enter your email"
-            className="w-full rounded-full px-6 py-4 border border-orange-400 text-gray-800 focus:outline-none"
+            className="w-full rounded-full px-6 py-4 border-2 border-orange-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 focus:outline-none transition-all text-gray-800"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            disabled={loading}
             required
           />
 
@@ -155,9 +157,10 @@ export default function Register() {
           <input
             type="password"
             placeholder="Enter your password"
-            className="w-full rounded-full px-6 py-4 border border-orange-400 text-gray-800 focus:outline-none"
+            className="w-full rounded-full px-6 py-4 border-2 border-orange-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 focus:outline-none transition-all text-gray-800"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            disabled={loading}
             required
           />
 
@@ -165,29 +168,37 @@ export default function Register() {
           <input
             type="password"
             placeholder="Confirm your password"
-            className="w-full rounded-full px-6 py-4 border border-orange-400 text-gray-800 focus:outline-none"
+            className="w-full rounded-full px-6 py-4 border-2 border-orange-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 focus:outline-none transition-all text-gray-800"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
+            disabled={loading}
             required
           />
         
-          {error && <div className="text-red-400 text-sm">{error}</div>}
+          {error && <div className="text-red-600 font-medium text-sm bg-red-50 border-2 border-red-200 rounded-lg p-3 mt-2">{error}</div>}
 
           <button
             type="submit"
             disabled={loading}
-            className="w-2/3 mx-auto flex justify-center items-center bg-gradient-to-r from-customOrange1 to-customOrange2 text-white py-4 rounded-full"
+            className="w-2/3 mx-auto flex justify-center items-center bg-gradient-to-r from-customOrange1 to-customOrange2 hover:from-orange-700 hover:to-orange-600 text-white py-3 rounded-full font-semibold hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all transform hover:scale-[1.02] active:scale-[0.98]"
           >
             {loading ? "Registering..." : "Register"}
           </button>
         </form>
 
         <p className="text-center my-4 text-sm">or continue with</p>
-        <div className="flex justify-center gap-4 mb-12">
-          <img src="/facebook-icon.png" alt="Facebook" className="h-8 w-8" />
-          <img src="/apple-icon.png" alt="Apple" className="h-8 w-8" />
-          <img src="/google-icon.png" alt="Google" className="h-8 w-8" />
+        <div className="flex justify-center gap-4">
+          <button className="hover:opacity-80" disabled>
+            <img src="/facebook-icon.png" alt="Facebook" className="h-8 w-8" />
+          </button>
+          <button className="hover:opacity-80" disabled>
+            <img src="/apple-icon.png" alt="Apple" className="h-8 w-8" />
+          </button>
+          <button className="hover:opacity-80" disabled>
+            <img src="/google-icon.png" alt="Google" className="h-8 w-8" />
+          </button>
         </div>
+        <p className="text-center text-xs text-gray-300 mt-2 mb-12">Social login coming soon</p>
       </div>
 
       
@@ -204,7 +215,7 @@ export default function Register() {
         <div className="flex bg-gray-100 rounded-full p-3 w-full">
           <button
             onClick={() => handleNavigate("/login")}
-            className={`px-6 py-2 w-1/2 rounded-full text-center font-medium ${
+            className={`px-6 py-5 w-1/2 rounded-full text-center font-medium ${
               currentPath === "/login"
                 ? "text-white bg-gradient-to-r from-customOrange1 to-customOrange2"
                 : "text-customOrange1"
@@ -214,7 +225,7 @@ export default function Register() {
           </button>
           <button
             onClick={() => handleNavigate("/register")}
-            className={`px-6 py-2 w-1/2 rounded-full text-center font-medium ${
+            className={`px-6 py-5 w-1/2 rounded-full text-center font-medium ${
               currentPath === "/register"
                 ? "text-white bg-gradient-to-r from-customOrange1 to-customOrange2"
                 : "text-customOrange1"
@@ -229,9 +240,10 @@ export default function Register() {
           <input
             type="text"
             placeholder="Enter your full name"
-            className="w-full rounded-full px-6 py-5 border border-orange-400 focus:outline-none"
+            className="w-full rounded-full px-6 py-5 border-2 border-orange-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 focus:outline-none transition-all text-gray-800"
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
+            disabled={loading}
             required
           />
 
@@ -239,9 +251,10 @@ export default function Register() {
           <input
             type="email"
             placeholder="Enter your email"
-            className="w-full rounded-full px-6 py-5 border border-orange-400 focus:outline-none"
+            className="w-full rounded-full px-6 py-5 border-2 border-orange-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 focus:outline-none transition-all text-gray-800"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            disabled={loading}
             required
           />
 
@@ -249,18 +262,30 @@ export default function Register() {
           <input
             type="password"
             placeholder="Enter your password"
-            className="w-full rounded-full px-6 py-5 border border-orange-400 focus:outline-none"
+            className="w-full rounded-full px-6 py-5 border-2 border-orange-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 focus:outline-none transition-all text-gray-800"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            disabled={loading}
             required
           />
 
-          {error && <div className="text-red-500 text-sm">{error}</div>}
+          <label className="text-sm font-medium">Confirm Password</label>
+          <input
+            type="password"
+            placeholder="Confirm your password"
+            className="w-full rounded-full px-6 py-5 border-2 border-orange-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 focus:outline-none transition-all text-gray-800"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            disabled={loading}
+            required
+          />
+
+          {error && <div className="text-red-600 font-medium text-sm bg-red-50 border-2 border-red-200 rounded-lg p-3 mt-2">{error}</div>}
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-gradient-to-r from-customOrange1 to-customOrange2 text-white py-5 rounded-full"
+            className="w-full bg-gradient-to-r from-customOrange1 to-customOrange2 hover:from-orange-700 hover:to-orange-600 text-white py-5 rounded-full font-semibold hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all transform hover:scale-[1.01] active:scale-[0.99]"
           >
             {loading ? "Registering..." : "Register"}
           </button>

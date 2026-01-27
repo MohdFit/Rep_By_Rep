@@ -116,11 +116,18 @@ function ProductPlans() {
       <section className="px-[17px] sm:px-[83px] mb-[65px] sm:mb-[145px]">
         <FilterPills />
         {loading ? (
-          <div className="text-center py-12 text-white">Loading plans...</div>
+          <div className="text-center py-12">
+            <div className="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-orange-500 mb-4"></div>
+            <p className="text-white text-lg">Loading plans...</p>
+          </div>
         ) : error ? (
-          <div className="text-center py-12 text-red-500">{error}</div>
+          <div className="text-center py-12 bg-red-50 border border-red-200 rounded-lg p-6 max-w-md mx-auto">
+            <p className="text-red-600 font-semibold">{error}</p>
+          </div>
         ) : plans.length === 0 ? (
-          <div className="text-center py-12 text-white">No plans available</div>
+          <div className="text-center py-12 bg-gray-800 rounded-lg p-6 max-w-md mx-auto">
+            <p className="text-white text-lg">No plans available</p>
+          </div>
         ) : (
           <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-y-[50px] gap-x-[20px]">
             {plans.map(plan => (
@@ -146,12 +153,17 @@ function ProductPlans() {
                     >
                       buy now
                     </button>
-                    <img
-                      src={heart}
-                      className={isInWishlist(plan._id) ? 'sm:w-[30px] sm:h-[30px] w-[15px] h-[14px] cursor-pointer hover:opacity-80 opacity-100 brightness-110' : 'sm:w-[30px] sm:h-[30px] w-[15px] h-[14px] cursor-pointer hover:opacity-80 opacity-60'}
-                      alt="wishlist"
+                    <button
                       onClick={(e) => { e.stopPropagation(); handleAddToWishlist(plan); }}
-                    />
+                      className="transition-all duration-200 hover:scale-110"
+                      aria-label={isInWishlist(plan._id) ? "Remove from wishlist" : "Add to wishlist"}
+                    >
+                      <img
+                        src={heart}
+                        className={isInWishlist(plan._id) ? 'sm:w-[30px] sm:h-[30px] w-[15px] h-[14px] brightness-125 drop-shadow-[0_0_8px_rgba(255,107,53,0.6)]' : 'sm:w-[30px] sm:h-[30px] w-[15px] h-[14px] opacity-60'}
+                        alt="wishlist"
+                      />
+                    </button>
                   </div>
                 </div>
               </div>
@@ -204,26 +216,26 @@ function ProductPlans() {
 
                 <button
                   onClick={() => {
+                    handleBuyNow(selectedPlan);
+                  }}
+                  className="w-full px-6 py-3 bg-gradient-to-r from-orange-600 to-orange-500 hover:from-orange-700 hover:to-orange-600 text-white font-bold rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-[1.02]"
+                >
+                  Buy Now
+                </button>
+                <button
+                  onClick={() => {
                     handleAddToCart(selectedPlan);
                     handleCloseDetails();
                   }}
-                  className="w-full px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-lg transition"
+                  className="w-full mt-3 px-6 py-3 bg-white/10 border-2 border-orange-500 hover:bg-orange-500 text-white font-semibold rounded-lg transition-all duration-300 hover:scale-[1.02]"
                 >
                   Add to Bag
                 </button>
                 <button
                   onClick={() => handleAddToWishlist(selectedPlan)}
-                  className="w-full mt-3 px-6 py-3 bg-[#FBF4F24D] border border-customOrange1 hover:bg-customOrange1 text-white font-semibold rounded-lg transition"
+                  className="w-full mt-3 px-6 py-3 bg-transparent border border-gray-500 hover:border-orange-500 hover:bg-white/5 text-gray-300 hover:text-white font-semibold rounded-lg transition-all duration-300"
                 >
-                  Add to Wishlist
-                </button>
-                <button
-                  onClick={() => {
-                    handleBuyNow(selectedPlan);
-                  }}
-                  className="w-full mt-3 px-6 py-3 bg-gradient-to-r from-red-500 to-orange-500 hover:opacity-90 text-white font-semibold rounded-lg transition"
-                >
-                  Buy Now
+                  {isInWishlist(selectedPlan._id) ? '❤️ In Wishlist' : 'Add to Wishlist'}
                 </button>
               </div>
 

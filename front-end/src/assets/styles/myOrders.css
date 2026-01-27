@@ -48,19 +48,34 @@ hr.line {
 }
 
 .search-container input {
-  padding: 8px 14px;
-  border: 1px solid #ff8800;
-  border-radius: 20px;
+  padding: 10px 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
   outline: none;
   width: 388px;
   max-width: 100%;
+  font-family: 'Poppins', sans-serif;
+  transition: all 0.3s ease;
+}
+
+.search-container input:focus {
+  border-color: #FF6B35;
+  box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
 }
 
 .search-container select {
-  padding: 8px 14px;
-  border: 1px solid #ff8800;
-  border-radius: 20px;
-  color: #0e183066;
+  padding: 10px 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  color: #333;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.search-container select:focus {
+  border-color: #FF6B35;
+  box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
 }
 
 .orders-list {
@@ -71,15 +86,21 @@ hr.line {
 
 .order-card {
   background: #fff;
-  border: 1px solid #eee;
-  border-radius: 8px;
+  border: 2px solid #f0f0f0;
+  border-radius: 12px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px 24px;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
+  padding: 20px 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 15px;
+  transition: all 0.3s ease;
+}
+
+.order-card:hover {
+  border-color: #FF6B35;
+  box-shadow: 0 4px 16px rgba(255, 107, 53, 0.15);
 }
 
 .order-info h4 {
@@ -93,46 +114,56 @@ hr.line {
 }
 
 .status {
-  padding: 6px 12px;
-  border-radius: 12px;
-  font-size: 14px;
-  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .status.processing {
-  background: #fff8db;
-  color: #997a00;
+  background: #FFF3CD;
+  color: #856404;
+  border: 1px solid #FFE69C;
 }
 
 .status.shipping {
-  background: #e6f2ff;
-  color: #1e88e5;
+  background: #D1ECF1;
+  color: #0c5460;
+  border: 1px solid #BEE5EB;
 }
 
 .status.delivered {
-  background: #e8f5e9;
-  color: #2e7d32;
+  background: #D4EDDA;
+  color: #155724;
+  border: 1px solid #C3E6CB;
 }
 
 .status.canceled {
-  background: #e8f5e9;
-  color: #c62828;
+  background: #F8D7DA;
+  color: #721C24;
+  border: 1px solid #F5C6CB;
 }
 
 /* ===== Button ===== */
 .view-btn {
-  background-color: #ff9000;
+  background: linear-gradient(to right, #FF6B35, #FF8E53);
   color: white;
   border: none;
-  padding: 8px 16px;
-  border-radius: 6px;
+  padding: 10px 20px;
+  border-radius: 8px;
   cursor: pointer;
-  font-weight: 500;
+  font-weight: 600;
   margin-left: 10px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(255, 107, 53, 0.2);
 }
 
 .view-btn:hover {
-  background-color: #e68100;
+  background: linear-gradient(to right, #FF5722, #FF7043);
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+  transform: translateY(-2px);
 }
 
 

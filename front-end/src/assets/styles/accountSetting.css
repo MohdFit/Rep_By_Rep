@@ -13,10 +13,15 @@
 }
 
 .section-title {
-  font-size: 22px;
-  font-weight: 600;
-  color: #ff7b00;
-  margin-bottom: 15px;
+  font-size: 24px;
+  font-weight: 700;
+  background: linear-gradient(to right, #FF6B35, #FF8E53);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .profile-picture {
@@ -30,14 +35,16 @@
 .profile-picture img {
   width: 100px;
   height: 100px;
-  border-radius: 20%;
+  border-radius: 12px;
   object-fit: cover;
-  border: 2px dashed #ccc;
-  transition: transform 0.3s ease;
+  border: 3px solid #FF6B35;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.2);
 }
 
 .profile-picture img:hover {
-  transform: scale(1.05);
+  transform: scale(1.08);
+  box-shadow: 0 6px 16px rgba(255, 107, 53, 0.3);
 }
 
 .profile-picture p {
@@ -71,21 +78,26 @@
 }
 
 .input-group input {
-  padding: 10px 12px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
+  padding: 12px 14px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
   font-size: 14px;
   outline: none;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
+  font-family: "Poppins", sans-serif;
 }
 
 .input-group input:focus {
-  border-color: #ff7b00;
+  border-color: #FF6B35;
+  box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+  background-color: #fff;
 }
 
 input:disabled {
   background-color: #f7f7f7;
   color: #888;
+  cursor: not-allowed;
+  border-color: #ddd;
 }
 
 /* ===== Buttons ===== */
@@ -93,31 +105,39 @@ input:disabled {
 .btn-save,
 .btn-cancel,
 .btn-change {
-  padding: 10px 18px;
-  background-color: #ff7b00;
+  padding: 12px 24px;
+  background: linear-gradient(to right, #FF6B35, #FF8E53);
   color: #fff;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 14px;
-  font-weight: 500;
-  transition: 0.3s ease;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.2);
+  display: inline-block;
 }
 
 .btn-cancel {
   margin-left: 10px;
-  background-color: #ddd;
+  background-color: #f0f0f0;
+  background: linear-gradient(to right, #f5f5f5, #e8e8e8);
   color: #333;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .btn-edit:hover,
 .btn-save:hover,
 .btn-change:hover {
-  background-color: #e76a00;
+  background: linear-gradient(to right, #FF5722, #FF7043);
+  box-shadow: 0 6px 16px rgba(255, 107, 53, 0.3);
+  transform: translateY(-2px);
 }
 
 .btn-cancel:hover {
-  background-color: #ccc;
+  background: linear-gradient(to right, #efefef, #d8d8d8);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
 }
 
 /* ===== Password Section ===== */

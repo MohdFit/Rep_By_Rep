@@ -45,11 +45,11 @@ export default function FooterWhite() {
                 type="email"
                 required
                 placeholder="Your email"
-                className="flex-1 h-9 rounded-md border border-orange-400 bg-white px-3 text-sm outline-none placeholder:text-[#A9A9A9] focus:ring-2 focus:ring-orange-300"
+                className="flex-1 h-9 rounded-lg border-2 border-orange-300 bg-white px-4 text-sm outline-none placeholder:text-gray-400 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition-all\"
               />
               <button
                 type="submit"
-                className="h-9 whitespace-nowrap rounded-md bg-orange-500 px-4 text-sm font-semibold text-white hover:bg-orange-600 transition-colors"
+                className="h-9 whitespace-nowrap rounded-lg bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 px-6 text-sm font-semibold text-white transition-all transform hover:scale-[1.02] active:scale-[0.98]"
               >
                 Subscribe
               </button>

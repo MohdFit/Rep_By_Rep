@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useCart } from '../../context/CartContext';
+import Header from '../../components/Header';
+import FooterWhite from '../../components/FooterWhite';
 import './cart.css';
 
 const Cart = () => {
@@ -36,20 +38,35 @@ const Cart = () => {
   };
 
   if (loading) {
-    return <div className="cart-container"><p>Loading cart...</p></div>;
+    return (
+      <>
+        <Header />
+        <div className="cart-container">
+          <p className="text-center text-gray-600 py-8">Loading cart...</p>
+        </div>
+        <FooterWhite />
+      </>
+    );
   }
 
   if (!cart || cart.items.length === 0) {
     return (
-      <div className="cart-container">
-        <h2>Your Cart</h2>
-        <p className="empty-cart">Your cart is empty</p>
-      </div>
+      <>
+        <Header />
+        <div className="cart-container">
+          <h2>Your Cart</h2>
+          <p className="empty-cart">Your cart is empty</p>
+          <a href="/programs" className="continue-shopping inline-block mt-4">Browse Training Plans</a>
+        </div>
+        <FooterWhite />
+      </>
     );
   }
 
   return (
-    <div className="cart-container">
+    <>
+      <Header />
+      <div className="cart-container">
       <h2>Your Cart</h2>
       <div className="cart-items">
         {cart.items.map(item => (
@@ -116,6 +133,8 @@ const Cart = () => {
         <a href="/programs" className="continue-shopping">Continue Shopping</a>
       </div>
     </div>
+    <FooterWhite />
+  </>
   );
 };
 

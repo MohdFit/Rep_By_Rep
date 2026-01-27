@@ -77,10 +77,19 @@ export default function CartPage() {
 
         <div className="flex flex-col space-y-6">
           {loading && (
-            <div className="text-center text-gray-600">Loading your cart...</div>
+            <div className="text-center py-12\">
+              <div className="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-orange-500 mb-4\"></div>
+              <p className="text-gray-600 text-lg\">Loading your cart...</p>
+            </div>
           )}
           {!loading && cartItems.length === 0 && (
-            <div className="text-center text-gray-700">Your cart is empty. Add a training plan from Programs.</div>
+            <div className="text-center py-12 bg-gray-50 rounded-lg p-6">
+              <p className="text-gray-700 text-lg font-medium">Your cart is empty.</p>
+              <p className="text-gray-600 mt-2 mb-4">Add a training plan from Programs to get started.</p>
+              <a href="/programs" className="inline-block px-6 py-2 bg-gradient-to-r from-customOrange1 to-orange-500 text-white font-semibold rounded-lg hover:shadow-lg transition-all\">
+                Browse Programs
+              </a>
+            </div>
           )}
           {!loading && cartItems.map((item) => (
             <div
@@ -90,7 +99,8 @@ export default function CartPage() {
               <div className="col-span-6 flex flex-col sm:flex-row sm:items-center space-y-3 sm:space-y-0 sm:space-x-4">
                 <button
                   onClick={() => removeItem(item)}
-                  className="w-8 h-8 rounded-full bg-orange-100 text-orange-500 flex items-center justify-center font-bold text-lg self-start sm:self-auto"
+                  className="w-8 h-8 rounded-full bg-red-100 hover:bg-red-200 text-red-600 hover:text-red-700 flex items-center justify-center font-bold text-xl self-start sm:self-auto transition-all\"
+                  aria-label="Remove from cart\"
                 >
                   ×
                 </button>
@@ -105,7 +115,6 @@ export default function CartPage() {
                   <span className="font-semibold text-[20px] sm:text-[24px]">
                     {item.product?.name || item.name || 'Training Plan'}
                   </span>
-                  {/* Plans do not have size/color; omit for a cleaner UI */}
                 </div>
               </div>
 
@@ -116,16 +125,16 @@ export default function CartPage() {
               <div className="col-span-2 flex justify-center items-center space-x-1 mt-2 sm:mt-0">
                 <button
                   onClick={() => changeQuantity(item, -1)}
-                  className="px-2 py-1 bg-gradient-to-r from-red-500 to-orange-400 text-white rounded"
+                  className="px-3 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-lg transition-colors border border-gray-300\"
                 >
-                  -
+                  −
                 </button>
-                <span className="px-3 py-1 border rounded">
+                <span className="px-4 py-2 border-2 border-gray-300 rounded-lg font-medium text-center min-w-[50px]\">
                   {item.quantity || 1}
                 </span>
                 <button
                   onClick={() => changeQuantity(item, 1)}
-                  className="px-2 py-1 bg-gradient-to-r from-red-500 to-orange-400 text-white rounded"
+                  className="px-3 py-2 bg-gradient-to-r from-customOrange1 to-orange-500 hover:from-orange-700 hover:to-orange-600 text-white font-semibold rounded-lg transition-all\"
                 >
                   +
                 </button>
@@ -147,9 +156,9 @@ export default function CartPage() {
               <input
                 type="text"
                 placeholder="Enter code"
-                className="flex-1 px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-400 placeholder-gray-400"
+                className="flex-1 px-4 py-3 rounded-lg border-2 border-gray-300 focus:border-customOrange1 focus:ring-2 focus:ring-orange-200 outline-none transition-all placeholder-gray-400 font-medium\"
               />
-              <button className="px-4 py-2 bg-gradient-to-r from-red-500 to-orange-400 text-white font-medium rounded-md hover:opacity-90 transition">
+              <button className="px-6 py-3 bg-gradient-to-r from-customOrange1 to-orange-500 hover:from-orange-700 hover:to-orange-600 text-white font-semibold rounded-lg hover:shadow-lg transition-all transform hover:scale-[1.02]\">
                 Redeem
               </button>
             </div>
@@ -186,8 +195,11 @@ export default function CartPage() {
               </span>
             </div>
 
-            <button onClick={() => setIsPaymentOpen(true)} className="w-full mt-4 py-2 bg-gradient-to-r from-red-500 to-orange-400 text-white rounded-md font-medium hover:opacity-90 transition" >
-              Check Out
+            <button 
+              onClick={() => setIsPaymentOpen(true)} 
+              className="w-full mt-6 py-3 bg-gradient-to-r from-customOrange1 to-orange-500 hover:from-orange-700 hover:to-orange-600 text-white rounded-lg font-bold text-lg shadow-lg hover:shadow-xl transition-all transform hover:scale-[1.02] active:scale-[0.98]\"
+            >
+              Proceed to Checkout
             </button>
 
             {isPaymentOpen && currentStep === 1 && (

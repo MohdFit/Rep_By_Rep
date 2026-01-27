@@ -32,19 +32,20 @@ const Footer = () => {
 
             <form onSubmit={handleSubscribe} className="mb-4">
               <div className="flex gap-2 w-full">
-                <div className="flex-1 p-0.5 bg-gradient-to-r from-customOrange1 to-customOrange2 rounded">
+                <div className="flex-1 p-0.5 bg-gradient-to-r from-customOrange1 to-customOrange2 rounded-lg\">
                   <input
                     type="email"
-                    placeholder="YOU EMAIL"
+                    placeholder="
+                    Your email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full px-4 py-0.5 bg-homepageColor text-white placeholder-gray-400 text-sm focus:outline-none rounded-sm"
+                    className="w-full px-4 py-2.5 bg-homepageColor text-white placeholder-gray-400 text-sm focus:outline-none rounded-md font-medium\"
                     required
                   />
                 </div>
                 <button
                   type="submit"
-                  className="px-6 py-0.5 bg-gradient-to-r from-customOrange1 to-customOrange2 hover:from-customOrange2 hover:to-customOrange1 text-white font-medium text-sm transition-all duration-300 rounded"
+                  className="px-6 py-2.5 bg-gradient-to-r from-customOrange1 to-customOrange2 hover:from-orange-700 hover:to-orange-600 text-white font-semibold text-sm transition-all duration-300 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02] active:scale-[0.98]\"
                 >
                   Subscribe
                 </button>
