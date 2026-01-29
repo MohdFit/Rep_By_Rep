@@ -14,12 +14,12 @@ const FeedbackModal = ({ product, onClose, onSubmit }) => {
   return (
     <div className="modal-overlay">
       <div className="feedback-modal">
-        {/* Title */}
+        
         <div className="feedback-title">
           <h2 className="title">Leave Your Feedback</h2>
         </div>
 
-        {/* Product Card */}
+        
         <div className="feedback-product">
           <img
             className="product-image"
@@ -34,10 +34,10 @@ const FeedbackModal = ({ product, onClose, onSubmit }) => {
           </div>
         </div>
 
-        {/* How would you rate paragraph */}
+        
         <p className="rating-text">How would you rate this product?</p>
 
-        {/* Stars */}
+        
         <div className="stars">
           {[1, 2, 3, 4, 5].map((star) => (
             <span
@@ -50,7 +50,7 @@ const FeedbackModal = ({ product, onClose, onSubmit }) => {
           ))}
         </div>
 
-        {/* Comment Box */}
+        
         <div className="feedback-comment-box">
           <p className="comment-paragraph">
             Tell us more about your experience
@@ -63,7 +63,7 @@ const FeedbackModal = ({ product, onClose, onSubmit }) => {
           ></textarea>
         </div>
 
-        {/* Buttons */}
+        
         <div className="feedback-actions">
           <button className="cancel-btn" onClick={onClose}>
             Cancel
@@ -78,3 +78,4 @@ const FeedbackModal = ({ product, onClose, onSubmit }) => {
 };
 
 export default FeedbackModal;
+

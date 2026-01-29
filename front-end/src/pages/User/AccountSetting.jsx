@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Layout from "./Layout";
 import "../../assets/styles/accountSetting.css";
 import userAvatar from "../../assets/images/accountSetting/UserProfile.jpg";
@@ -19,6 +19,24 @@ export default function AccountSettings() {
 
   const [isEditing, setIsEditing] = useState(false);
 
+  // Load user data from localStorage
+  useEffect(() => {
+    const userData = localStorage.getItem('user');
+    if (userData) {
+      try {
+        const parsed = JSON.parse(userData);
+        setUser({
+          name: parsed.fullName || parsed.name || "",
+          email: parsed.email || "",
+          phone: parsed.phone || "",
+          address: parsed.address || "",
+        });
+      } catch (e) {
+        console.error("Failed to parse user data:", e);
+      }
+    }
+  }, []);
+
   const handleProfileChange = (e) => {
     const { name, value } = e.target;
     setUser((prev) => ({ ...prev, [name]: value }));
@@ -37,7 +55,11 @@ export default function AccountSettings() {
   const handleSaveChanges = (e) => {
     e.preventDefault();
     console.log("Profile Data:", user);
-    alert("Profile updated!");
+    const msg = document.createElement('div');
+    msg.textContent = '\u2713 Profile updated!';
+    msg.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-[9999] animate-fadeIn';
+    document.body.appendChild(msg);
+    setTimeout(() => msg.remove(), 3000);
     setIsEditing(false);
   };
 
@@ -48,17 +70,25 @@ export default function AccountSettings() {
   const handleChangePassword = (e) => {
     e.preventDefault();
     if (passwords.newPass !== passwords.confirm) {
-      alert("Passwords do not match!");
+      const msg = document.createElement('div');
+      msg.textContent = '\u26a0 Passwords do not match!';
+      msg.className = 'fixed top-4 right-4 bg-yellow-500 text-white px-6 py-3 rounded-lg shadow-lg z-[9999] animate-fadeIn';
+      document.body.appendChild(msg);
+      setTimeout(() => msg.remove(), 3000);
       return;
     }
     console.log("Password Data:", passwords);
-    alert("Password changed successfully!");
+    const msg = document.createElement('div');
+    msg.textContent = '\u2713 Password changed successfully!';
+    msg.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-[9999] animate-fadeIn';
+    document.body.appendChild(msg);
+    setTimeout(() => msg.remove(), 3000);
   };
 
   return (
     <Layout>
       <div className="account-settings-container">
-        {/* Profile Information Section */}
+        
         <div className="section">
           <h2 className="section-title">Profile Information</h2>
 
@@ -144,7 +174,7 @@ export default function AccountSettings() {
           </form>
         </div>
 
-        {/* Change Password Section */}
+        
         <div className="section">
           <h2 className="section-title">Change Password</h2>
           <p className="desc">
@@ -192,3 +222,4 @@ export default function AccountSettings() {
     </Layout>
   );
 }
+

@@ -8,7 +8,7 @@ function Header({
   return (
     <div className={className}>
       <header className="w-full fixed top-0 left-0 w-full flex items-center justify-between bg-white px-[60px] py-[16px] z-50">
-        {/* --- Logo --- */}
+        
         <div className="flex items-center justify-center">
           <img
             src="/images/logo.png"
@@ -17,7 +17,7 @@ function Header({
           />
         </div>
 
-        {/* --- Right side: Cart & Account icons --- */}
+        
         <div className="flex items-center space-x-4">
           <button type="button" aria-label="Cart">
             <img
@@ -42,3 +42,4 @@ function Header({
 }
 
 export default memo(Header);
+

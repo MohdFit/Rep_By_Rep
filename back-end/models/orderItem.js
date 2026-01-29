@@ -40,17 +40,17 @@ const orderItemSchema = new mongoose.Schema({
     type: String,
     enum: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
     required: function() {
-      return this.productType === 'Merch';
+      return this.productType === 'TShirt';
     }
   },
   
   selectedColor: {
     type: String,
     required: function() {
-      return this.productType === 'Merch';
-    }}
-  },
-  {
+      return this.productType === 'TShirt';
+    }
+  }
+}, {
   timestamps: true
 });
 
@@ -68,7 +68,6 @@ orderItemSchema.pre('validate', async function (next) {
       return next(new Error('Product not found'));
     }
 
-    // ✅ Always override these fields to prevent client tampering
     this.unitPrice = product.price;
     this.totalPrice = this.quantity * this.unitPrice;
 
@@ -77,10 +76,5 @@ orderItemSchema.pre('validate', async function (next) {
     next(err);
   }
 });
-
-// orderItemSchema.pre('save', function(next) {
-//   this.totalPrice = this.quantity * this.unitPrice;
-//   next();
-// });
 
 module.exports = mongoose.model('OrderItem', orderItemSchema);

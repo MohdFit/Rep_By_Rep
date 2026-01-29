@@ -12,19 +12,5 @@ function Button({ width, height, radius = 16, children }) {
   );
 }
 
-/*
-
-<div className="p-[2px] rounded-[16px] bg-gradient-to-r from-orange-600 to-orange-500 my-4 relative">
-            <input
-              type="text"
-              placeholder="Search For..."
-              className="w-[368px] h-[32px] rounded-[14px] pl-2 bg-white placeholder-gray-400 text-black outline-none"
-            />
-            <img
-              src={searchIcon}
-              alt="glass"
-              className="absolute right-[9px] bottom-[9px]"
-            />
-          </div>
-*/
 export default Button;
+

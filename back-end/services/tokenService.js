@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken');
 
 class TokenService {
-  // Generate JWT token
   static generateAccessToken(userId, role = 'user') {
     const payload = {
       userId,
@@ -20,7 +19,6 @@ class TokenService {
     );
   }
 
-  // Generate refresh token (longer lasting)
   static generateRefreshToken(userId) {
     const payload = {
       userId,
@@ -38,7 +36,6 @@ class TokenService {
     );
   }
 
-  // Verify access token
   static verifyAccessToken(token) {
     try {
       return jwt.verify(token, process.env.JWT_SECRET);
@@ -47,7 +44,6 @@ class TokenService {
     }
   }
 
-  // Verify refresh token
   static verifyRefreshToken(token) {
     try {
       return jwt.verify(token, process.env.JWT_REFRESH_SECRET || 'your-refresh-secret-key');
@@ -56,7 +52,6 @@ class TokenService {
     }
   }
 
-  // Generate token pair (access + refresh)
   static generateTokenPair(userId, role = 'user') {
     return {
       accessToken: this.generateAccessToken(userId, role),
@@ -66,7 +61,6 @@ class TokenService {
     };
   }
 
-  // Decode token without verification (for getting payload)
   static decodeToken(token) {
     return jwt.decode(token);
   }

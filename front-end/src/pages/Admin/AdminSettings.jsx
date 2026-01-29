@@ -16,10 +16,9 @@ export default function ProfilePasswordManagement() {
     confirm: ''
   });
 
-  // --- ADD THESE THREE LINES ---
   const fileInputRef = useRef(null);
-  const [profileImage, setProfileImage] = useState(null); // Stores the file
-  const [imagePreview, setImagePreview] = useState(null); // Stores the preview URL
+  const [profileImage, setProfileImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
 
   const [originalData, setOriginalData] = useState(profileData);
 
@@ -38,66 +37,50 @@ export default function ProfilePasswordManagement() {
   };
 
   const handleEditClick = () => {
-    // Snapshot the current data *before* editing
     setOriginalData(profileData);
     setIsEditing(true);
   };
 
-  // 2. When user clicks "Save Changes"
   const handleSaveClick = () => {
-    // --- THIS IS WHERE YOU USE profileImage ---
-    
-    // Create a FormData object to send all data, including the file
     const formData = new FormData();
     
-    // Add all the text data
     formData.append('fullName', profileData.fullName);
     formData.append('email', profileData.email);
     formData.append('phone', profileData.phone);
     formData.append('address', profileData.address);
 
-    // Add the image file IF one was selected
     if (profileImage) {
-      formData.append('profilePicture', profileImage); // 'profilePicture' is the name your backend expects
+      formData.append('profilePicture', profileImage);
     }
 
-    // TODO: Add your API call here to send 'formData'
     console.log("Saving data:", formData);
-    // Example: await api.updateProfile(formData);
 
-    // --- End of new part ---
-
-    // After saving, update 'originalData'
     setOriginalData(profileData); 
-    setIsEditing(false); // Exit edit mode
-    
-    // Optional: Clear the image state after saving
-    // setProfileImage(null); 
+    setIsEditing(false);
   };
 
   const handleCancelClick = () => {
-    setIsEditing(false); // Exit edit mode
-    // Revert all changes by resetting the form to the 'originalData'
+    setIsEditing(false);
     setProfileData(originalData);
   };
 
   const handleChangePassword = () => {
-    // Here you would validate and save password changes
     if (passwordData.new !== passwordData.confirm) {
-      alert('New passwords do not match!');
+      const msg = document.createElement('div');
+      msg.textContent = '\u26a0 New passwords do not match!';
+      msg.className = 'fixed top-4 right-4 bg-yellow-500 text-white px-6 py-3 rounded-lg shadow-lg z-[9999] animate-fadeIn';
+      document.body.appendChild(msg);
+      setTimeout(() => msg.remove(), 3000);
       return;
     }
     console.log('Password change requested');
     setPasswordData({ current: '', new: '', confirm: '' });
   };
 
-  // Runs when the user clicks the visible profile pic area
   const handleImageClick = () => {
-    // Clicks the hidden file input
     fileInputRef.current.click();
   };
 
-  // Runs when the user selects a file
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -110,15 +93,15 @@ export default function ProfilePasswordManagement() {
     <div className="min-h-screen bg-white-50 p-4 md:p-8">
 
       <div className="max-w-7xl mx-auto bg-white rounded-lg shadow-2xl p-6 md:p-8">
-        {/* Profile Information Section */}
+        
         <div className="mb-12">
           <h2 className="text-xl font-semibold text-orange-500 border-b-2 border-orange-500 pb-1 inline-block mb-4">Profile Information</h2>
 
-          {/* Profile Picture */}
+          
           <div className="flex justify-center mb-8">
             <div className="relative">
               
-              {/* 1. This is the hidden file input */}
+              
               <input 
                 type="file"
                 accept="image/*"
@@ -127,12 +110,12 @@ export default function ProfilePasswordManagement() {
                 className="hidden"
               />
 
-              {/* 2. This is the clickable area */}
+              
               <div 
                 onClick={handleImageClick}
                 className="w-24 h-24 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center bg-orange-50 cursor-pointer overflow-hidden"
               >
-                {/* 3. This logic shows the preview or the default icon */}
+                
                 {imagePreview ? (
                   <img src={imagePreview} alt="Profile Preview" className="w-full h-full object-cover" />
                 ) : (
@@ -143,9 +126,9 @@ export default function ProfilePasswordManagement() {
             </div>
           </div>
 
-          {/* Profile Form */}
+          
           <div className="grid grid-cols-2 md:grid-cols-2 gap-4 mb-6">
-            {/* Full Name */}
+            
             <div>
               <label className="block text-lg text-gray-700 mb-2 text-Poppins">Full Name</label>
               <div className="relative">
@@ -162,7 +145,7 @@ export default function ProfilePasswordManagement() {
               </div>
             </div>
 
-            {/* Email */}
+            
             <div>
               <label className="block text-lg text-gray-700 mb-2 text-Poppins">EMAIL</label>
               <div className="relative">
@@ -179,7 +162,7 @@ export default function ProfilePasswordManagement() {
               </div>
             </div>
 
-            {/* Phone Number */}
+            
             <div>
               <label className="block text-lg text-gray-700 mb-2 text-Poppins">Phone Number</label>
               <div className="relative">
@@ -196,7 +179,7 @@ export default function ProfilePasswordManagement() {
               </div>
             </div>
 
-            {/* Address */}
+            
             <div>
               <label className="block text-lg text-gray-700 mb-2 text-Poppins">Address</label>
               <div className="relative">
@@ -217,11 +200,9 @@ export default function ProfilePasswordManagement() {
 
           <div className="flex items-center gap-4">
             {!isEditing ? (
-              // --- State 1: "Edit Profile" Button ---
               <button
-                onClick={handleEditClick} // <-- Use new handler
+                onClick={handleEditClick}
                 className="
-                /* --- Your Original Button Styles --- */
                 text-white 
                 flex items-center justify-center 
                 transition-colors 
@@ -241,12 +222,10 @@ export default function ProfilePasswordManagement() {
                 Edit Profile
               </button>
             ) : (
-              // --- State 2: "Save" and "Cancel" Buttons ---
               <>
                 <button
-                  onClick={handleSaveClick} // <-- Use new handler
+                  onClick={handleSaveClick}
                   className="
-                  /* --- Your Original Button Styles --- */
                   text-white 
                   flex items-center justify-center 
                   transition-colors 
@@ -267,9 +246,8 @@ export default function ProfilePasswordManagement() {
                 </button>
 
                 <button
-                  onClick={handleCancelClick} // <-- Use new handler
+                  onClick={handleCancelClick}
                   className="
-                  /* --- NEW Styles for the 'Cancel' button --- */
                   flex items-center justify-center 
                   transition-colors 
                   w-[188px] 
@@ -292,14 +270,14 @@ export default function ProfilePasswordManagement() {
 
         </div>
 
-        {/* Change Password Section */}
+        
         <div>
           <h2 className="text-xl font-semibold text-orange-500 border-b-2 border-orange-500 pb-1 inline-block mb-4">Change Password</h2>
           <p className="text-lg text-Poppins text-gray-600 mb-6">Keep your account secure with a strong password</p>
 
-          {/* Password Form */}
+          
           <div className="space-y-4 mb-6">
-            {/* Current Password */}
+            
             <div>
               <label className="block text-sm text-gray-700 mb-2">Current Password</label>
               <div className="relative">
@@ -315,7 +293,7 @@ export default function ProfilePasswordManagement() {
               </div>
             </div>
 
-            {/* New Password */}
+            
             <div>
               <label className="block text-sm text-gray-700 mb-2">New Password</label>
               <div className="relative">
@@ -331,7 +309,7 @@ export default function ProfilePasswordManagement() {
               </div>
             </div>
 
-            {/* Confirm New Password */}
+            
             <div>
               <label className="block text-sm text-gray-700 mb-2">Confirm New Password</label>
               <div className="relative">

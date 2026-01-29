@@ -1,0 +1,149 @@
+import React, { useState } from 'react';
+import { useCart } from '../../context/CartContext';
+import Header from '../../components/Header';
+import FooterWhite from '../../components/FooterWhite';
+import './cart.css';
+
+const Cart = () => {
+  const { cart, loading, removeFromCart, updateCartItem } = useCart();
+  const [updatingItems, setUpdatingItems] = useState({});
+
+  const handleQuantityChange = async (itemId, newQuantity) => {
+    if (newQuantity < 1) {
+      handleRemoveItem(itemId);
+      return;
+    }
+
+    try {
+      setUpdatingItems(prev => ({ ...prev, [itemId]: true }));
+      await updateCartItem(itemId, newQuantity);
+    } catch (error) {
+      console.error('Error updating quantity:', error);
+      const msg = document.createElement('div');
+      msg.textContent = '✗ Failed to update quantity';
+      msg.className = 'fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-[9999] animate-fadeIn';
+      document.body.appendChild(msg);
+      setTimeout(() => msg.remove(), 3000);
+    } finally {
+      setUpdatingItems(prev => ({ ...prev, [itemId]: false }));
+    }
+  };
+
+  const handleRemoveItem = async (itemId) => {
+    try {
+      setUpdatingItems(prev => ({ ...prev, [itemId]: true }));
+      await removeFromCart(itemId);
+    } catch (error) {
+      console.error('Error removing item:', error);
+      const msg = document.createElement('div');
+      msg.textContent = '✗ Failed to remove item';
+      msg.className = 'fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-[9999] animate-fadeIn';
+      document.body.appendChild(msg);
+      setTimeout(() => msg.remove(), 3000);
+    } finally {
+      setUpdatingItems(prev => ({ ...prev, [itemId]: false }));
+    }
+  };
+
+  if (loading) {
+    return (
+      <>
+        <Header />
+        <div className="cart-container">
+          <p className="text-center text-gray-600 py-8">Loading cart...</p>
+        </div>
+        <FooterWhite />
+      </>
+    );
+  }
+
+  if (!cart || cart.items.length === 0) {
+    return (
+      <>
+        <Header />
+        <div className="cart-container">
+          <h2>Your Cart</h2>
+          <p className="empty-cart">Your cart is empty</p>
+          <a href="/programs" className="continue-shopping inline-block mt-4">Browse Training Plans</a>
+        </div>
+        <FooterWhite />
+      </>
+    );
+  }
+
+  return (
+    <>
+      <Header />
+      <div className="cart-container">
+      <h2>Your Cart</h2>
+      <div className="cart-items">
+        {cart.items.map(item => (
+          <div key={item._id} className="cart-item">
+            <div className="item-info">
+              <h4>{item.productType}</h4>
+              {item.selectedSize && <p>Size: {item.selectedSize}</p>}
+              {item.selectedColor && <p>Color: {item.selectedColor}</p>}
+              <p className="price">${item.price.toFixed(2)}</p>
+            </div>
+
+            <div className="item-quantity">
+              <button
+                onClick={() => handleQuantityChange(item._id, item.quantity - 1)}
+                disabled={updatingItems[item._id]}
+              >
+                -
+              </button>
+              <span>{item.quantity}</span>
+              <button
+                onClick={() => handleQuantityChange(item._id, item.quantity + 1)}
+                disabled={updatingItems[item._id]}
+              >
+                +
+              </button>
+            </div>
+
+            <div className="item-total">
+              <p>${(item.price * item.quantity).toFixed(2)}</p>
+            </div>
+
+            <button
+              className="remove-btn"
+              onClick={() => handleRemoveItem(item._id)}
+              disabled={updatingItems[item._id]}
+            >
+              Remove
+            </button>
+          </div>
+        ))}
+      </div>
+
+      <div className="cart-summary">
+        <div className="summary-row">
+          <span>Subtotal:</span>
+          <span>${cart.subTotal.toFixed(2)}</span>
+        </div>
+        <div className="summary-row">
+          <span>Tax (8%):</span>
+          <span>${cart.tax.toFixed(2)}</span>
+        </div>
+        <div className="summary-row">
+          <span>Shipping:</span>
+          <span>${cart.shippingCost.toFixed(2)}</span>
+        </div>
+        <div className="summary-row total">
+          <span>Total:</span>
+          <span>${cart.total.toFixed(2)}</span>
+        </div>
+      </div>
+
+      <div className="cart-actions">
+        <button className="checkout-btn">Proceed to Checkout</button>
+        <a href="/programs" className="continue-shopping">Continue Shopping</a>
+      </div>
+    </div>
+    <FooterWhite />
+  </>
+  );
+};
+
+export default Cart;

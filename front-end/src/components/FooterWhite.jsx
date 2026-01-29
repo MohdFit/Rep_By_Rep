@@ -1,5 +1,6 @@
 // src/components/FooterWhite.jsx
 import React from "react";
+import { Link } from "react-router-dom";
 
 import footer from "../assets/images/footer/r.png";
 import iconInsta from "../assets/images/allproducts/instgram.png";
@@ -12,7 +13,6 @@ export default function FooterWhite() {
   return (
     <footer className="bg-[#FBF4F2] text-[#0E1830]">
       <div className="mx-auto max-w-[1274px] px-[17px] sm:px-[83px] py-12 sm:py-16">
-        {/* ===== 12-col grid with spacer for custom spacing ===== */}
         <div
           className="
             grid grid-cols-1 sm:grid-cols-12
@@ -22,7 +22,6 @@ export default function FooterWhite() {
             text-center sm:text-left
           "
         >
-          {/* Left: brand + newsletter (6/12) */}
           <div className="w-full sm:col-span-6">
             <div className="mb-6">
               <img
@@ -38,7 +37,6 @@ export default function FooterWhite() {
               features and releases.
             </h3>
 
-            {/* Email form */}
             <form
               onSubmit={(e) => e.preventDefault()}
               className="mt-5 flex w-full max-w-[420px] gap-2 mx-auto sm:mx-0"
@@ -47,11 +45,11 @@ export default function FooterWhite() {
                 type="email"
                 required
                 placeholder="Your email"
-                className="flex-1 h-9 rounded-md border border-orange-400 bg-white px-3 text-sm outline-none placeholder:text-[#A9A9A9] focus:ring-2 focus:ring-orange-300"
+                className="flex-1 h-9 rounded-lg border-2 border-orange-300 bg-white px-4 text-sm outline-none placeholder:text-gray-400 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition-all\"
               />
               <button
                 type="submit"
-                className="h-9 whitespace-nowrap rounded-md bg-orange-500 px-4 text-sm font-semibold text-white hover:bg-orange-600 transition-colors"
+                className="h-9 whitespace-nowrap rounded-lg bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 px-6 text-sm font-semibold text-white transition-all transform hover:scale-[1.02] active:scale-[0.98]"
               >
                 Subscribe
               </button>
@@ -63,42 +61,39 @@ export default function FooterWhite() {
             </p>
           </div>
 
-          {/* Spacer column (1/12) -> increases gap between left & middle */}
           <div className="hidden sm:block sm:col-span-1" />
 
-          {/* Middle: Quick Links (2/12) -> a bit narrower */}
           <div className="w-full sm:col-span-2">
             <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-3 text-[15px]">
               <li>
-                <a href="#" className="hover:text-orange-600">
+                <Link to="/" className="hover:text-orange-600">
                   HOME PAGE
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-orange-600">
+                <Link to="/#about" className="hover:text-orange-600">
                   About
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-orange-600">
+                <Link to="/#contact" className="hover:text-orange-600">
                   Contact Us
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-orange-600">
+                <Link to="/programs" className="hover:text-orange-600">
                   Shop
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
 
-          {/* Right: Connect (3/12) -> a bit wider & closer to middle */}
           <div className="w-full sm:col-span-3">
             <h4 className="text-lg font-semibold mb-4">Connect With Us</h4>
             <ul className="space-y-3 text-[15px]">
               <li className="flex items-center justify-center sm:justify-start gap-3">
-                <img src={iconMail} alt="" className="w-4 h-4 object-contain" />
+                <img src={iconMail} alt="Email" className="w-5 h-5 object-contain flex-shrink-0" />
                 <a
                   href="mailto:Hamawiasaad@gmail.com"
                   className="hover:text-orange-600"
@@ -109,8 +104,8 @@ export default function FooterWhite() {
               <li className="flex items-center justify-center sm:justify-start gap-3">
                 <img
                   src={iconPhone}
-                  alt=""
-                  className="w-4 h-4 object-contain"
+                  alt="Phone"
+                  className="w-5 h-5 object-contain flex-shrink-0"
                 />
                 <a href="tel:+962796728300" className="hover:text-orange-600">
                   +962 796 728 300
@@ -119,30 +114,30 @@ export default function FooterWhite() {
               <li className="flex items-center justify-center sm:justify-start gap-3">
                 <img
                   src={iconInsta}
-                  alt=""
-                  className="w-4 h-4 object-contain"
+                  alt="Instagram"
+                  className="w-5 h-5 object-contain flex-shrink-0"
                 />
-                <a href="#" className="hover:text-orange-600">
+                <a href="https://instagram.com/Assadhamawi" target="_blank" rel="noopener noreferrer" className="hover:text-orange-600">
                   @Assadhamawi
                 </a>
               </li>
               <li className="flex items-center justify-center sm:justify-start gap-3">
                 <img
                   src={iconYoutube}
-                  alt=""
-                  className="w-4 h-4 object-contain"
+                  alt="YouTube"
+                  className="w-5 h-5 object-contain flex-shrink-0"
                 />
-                <a href="#" className="hover:text-orange-600">
+                <a href="https://youtube.com/@Assadhamawi" target="_blank" rel="noopener noreferrer" className="hover:text-orange-600">
                   @Assadhamawi
                 </a>
               </li>
               <li className="flex items-center justify-center sm:justify-start gap-3">
                 <img
                   src={iconTiktok}
-                  alt=""
-                  className="w-4 h-4 object-contain"
+                  alt="TikTok"
+                  className="w-5 h-5 object-contain flex-shrink-0"
                 />
-                <a href="#" className="hover:text-orange-600">
+                <a href="https://tiktok.com/@Assadhamawi" target="_blank" rel="noopener noreferrer" className="hover:text-orange-600">
                   @Assadhamawi
                 </a>
               </li>
@@ -150,33 +145,32 @@ export default function FooterWhite() {
           </div>
         </div>
 
-        {/* Divider */}
         <div className="my-8 h-px bg-black/5" />
 
-        {/* Bottom row */}
         <div
           className="
            
- flex  sm:flex-row
- items-center sm:items-center
- justify-between sm:justify-between
- gap-3
- text-[12px] text-[#6B7280]
- text-center sm:text-left
+            flex  sm:flex-row
+            items-center sm:items-center
+            justify-between sm:justify-between
+            gap-3
+            text-[12px] text-[#6B7280]
+            text-center sm:text-left
  
-          "
+                    "
         >
-          <p>© 2025 Relume. All rights reserved.</p>
+          <p>© 2025 Rep By Rep. by PCM.</p>
           <div className="flex items-center gap-8">
-            <a href="#" className="hover:text-orange-600">
-              Lorem ipsum
-            </a>
-            <a href="#" className="hover:text-orange-600">
-              Lorem ipsum
-            </a>
+            <Link to="/terms" className="hover:text-orange-600">
+              Terms of Service
+            </Link>
+            <Link to="/privacy" className="hover:text-orange-600">
+              Privacy Policy
+            </Link>
           </div>
         </div>
       </div>
     </footer>
   );
 }
+

@@ -1,26 +1,19 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { CartProvider } from "./context/CartContext";
+import { AuthProvider } from "./context/AuthContext";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 import Login from "./pages/auth/login";
 import Register from "./pages/auth/register";
 import Home from "./pages/Home/Home";
-import AllProduct from "./pages/AllProduct/AllProduct";
-import ProductMen from "./pages/productMen/ProductMen";
-import InnerPageWorkout from "./pages/InnerPage/InnerPageWorkout";
-import ProductWomen from "./pages/productWomen/ProductWomen";
-import ProductNowIn from "./pages/productNowIn/ProductNowIn";
 import ProductPlans from "./pages/productPlans/ProductPlans";
-
-//user imports
 
 import OrderDetails from "./pages/User/Order/OrderDetailes";
 import FeedbackModal from "./pages/User/Order/FeedbackModal";
 import Order from "./pages/User/Order/MyOrders";
-import Cart from "./pages/User/Cart/Cart";
+import Cart from "./pages/Cart/Cart";
 import Wishlist from "./pages/User/Wishlist";
 import AccountSettings from "./pages/User/AccountSetting";
-
-
-//admin imports
 
 import AdminDashboard from "./pages/Admin/AdminDashboard";
 import AdminLayout from "./pages/Admin/AdminLayout";
@@ -33,27 +26,24 @@ import AdminSettings from "./pages/Admin/AdminSettings";
 function App() {
   return (
     <BrowserRouter>
-      <div>
-        <Routes>
+      <AuthProvider>
+        <CartProvider>
+          <div>
+            <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/" element={<Home />} />
-          <Route path="/allproducts" element={<AllProduct />} />
-          <Route path="/men" element={<ProductMen />} />
-          <Route path="/women" element={<ProductWomen />} />
-          <Route path="/nowin" element={<ProductNowIn />} />
-          <Route path="/plans" element={<ProductPlans />} />
-          <Route path="innerPage/workout" element={<InnerPageWorkout />} />
-          <Route path="user/wishlist" element={<Wishlist />} />
-          <Route path="user/cart" element={<Cart />} />
-
+          <Route path="/programs" element={<ProductPlans />} />
           
-          <Route path="user/account-settings" element={<AccountSettings />} />
-          <Route path="user/order-details" element={<OrderDetails />} />
-          <Route path="user/feedback-model" element={<FeedbackModal />} />
-          <Route path="user/orders" element={<Order />} />
+          <Route path="/user/wishlist" element={<ProtectedRoute><Wishlist /></ProtectedRoute>} />
+          <Route path="/user/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
+          <Route path="/user/account-settings" element={<ProtectedRoute><AccountSettings /></ProtectedRoute>} />
+          <Route path="/user/order-details" element={<ProtectedRoute><OrderDetails /></ProtectedRoute>} />
+          <Route path="/user/feedback-model" element={<ProtectedRoute><FeedbackModal /></ProtectedRoute>} />
+          <Route path="/user/orders" element={<ProtectedRoute><Order /></ProtectedRoute>} />
+          <Route path="/user/my-orders" element={<ProtectedRoute><Order /></ProtectedRoute>} />
 
-          <Route path="admin/*" element={<AdminLayout>
+          <Route path="/admin/*" element={<ProtectedRoute><AdminLayout>
               <Routes>
                 <Route path="dashboard" element={<AdminDashboard />} />
                 <Route path="orders" element={<AdminOrders />} />
@@ -62,16 +52,16 @@ function App() {
                 <Route path="reviews" element={<AdminReviews />} />
                 <Route path="settings" element={<AdminSettings />} />
               </Routes>
-            </AdminLayout>
-          }
+            </AdminLayout></ProtectedRoute>}
         />
 
-
-
         </Routes>
-      </div>
+          </div>
+        </CartProvider>
+      </AuthProvider>
     </BrowserRouter>
   );
 }
 
 export default App;
+

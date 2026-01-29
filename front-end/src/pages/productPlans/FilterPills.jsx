@@ -1,5 +1,3 @@
-import { useNavigate } from "react-router-dom";
-
 function Pill({ label, onClick, className = "" }) {
   return (
     <div className={`p-[2px] rounded-full ${className}`}>
@@ -23,18 +21,16 @@ function Pill({ label, onClick, className = "" }) {
 }
 
 export default function FilterPills() {
-  const navigate = useNavigate();
-
   return (
     <div className="w-full flex justify-start gap-3 -translate-y-4 mt-4">
       <Pill
-        label="MEN"
-        onClick={() => navigate("/men-product")}
+        label="All Programs"
+        onClick={() => {}}
         className="min-w-[180px]"
       />
       <Pill
-        label="WOMEN"
-        onClick={() => navigate("/women-product")}
+        label="Featured"
+        onClick={() => {}}
         className="min-w-[180px]"
       />
     </div>

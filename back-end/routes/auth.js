@@ -1,4 +1,3 @@
-// back-end/routes/auth.js
 const { loginUser, logoutUser  } = require('../controllers/loginController');
 const { refreshToken } = require('../controllers/tokenController');
 const express = require('express');
@@ -11,8 +10,6 @@ router.post('/logout', logoutUser);
 
 router.post('/register', registerUser);
 
-
-// tokens
 router.post('/refresh-token', refreshToken);
 
 module.exports = router;

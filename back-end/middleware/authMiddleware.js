@@ -1,11 +1,9 @@
-// back-end/middleware/authMiddleware.js
 const TokenService = require('../services/tokenService');
 const User = require('../models/user');
 const { isBlacklisted } = require('../services/blacklist');
 
 const authMiddleware = async (req, res, next) => {
   try {
-    // Get token from header
     const authHeader = req.header('Authorization');
     
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
@@ -26,21 +24,10 @@ const authMiddleware = async (req, res, next) => {
       });
     }
    
-    // Verify token
     const decoded = TokenService.verifyAccessToken(token);
 
-    // Check if user still exists 
     const user = await User.findById(decoded.userId);
-    
-    // if (!user || !user.isActive) {
-    //   return res.status(401).json({
-    //     success: false,
-    //     message: 'User not found or account deactivated'
-    //   });
-    // }
-       
 
-    // Add user info to request
     req.user = {
       userId: decoded.userId,
       role: decoded.role,
@@ -64,7 +51,6 @@ const authMiddleware = async (req, res, next) => {
   }
 };
 
-// Role-based middleware
 const requireRole = (roles) => {
   return (req, res, next) => {
     if (!req.user) {

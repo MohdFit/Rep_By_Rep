@@ -4,7 +4,7 @@ import mobileBg from "../../assets/images/pexelsMobile.png"
 export default function TransformationCTA() {
   return (
     <section className="relative w-full overflow-hidden">
-      {/* Background Image */}
+      
       <div className="absolute inset-0">
         <img 
           src={mobileBg}
@@ -16,19 +16,19 @@ export default function TransformationCTA() {
           alt="Transformation background"
           className="w-full h-full object-cover hidden sm:block"
         />
-        {/* Dark overlay for better text readability */}
+        
         <div className="absolute inset-0 bg-[#0E1830] bg-opacity-35"></div>
       </div>
       
-      {/* Content */}
+      
       <div className="relative z-10 flex items-center justify-center min-h-[400px] sm:min-h-[500px] px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
         <div className="text-center max-w-4xl mx-auto">
-          {/* Main Heading */}
+          
           <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-4 sm:mb-6">
             Ready To Transform Your Life?
           </h2>
           
-          {/* Subheadings */}
+          
           <p className="text-lg sm:text-xl lg:text-2xl text-white mb-2 sm:mb-4 font-medium">
             No More Waiting. No More Excuses.
           </p>
@@ -37,10 +37,10 @@ export default function TransformationCTA() {
             Take The First Step Toward Your Strongest, Healthiest Self — Today.
           </p>
           
-          {/* CTA Button */}
+          
           <CTAButton />
           
-          {/* Bottom Text */}
+          
           <p className="text-sm sm:text-base lg:text-lg text-gray-200 mt-8 sm:mt-12 font-light">
             You Don't Need More Motivation. You Need A System Built For You
           </p>
