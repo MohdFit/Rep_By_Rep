@@ -42,9 +42,18 @@ export default function Wishlist() {
       const planId = item.product?._id || item.productId || item._id;
       await addToCart(planId, 'Plan', 1);
       await handleRemove(item);
-      alert('Added to cart!');
+      const msg = document.createElement('div');
+      msg.textContent = '\u2713 Added to cart!';
+      msg.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-[9999] animate-fadeIn';
+      document.body.appendChild(msg);
+      setTimeout(() => msg.remove(), 3000);
     } catch (err) {
-      alert('Failed to add to cart');
+      console.error('Failed to add to cart:', err);
+      const msg = document.createElement('div');
+      msg.textContent = '\u2717 Failed to add to cart';
+      msg.className = 'fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-[9999] animate-fadeIn';
+      document.body.appendChild(msg);
+      setTimeout(() => msg.remove(), 3000);
     }
   };
 

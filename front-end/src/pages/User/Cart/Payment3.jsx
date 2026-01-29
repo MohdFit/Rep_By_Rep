@@ -64,30 +64,34 @@ const Payment3 = ({ onBack, onClose, onHome, shippingData, paymentMethod, cartIt
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/40 z-50">
-      <div className="bg-white w-[600px] h-[520px] rounded-2xl p-8 relative flex flex-col items-center">
-        <div className="flex justify-between items-center w-full mb-4">
-          <ArrowLeft
-            className="w-6 h-6 cursor-pointer text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-400"
+      <div className="bg-white w-[600px] max-w-[95vw] rounded-2xl p-8 relative flex flex-col items-center shadow-2xl">
+        <div className="flex justify-between items-center w-full mb-6">
+          <button 
             onClick={onBack}
-            style={{ pointerEvents: loading ? 'none' : 'auto', opacity: loading ? 0.5 : 1 }}
-          />
-          <h2 className="text-2xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-400 font-poppins">
+            disabled={loading}
+            className="hover:scale-110 transition-transform disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <ArrowLeft className="w-6 h-6 text-orange-500" />
+          </button>
+          <h2 className="text-2xl sm:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-customOrange1 to-orange-500">
             Make Payment
           </h2>
-          <X
-            className="w-6 h-6 cursor-pointer text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-400"
+          <button 
             onClick={onClose}
-            style={{ pointerEvents: loading ? 'none' : 'auto', opacity: loading ? 0.5 : 1 }}
-          />
+            disabled={loading}
+            className="hover:scale-110 transition-transform disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <X className="w-6 h-6 text-gray-500 hover:text-red-500" />
+          </button>
         </div>
 
-        <div className="flex justify-center gap-4 mb-6 w-full">
+        <div className="flex justify-center space-x-4 mb-8 w-full">
           {[1, 2, 3].map((num) => (
             <div
               key={num}
-              className={`w-8 h-8 flex items-center justify-center rounded-full text-white ${
+              className={`w-10 h-10 rounded-full flex items-center justify-center text-white font-semibold text-lg transition-all ${
                 num === 3
-                  ? "bg-gradient-to-r from-red-500 to-orange-400"
+                  ? "bg-gradient-to-r from-customOrange1 to-orange-500 shadow-lg scale-110"
                   : "bg-gray-300"
               }`}
             >
@@ -97,22 +101,22 @@ const Payment3 = ({ onBack, onClose, onHome, shippingData, paymentMethod, cartIt
         </div>
 
         {error && (
-          <div className="w-full mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
-            {error}
+          <div className="w-full mb-4 p-4 bg-red-50 border-2 border-red-200 text-red-700 rounded-lg font-medium">
+            ⚠️ {error}
           </div>
         )}
 
-        <h3 className="font-poppins font-medium text-[24px] mb-6 text-center">
-          Thank you for choosing us.
+        <h3 className="font-bold text-2xl mb-6 text-center text-gray-800">
+          {loading ? 'Processing Your Order...' : 'Thank You For Choosing Us!'}
         </h3>
 
-        <div className="w-24 h-24 mb-6 flex items-center justify-center rounded-xl bg-gradient-to-r from-red-500 to-orange-400 text-white text-5xl">
+        <div className="w-24 h-24 mb-6 flex items-center justify-center rounded-2xl bg-gradient-to-r from-customOrange1 to-orange-500 text-white text-5xl shadow-lg">
           {loading ? '⏳' : '✓'}
         </div>
-        <p className="font-poppins text-[16px] text-center mb-2">
+        <p className="text-base text-center mb-2 text-gray-700 font-medium">
           {loading ? 'Processing your order...' : "We're happy to confirm your payment"}
         </p>
-        <p className="font-poppins text-[16px] text-center mb-6">
+        <p className="text-base text-center mb-8 text-gray-600">
           {loading ? 'Please wait...' : "You'll receive an email shortly with your order details"}
         </p>
 
@@ -123,7 +127,7 @@ const Payment3 = ({ onBack, onClose, onHome, shippingData, paymentMethod, cartIt
             });
           }}
           disabled={loading}
-          className="mt-auto bg-gradient-to-r from-red-500 to-orange-400 text-white font-poppins font-extrabold text-[24px] py-3 px-6 rounded-xl hover:opacity-90 transition disabled:opacity-50"
+          className="mt-6 bg-gradient-to-r from-customOrange1 to-orange-500 hover:from-orange-700 hover:to-orange-600 text-white font-bold text-xl py-4 px-12 rounded-lg shadow-lg hover:shadow-xl transition-all transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
         >
           {loading ? 'Processing...' : 'Back to Home'}
         </button>

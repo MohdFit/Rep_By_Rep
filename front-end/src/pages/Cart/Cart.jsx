@@ -19,7 +19,11 @@ const Cart = () => {
       await updateCartItem(itemId, newQuantity);
     } catch (error) {
       console.error('Error updating quantity:', error);
-      alert('Failed to update quantity');
+      const msg = document.createElement('div');
+      msg.textContent = '✗ Failed to update quantity';
+      msg.className = 'fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-[9999] animate-fadeIn';
+      document.body.appendChild(msg);
+      setTimeout(() => msg.remove(), 3000);
     } finally {
       setUpdatingItems(prev => ({ ...prev, [itemId]: false }));
     }
@@ -31,7 +35,11 @@ const Cart = () => {
       await removeFromCart(itemId);
     } catch (error) {
       console.error('Error removing item:', error);
-      alert('Failed to remove item');
+      const msg = document.createElement('div');
+      msg.textContent = '✗ Failed to remove item';
+      msg.className = 'fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-[9999] animate-fadeIn';
+      document.body.appendChild(msg);
+      setTimeout(() => msg.remove(), 3000);
     } finally {
       setUpdatingItems(prev => ({ ...prev, [itemId]: false }));
     }

@@ -34,7 +34,7 @@ export default function Navbar() {
   const toggleUserDropdown = useCallback(() => {
     setUserDropdownOpen((open) => !open);
   }, []);
-
+  
   const toggleMenu = useCallback(() => {
     setIsOpen((open) => !open);
   }, []);
@@ -82,26 +82,26 @@ export default function Navbar() {
           />
           
           {userDropdownOpen && (
-            <div className="absolute right-0 top-full mt-2 w-48 bg-[#11131B] border border-gray-600 rounded-lg shadow-lg py-2 z-50">
+            <div className="absolute right-0 top-full mt-2 w-56 bg-[#11131B] border-2 border-gray-600 rounded-xl shadow-2xl py-2 z-50 animate-fadeIn">
               {isAuthenticated && user ? (
                 <>
-                  <div className="px-4 py-2 text-white border-b border-gray-600">
-                    <p className="text-sm text-gray-300">Welcome Back!</p>
-                    <p className="font-medium">{user.fullName || user.name || user.email?.split('@')[0]}</p>
+                  <div className="px-4 py-3 text-white border-b border-gray-600 bg-gradient-to-r from-orange-500/10 to-orange-600/10">
+                    <p className="text-xs text-gray-400 uppercase tracking-wide">Welcome Back!</p>
+                    <p className="font-semibold text-lg mt-1">{user.fullName || user.name || user.email?.split('@')[0]}</p>
                   </div>
                   <Link 
                     to="/user/account-settings" 
-                    className="block px-4 py-2 text-white hover:bg-gray-700 hover:text-orange-500"
+                    className="block px-4 py-3 text-white hover:bg-gradient-to-r hover:from-orange-500/20 hover:to-orange-600/20 hover:text-orange-400 transition-all font-medium"
                     onClick={() => setUserDropdownOpen(false)}
                   >
-                    Account Settings
+                    💼 Account Settings
                   </Link>
                   <Link 
                     to="/user/my-orders" 
-                    className="block px-4 py-2 text-white hover:bg-gray-700 hover:text-orange-500"
+                    className="block px-4 py-3 text-white hover:bg-gradient-to-r hover:from-orange-500/20 hover:to-orange-600/20 hover:text-orange-400 transition-all font-medium"
                     onClick={() => setUserDropdownOpen(false)}
                   >
-                    My Orders
+                    📦 My Orders
                   </Link>
                   <button 
                     onClick={async () => {
@@ -109,26 +109,26 @@ export default function Navbar() {
                       setUserDropdownOpen(false);
                       navigate('/');
                     }}
-                    className="w-full text-left px-4 py-2 text-white hover:bg-gray-700 hover:text-orange-500 border-t border-gray-600"
+                    className="w-full text-left px-4 py-3 text-white hover:bg-red-500/20 hover:text-red-400 transition-all border-t border-gray-600 font-medium"
                   >
-                    Log out
+                    🚪 Log Out
                   </button>
                 </>
               ) : (
                 <>
                   <Link 
                     to="/login" 
-                    className="block px-4 py-2 text-white hover:bg-gray-700 hover:text-orange-500"
+                    className="block px-4 py-3 text-white hover:bg-gradient-to-r hover:from-orange-500/20 hover:to-orange-600/20 hover:text-orange-400 transition-all font-medium"
                     onClick={() => setUserDropdownOpen(false)}
                   >
-                    Login
+                    🔑 Login
                   </Link>
                   <Link 
                     to="/register" 
-                    className="block px-4 py-2 text-white hover:bg-gray-700 hover:text-orange-500"
+                    className="block px-4 py-3 text-white hover:bg-gradient-to-r hover:from-orange-500/20 hover:to-orange-600/20 hover:text-orange-400 transition-all font-medium"
                     onClick={() => setUserDropdownOpen(false)}
                   >
-                    Register
+                    ✍️ Register
                   </Link>
                 </>
               )}
@@ -136,7 +136,9 @@ export default function Navbar() {
           )}
         </div>
         
-        <FaShoppingBag className="cursor-pointer hover:text-orange-500" />
+        <Link to="/user/cart" className="hover:text-orange-500 transition-colors">
+          <FaShoppingBag className="cursor-pointer" />
+        </Link>
 
         <button
           className="sm:hidden text-2xl"

@@ -66,7 +66,11 @@ export default function ProfilePasswordManagement() {
 
   const handleChangePassword = () => {
     if (passwordData.new !== passwordData.confirm) {
-      alert('New passwords do not match!');
+      const msg = document.createElement('div');
+      msg.textContent = '\u26a0 New passwords do not match!';
+      msg.className = 'fixed top-4 right-4 bg-yellow-500 text-white px-6 py-3 rounded-lg shadow-lg z-[9999] animate-fadeIn';
+      document.body.appendChild(msg);
+      setTimeout(() => msg.remove(), 3000);
       return;
     }
     console.log('Password change requested');

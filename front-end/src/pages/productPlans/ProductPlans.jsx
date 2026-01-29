@@ -46,7 +46,9 @@ function ProductPlans() {
       try {
         const res = await wishlistService.getWishlist();
         if (res?.success) {
-          setWishlist((res.data?.items || []).map(it => String(it.productId)));
+          // Handle both array response and object with items property
+          const items = Array.isArray(res.data) ? res.data : (res.data?.items || []);
+          setWishlist(items.map(it => String(it.productId || it._id)));
         }
       } catch (_) {
         setWishlist([]);
@@ -59,11 +61,19 @@ function ProductPlans() {
   const handleAddToCart = async (plan) => {
     try {
       await addToCart(plan._id, 'Plan', 1);
-      alert('Added to cart!');
+      // Create a temporary success message
+      const msg = document.createElement('div');
+      msg.textContent = '✓ Added to cart!';
+      msg.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-[9999] animate-fadeIn';
+      document.body.appendChild(msg);
+      setTimeout(() => msg.remove(), 3000);
     } catch (error) {
       console.error('Error adding to cart:', error);
-      alert('Failed to add to cart');
-      
+      const msg = document.createElement('div');
+      msg.textContent = '✗ Failed to add to cart';
+      msg.className = 'fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-[9999] animate-fadeIn';
+      document.body.appendChild(msg);
+      setTimeout(() => msg.remove(), 3000);
     }
   };
 
@@ -74,24 +84,46 @@ function ProductPlans() {
       navigate('/user/cart?checkout=true');
     } catch (error) {
       console.error('Error processing Buy Now:', error);
-      alert('Failed to start checkout');
+      const msg = document.createElement('div');
+      msg.textContent = '✗ Failed to start checkout';
+      msg.className = 'fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-[9999] animate-fadeIn';
+      document.body.appendChild(msg);
+      setTimeout(() => msg.remove(), 3000);
     }
   };
 
   const isInWishlist = (planId) => wishlist.includes(String(planId));
 
   const handleAddToWishlist = async (plan) => {
+    // Check if already in wishlist
+    if (isInWishlist(plan._id)) {
+      const msg = document.createElement('div');
+      msg.textContent = 'ℹ Already in wishlist';
+      msg.className = 'fixed top-4 right-4 bg-blue-500 text-white px-6 py-3 rounded-lg shadow-lg z-[9999] animate-fadeIn';
+      document.body.appendChild(msg);
+      setTimeout(() => msg.remove(), 3000);
+      return;
+    }
+    
     try {
       const res = await wishlistService.addToWishlist(plan._id);
       if (res?.success) {
         setWishlist([...wishlist, String(plan._id)]);
-        alert('Added to wishlist');
+        const msg = document.createElement('div');
+        msg.textContent = '♥ Added to wishlist';
+        msg.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-[9999] animate-fadeIn';
+        document.body.appendChild(msg);
+        setTimeout(() => msg.remove(), 3000);
       } else {
-        alert(res?.message || 'Failed to add to wishlist');
+        throw new Error(res?.message || 'Failed to add to wishlist');
       }
     } catch (error) {
       console.error('Error adding to wishlist:', error);
-      alert('Failed to add to wishlist');
+      const msg = document.createElement('div');
+      msg.textContent = '✗ ' + (error.message || 'Failed to add to wishlist');
+      msg.className = 'fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-[9999] animate-fadeIn';
+      document.body.appendChild(msg);
+      setTimeout(() => msg.remove(), 3000);
     }
   };
 

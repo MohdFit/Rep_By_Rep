@@ -55,7 +55,11 @@ export default function AccountSettings() {
   const handleSaveChanges = (e) => {
     e.preventDefault();
     console.log("Profile Data:", user);
-    alert("Profile updated!");
+    const msg = document.createElement('div');
+    msg.textContent = '\u2713 Profile updated!';
+    msg.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-[9999] animate-fadeIn';
+    document.body.appendChild(msg);
+    setTimeout(() => msg.remove(), 3000);
     setIsEditing(false);
   };
 
@@ -66,11 +70,19 @@ export default function AccountSettings() {
   const handleChangePassword = (e) => {
     e.preventDefault();
     if (passwords.newPass !== passwords.confirm) {
-      alert("Passwords do not match!");
+      const msg = document.createElement('div');
+      msg.textContent = '\u26a0 Passwords do not match!';
+      msg.className = 'fixed top-4 right-4 bg-yellow-500 text-white px-6 py-3 rounded-lg shadow-lg z-[9999] animate-fadeIn';
+      document.body.appendChild(msg);
+      setTimeout(() => msg.remove(), 3000);
       return;
     }
     console.log("Password Data:", passwords);
-    alert("Password changed successfully!");
+    const msg = document.createElement('div');
+    msg.textContent = '\u2713 Password changed successfully!';
+    msg.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-[9999] animate-fadeIn';
+    document.body.appendChild(msg);
+    setTimeout(() => msg.remove(), 3000);
   };
 
   return (
