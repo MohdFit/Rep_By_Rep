@@ -4,7 +4,6 @@ import Order from "../../../assets/images/accountSetting/Order.png";
 import CreditCard from "../../../assets/images/OrderDetails/CreditCard.png";
 import MapPin from "../../../assets/images/OrderDetails/MapPin.png";
 import cardMan from "../../../assets/images/OrderDetails/cardMan.jpg";
-import cardWomen from "../../../assets/images/OrderDetails/cardWomen.jpg";
 import ReviewForm from "../../../components/ReviewForm";
 
 const OrderDetailsModal = ({ order, onClose }) => {

@@ -1,9 +1,15 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
+import { updateUser } from "../../services/userService";
+import api from "../../api/axios";
 import Layout from "./Layout";
 import "../../assets/styles/accountSetting.css";
 import userAvatar from "../../assets/images/accountSetting/UserProfile.jpg";
 
 export default function AccountSettings() {
+  const navigate = useNavigate();
+  const { user: authUser, updateUser: updateAuthUser, logout } = useAuth();
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -18,24 +24,19 @@ export default function AccountSettings() {
   });
 
   const [isEditing, setIsEditing] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  // Load user data from localStorage
+  // Load user data from auth context
   useEffect(() => {
-    const userData = localStorage.getItem('user');
-    if (userData) {
-      try {
-        const parsed = JSON.parse(userData);
-        setUser({
-          name: parsed.fullName || parsed.name || "",
-          email: parsed.email || "",
-          phone: parsed.phone || "",
-          address: parsed.address || "",
-        });
-      } catch (e) {
-        console.error("Failed to parse user data:", e);
-      }
+    if (authUser) {
+      setUser({
+        name: authUser.fullName || authUser.name || "",
+        email: authUser.email || "",
+        phone: authUser.phone || "",
+        address: authUser.address || "",
+      });
     }
-  }, []);
+  }, [authUser]);
 
   const handleProfileChange = (e) => {
     const { name, value } = e.target;
@@ -52,23 +53,70 @@ export default function AccountSettings() {
     setIsEditing(true);
   };
 
-  const handleSaveChanges = (e) => {
+  const handleSaveChanges = async (e) => {
     e.preventDefault();
-    console.log("Profile Data:", user);
-    const msg = document.createElement('div');
-    msg.textContent = '\u2713 Profile updated!';
-    msg.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-[9999] animate-fadeIn';
-    document.body.appendChild(msg);
-    setTimeout(() => msg.remove(), 3000);
-    setIsEditing(false);
+    if (!authUser?._id) return;
+    
+    setLoading(true);
+    try {
+      const updates = {
+        fullName: user.name,
+        email: user.email,
+        phone: user.phone,
+        address: user.address,
+      };
+      
+      const response = await updateUser(authUser._id, updates);
+      
+      if (response.success) {
+        // Update auth context with new user data
+        updateAuthUser(response.data.user);
+        
+        const msg = document.createElement('div');
+        msg.textContent = '\u2713 Profile updated successfully!';
+        msg.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-[9999] animate-fadeIn';
+        document.body.appendChild(msg);
+        setTimeout(() => msg.remove(), 3000);
+        setIsEditing(false);
+      }
+    } catch (error) {
+      console.error('Failed to update profile:', error);
+      const msg = document.createElement('div');
+      msg.textContent = '\u2717 ' + (error.response?.data?.message || 'Failed to update profile');
+      msg.className = 'fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-[9999] animate-fadeIn';
+      document.body.appendChild(msg);
+      setTimeout(() => msg.remove(), 3000);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleCancelEdit = () => {
     setIsEditing(false);
   };
 
-  const handleChangePassword = (e) => {
+  const handleChangePassword = async (e) => {
     e.preventDefault();
+    
+    // Validate passwords
+    if (!passwords.current) {
+      const msg = document.createElement('div');
+      msg.textContent = '\u26a0 Please enter your current password';
+      msg.className = 'fixed top-4 right-4 bg-yellow-500 text-white px-6 py-3 rounded-lg shadow-lg z-[9999] animate-fadeIn';
+      document.body.appendChild(msg);
+      setTimeout(() => msg.remove(), 3000);
+      return;
+    }
+    
+    if (passwords.newPass.length < 6) {
+      const msg = document.createElement('div');
+      msg.textContent = '\u26a0 New password must be at least 6 characters';
+      msg.className = 'fixed top-4 right-4 bg-yellow-500 text-white px-6 py-3 rounded-lg shadow-lg z-[9999] animate-fadeIn';
+      document.body.appendChild(msg);
+      setTimeout(() => msg.remove(), 3000);
+      return;
+    }
+    
     if (passwords.newPass !== passwords.confirm) {
       const msg = document.createElement('div');
       msg.textContent = '\u26a0 Passwords do not match!';
@@ -77,12 +125,34 @@ export default function AccountSettings() {
       setTimeout(() => msg.remove(), 3000);
       return;
     }
-    console.log("Password Data:", passwords);
-    const msg = document.createElement('div');
-    msg.textContent = '\u2713 Password changed successfully!';
-    msg.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-[9999] animate-fadeIn';
-    document.body.appendChild(msg);
-    setTimeout(() => msg.remove(), 3000);
+    
+    setLoading(true);
+    try {
+      const response = await api.post('/auth/change-password', {
+        currentPassword: passwords.current,
+        newPassword: passwords.newPass,
+      });
+      
+      if (response.data.success) {
+        const msg = document.createElement('div');
+        msg.textContent = '\u2713 Password changed successfully!';
+        msg.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-[9999] animate-fadeIn';
+        document.body.appendChild(msg);
+        setTimeout(() => msg.remove(), 3000);
+        
+        // Clear password fields
+        setPasswords({ current: '', newPass: '', confirm: '' });
+      }
+    } catch (error) {
+      console.error('Failed to change password:', error);
+      const msg = document.createElement('div');
+      msg.textContent = '\u2717 ' + (error.response?.data?.message || 'Failed to change password');
+      msg.className = 'fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-[9999] animate-fadeIn';
+      document.body.appendChild(msg);
+      setTimeout(() => msg.remove(), 3000);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -159,13 +229,14 @@ export default function AccountSettings() {
 
             {isEditing && (
               <div className="edit-buttons">
-                <button type="submit" className="btn-save">
-                  Save Changes
+                <button type="submit" className="btn-save" disabled={loading}>
+                  {loading ? 'Saving...' : 'Save Changes'}
                 </button>
                 <button
                   type="button"
                   className="btn-cancel"
                   onClick={handleCancelEdit}
+                  disabled={loading}
                 >
                   Cancel
                 </button>
@@ -213,10 +284,32 @@ export default function AccountSettings() {
               />
             </div>
 
-            <button type="submit" className="btn-change">
-              Change Password
+            <button type="submit" className="btn-change" disabled={loading}>
+              {loading ? 'Changing...' : 'Change Password'}
             </button>
           </form>
+        </div>
+
+        <div className="section">
+          <h2 className="section-title">Account Actions</h2>
+          <p className="desc">
+            Sign out from your account.
+          </p>
+          <button 
+            onClick={async () => {
+              await logout();
+              navigate('/');
+              const msg = document.createElement('div');
+              msg.textContent = '\u2713 Logged out successfully';
+              msg.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-[9999] animate-fadeIn';
+              document.body.appendChild(msg);
+              setTimeout(() => msg.remove(), 3000);
+            }}
+            className="btn-change"
+            style={{ backgroundColor: '#dc2626', borderColor: '#dc2626' }}
+          >
+            🚪 Logout
+          </button>
         </div>
       </div>
     </Layout>

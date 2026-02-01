@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { getProductReviews } from '../services/reviewService';
 import './productReviews.css';
 
@@ -12,11 +12,7 @@ const ProductReviews = ({ productId }) => {
   const [sortBy, setSortBy] = useState('createdAt');
   const [sortOrder, setSortOrder] = useState('desc');
 
-  useEffect(() => {
-    fetchReviews();
-  }, [productId, page, sortBy, sortOrder]);
-
-  const fetchReviews = async () => {
+  const fetchReviews = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -43,7 +39,11 @@ const ProductReviews = ({ productId }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [page, productId, sortBy, sortOrder]);
+
+  useEffect(() => {
+    fetchReviews();
+  }, [fetchReviews]);
 
   const renderStars = (rating) => {
     return (

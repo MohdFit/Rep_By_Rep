@@ -243,9 +243,9 @@ export default function Login() {
             <label className="flex items-center gap-1">
               <input type="checkbox" /> Remember me
             </label>
-            <a href="#" className="text-customOrange1 hover:underline">
+            <button type="button" className="text-customOrange1 hover:underline">
               Forgot Password?
-            </a>
+            </button>
           </div>
 
           {error && <div className="text-red-600 font-medium text-sm bg-red-50 border-2 border-red-200 rounded-lg p-3 mt-2">{error}</div>}

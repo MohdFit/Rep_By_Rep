@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { CartProvider } from "./context/CartContext";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
+import AdminRoute from "./components/AdminRoute";
 
 import Login from "./pages/auth/login";
 import Register from "./pages/auth/register";
@@ -9,6 +10,7 @@ import Home from "./pages/Home/Home";
 import ProductPlans from "./pages/productPlans/ProductPlans";
 
 import OrderDetails from "./pages/User/Order/OrderDetailes";
+import OrderConfirmation from "./pages/User/Order/OrderConfirmation";
 import FeedbackModal from "./pages/User/Order/FeedbackModal";
 import Order from "./pages/User/Order/MyOrders";
 import Cart from "./pages/Cart/Cart";
@@ -39,11 +41,12 @@ function App() {
           <Route path="/user/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
           <Route path="/user/account-settings" element={<ProtectedRoute><AccountSettings /></ProtectedRoute>} />
           <Route path="/user/order-details" element={<ProtectedRoute><OrderDetails /></ProtectedRoute>} />
+          <Route path="/user/order-confirmation" element={<ProtectedRoute><OrderConfirmation /></ProtectedRoute>} />
           <Route path="/user/feedback-model" element={<ProtectedRoute><FeedbackModal /></ProtectedRoute>} />
           <Route path="/user/orders" element={<ProtectedRoute><Order /></ProtectedRoute>} />
           <Route path="/user/my-orders" element={<ProtectedRoute><Order /></ProtectedRoute>} />
 
-          <Route path="/admin/*" element={<ProtectedRoute><AdminLayout>
+          <Route path="/admin/*" element={<AdminRoute><AdminLayout>
               <Routes>
                 <Route path="dashboard" element={<AdminDashboard />} />
                 <Route path="orders" element={<AdminOrders />} />
@@ -52,7 +55,7 @@ function App() {
                 <Route path="reviews" element={<AdminReviews />} />
                 <Route path="settings" element={<AdminSettings />} />
               </Routes>
-            </AdminLayout></ProtectedRoute>}
+            </AdminLayout></AdminRoute>}
         />
 
         </Routes>

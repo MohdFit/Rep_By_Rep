@@ -25,11 +25,9 @@ const Payment3 = ({ onBack, onClose, onHome, shippingData, paymentMethod, cartIt
         userId,
         items: (cartItems || []).map(item => ({
           productId: item._id || item.id,
-          productType: item.productType || 'TShirt',
+          productType: item.productType || 'Plan',
           quantity: item.quantity || 1,
-          unitPrice: item.price || item.unitPrice || 0,
-          selectedSize: item.selectedSize,
-          selectedColor: item.selectedColor
+          unitPrice: item.price || item.unitPrice || 0
         })),
         shippingInfo: shippingData || {
           firstName: "Guest",
@@ -49,14 +47,15 @@ const Payment3 = ({ onBack, onClose, onHome, shippingData, paymentMethod, cartIt
       if (response.success) {
         // Clear cart after successful order
         localStorage.removeItem("cart");
-        
-        // Show success message
+        return response.data;
       } else {
         setError(response.message || "Failed to create order");
+        return null;
       }
     } catch (err) {
       console.error("Error creating order:", err);
       setError(err.message || "An error occurred while creating order");
+      return null;
     } finally {
       setLoading(false);
     }
@@ -122,14 +121,16 @@ const Payment3 = ({ onBack, onClose, onHome, shippingData, paymentMethod, cartIt
 
         <button
           onClick={() => {
-            handleCreateOrder().then(() => {
-              onHome();
+            handleCreateOrder().then((order) => {
+              if (order) {
+                onHome();
+              }
             });
           }}
           disabled={loading}
           className="mt-6 bg-gradient-to-r from-customOrange1 to-orange-500 hover:from-orange-700 hover:to-orange-600 text-white font-bold text-xl py-4 px-12 rounded-lg shadow-lg hover:shadow-xl transition-all transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
         >
-          {loading ? 'Processing...' : 'Back to Home'}
+          {loading ? 'Processing...' : 'Finish'}
         </button>
       </div>
     </div>

@@ -1,27 +1,60 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Search, Phone, XCircle, Check, X } from 'lucide-react';
+import { getAllUsers } from '../../services/userService';
 
 const AdminUsers = () => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [users, setUsers] = useState([
-    { id: 1, name: 'Omar gggg', email: 'omar.j@email.com', joinedDate: 'Aug 17, 2025', status: 'ACTIVE' },
-    { id: 2, name: 'Sarah Johnson', email: 'sarah.j@email.com', joinedDate: 'Aug 17, 2025', status: 'Blocked' },
-    { id: 3, name: 'Sarah Johnson', email: 'sarah.j@email.com', joinedDate: 'Aug 17, 2025', status: 'ACTIVE' },
-    { id: 4, name: 'Sarah Johnson', email: 'sarah.j@email.com', joinedDate: 'Aug 17, 2025', status: 'ACTIVE' },
-    { id: 5, name: 'Sarah Johnson', email: 'sarah.j@email.com', joinedDate: 'Aug 17, 2025', status: 'ACTIVE' },
-    { id: 6, name: 'Sarah Johnson', email: 'sarah.j@email.com', joinedDate: 'Aug 17, 2025', status: 'ACTIVE' },
-    { id: 7, name: 'Sarah Johnson', email: 'sarah.j@email.com', joinedDate: 'Aug 17, 2025', status: 'ACTIVE' },
-    { id: 8, name: 'Sarah Johnson', email: 'sarah.j@email.com', joinedDate: 'Aug 17, 2025', status: 'Blocked' },
-    { id: 9, name: 'Sarah Johnson', email: 'sarah.j@email.com', joinedDate: 'Aug 17, 2025', status: 'ACTIVE' },
-    { id: 10, name: 'Sarah Johnson', email: 'sarah.j@email.com', joinedDate: 'Aug 17, 2025', status: 'ACTIVE' },
-  ]);
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(10);
+  const [totalPages, setTotalPages] = useState(1);
+  const [statusFilter, setStatusFilter] = useState('all');
+  const [roleFilter, setRoleFilter] = useState('all');
 
-  const filteredUsers = users.filter(user => {
-    const matchesSearch = user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         user.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         user.id.toString().includes(searchQuery);
-    return matchesSearch;
-  });
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        setLoading(true);
+        setError('');
+        const res = await getAllUsers({
+          page,
+          limit,
+          search: searchQuery,
+          status: statusFilter,
+          role: roleFilter
+        });
+        if (res?.success) {
+          const normalized = (res.data?.users || []).map((u) => ({
+            id: u._id,
+            name: u.fullName || u.name || 'User',
+            email: u.email || '-',
+            joinedDate: u.createdAt
+              ? new Date(u.createdAt).toLocaleDateString('en-US', {
+                  month: 'short',
+                  day: 'numeric',
+                  year: 'numeric'
+                })
+              : '-',
+            status: u.isActive === false ? 'Blocked' : 'ACTIVE',
+            role: u.role || 'user'
+          }));
+          setUsers(normalized);
+          setTotalPages(res.data?.pagination?.totalPages || 1);
+        } else {
+          setError(res?.message || 'Failed to load users');
+        }
+      } catch (err) {
+        setError(err?.message || 'Failed to load users');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    const debounce = setTimeout(fetchUsers, 300);
+    return () => clearTimeout(debounce);
+  }, [page, limit, roleFilter, searchQuery, statusFilter]);
 
   return (
     <div className="min-h-screen bg-white-50 p-4 md:p-8">
@@ -45,11 +78,43 @@ const AdminUsers = () => {
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-orange-400" size={18} />
               <input
                 type="text"
-                placeholder="Search by order number ..."
+                placeholder="Search by name or email"
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={(e) => { setPage(1); setSearchQuery(e.target.value); }}
                 className="w-full pl-10 pr-4 py-2 border border-orange-200 rounded-full focus:outline-none focus:ring-1 focus:ring-orange-400 focus:border-orange-400 text-sm"
               />
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+              <select
+                value={statusFilter}
+                onChange={(e) => { setPage(1); setStatusFilter(e.target.value); }}
+                className="w-full sm:w-[160px] px-3 py-2 border border-orange-200 rounded-full text-sm focus:outline-none focus:ring-1 focus:ring-orange-400 focus:border-orange-400"
+              >
+                <option value="all">All Status</option>
+                <option value="active">Active</option>
+                <option value="blocked">Blocked</option>
+              </select>
+
+              <select
+                value={roleFilter}
+                onChange={(e) => { setPage(1); setRoleFilter(e.target.value); }}
+                className="w-full sm:w-[160px] px-3 py-2 border border-orange-200 rounded-full text-sm focus:outline-none focus:ring-1 focus:ring-orange-400 focus:border-orange-400"
+              >
+                <option value="all">All Roles</option>
+                <option value="admin">Admin</option>
+                <option value="user">User</option>
+              </select>
+
+              <select
+                value={limit}
+                onChange={(e) => { setPage(1); setLimit(Number(e.target.value)); }}
+                className="w-full sm:w-[140px] px-3 py-2 border border-orange-200 rounded-full text-sm focus:outline-none focus:ring-1 focus:ring-orange-400 focus:border-orange-400"
+              >
+                <option value={10}>10 / page</option>
+                <option value={20}>20 / page</option>
+                <option value={50}>50 / page</option>
+              </select>
             </div>
           </div>
 
@@ -66,7 +131,13 @@ const AdminUsers = () => {
 
               
               <div>
-                {filteredUsers.map((user) => (
+                {loading && (
+                  <div className="p-8 text-center text-gray-500 text-sm">Loading users...</div>
+                )}
+                {!loading && error && (
+                  <div className="p-8 text-center text-red-500 text-sm">{error}</div>
+                )}
+                {!loading && !error && users.map((user) => (
                   <div 
                     key={user.id} 
                     className="grid grid-cols-[2.5fr_1.5fr_1.2fr_1fr] gap-4 px-6 py-4 border-b border-gray-100 items-center hover:bg-gray-50 transition-colors"
@@ -121,7 +192,13 @@ const AdminUsers = () => {
 
           
           <div className="block sm:hidden">
-            {filteredUsers.map((user) => (
+            {loading && (
+              <div className="p-4 text-center text-gray-500 text-sm">Loading users...</div>
+            )}
+            {!loading && error && (
+              <div className="p-4 text-center text-red-500 text-sm">{error}</div>
+            )}
+            {!loading && !error && users.map((user) => (
               <div key={user.id} className="p-4 border-b border-gray-100">
                 <div className="flex items-start gap-3 mb-3">
                   <div className="w-12 h-12 bg-orange-200 rounded-full flex items-center justify-center flex-shrink-0">
@@ -163,8 +240,32 @@ const AdminUsers = () => {
             ))}
           </div>
 
+          {!loading && !error && users.length > 0 && (
+            <div className="flex items-center justify-between px-6 py-4 border-t border-gray-100">
+              <span className="text-sm text-gray-500">Page {page} of {totalPages}</span>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setPage((p) => Math.max(1, p - 1))}
+                  disabled={page <= 1}
+                  className="px-3 py-1 rounded-md border border-gray-300 text-sm text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Prev
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                  disabled={page >= totalPages}
+                  className="px-3 py-1 rounded-md border border-gray-300 text-sm text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Next
+                </button>
+              </div>
+            </div>
+          )}
+
           
-          {filteredUsers.length === 0 && (
+          {!loading && !error && users.length === 0 && (
             <div className="p-12 text-center">
               <p className="text-gray-500 text-sm">No users found matching your criteria.</p>
             </div>
