@@ -59,13 +59,23 @@ const getAllUsers = async (req, res) => {
     
     if (search) {
       query.$or = [
+        { fullName: { $regex: search, $options: 'i' } },
         { name: { $regex: search, $options: 'i' } },
         { email: { $regex: search, $options: 'i' } }
       ];
     }
     
     if (status && status !== 'all') {
-      query.isActive = status === 'active';
+      if (status === 'active') {
+        query.$or = query.$or ? query.$or : [];
+        query.$and = [
+          ...(query.$and || []),
+          { $or: [{ isActive: true }, { isActive: { $exists: false } }] }
+        ];
+      }
+      if (status === 'blocked') {
+        query.isActive = false;
+      }
     }
     
     if (role) {

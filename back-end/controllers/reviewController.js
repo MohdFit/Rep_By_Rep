@@ -1,5 +1,4 @@
 const Review = require('../models/review');
-const TShirt = require('../models/merch');
 const Plan = require('../models/plan');
 const Order = require('../models/order');
 
@@ -34,19 +33,14 @@ exports.createReview = async (req, res) => {
       });
     }
 
-    // Check if product exists and determine type
-    let product = await Plan.findById(productId);
-    let productType = 'Plan';
-    
-    if (!product) {
-      product = await TShirt.findById(productId);
-      productType = 'TShirt';
-    }
+    // Check if plan exists
+    const product = await Plan.findById(productId);
+    const productType = 'Plan';
     
     if (!product) {
       return res.status(404).json({
         success: false,
-        message: 'Product not found'
+        message: 'Plan not found'
       });
     }
 

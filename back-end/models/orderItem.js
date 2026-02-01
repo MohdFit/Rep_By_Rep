@@ -1,21 +1,21 @@
 const mongoose = require('mongoose');
-const Plan = require('./plan');      // Path to your Plan model
-const TShirt = require('./merch');
+const Plan = require('./plan');
 
 const orderItemSchema = new mongoose.Schema({
   productType: {
     type: String,
     enum: {
-      values: ['Plan', 'TShirt'],
-      message: 'Product type must be either Plan or TShirt'
+      values: ['Plan'],
+      message: 'Product type must be Plan'
     },
-    required: [true, 'Product type is required']
+    required: [true, 'Product type is required'],
+    default: 'Plan'
   },
   
   productId: {
     type: mongoose.Schema.Types.ObjectId,
     required: [true, 'Product ID is required'],
-    refPath: 'productType'
+    ref: 'Plan'
   },
   
   quantity: {
@@ -33,22 +33,6 @@ const orderItemSchema = new mongoose.Schema({
   totalPrice: {
     type: Number,
     min: [0, 'Total price cannot be negative']
-  },
-  
-  
-  selectedSize: {
-    type: String,
-    enum: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
-    required: function() {
-      return this.productType === 'TShirt';
-    }
-  },
-  
-  selectedColor: {
-    type: String,
-    required: function() {
-      return this.productType === 'TShirt';
-    }
   }
 }, {
   timestamps: true
@@ -56,16 +40,10 @@ const orderItemSchema = new mongoose.Schema({
 
 orderItemSchema.pre('validate', async function (next) {
   try {
-    let product;
-
-    if (this.productType === 'Plan') {
-      product = await Plan.findById(this.productId);
-    } else if (this.productType === 'TShirt') {
-      product = await TShirt.findById(this.productId);
-    }
+    const product = await Plan.findById(this.productId);
 
     if (!product) {
-      return next(new Error('Product not found'));
+      return next(new Error('Plan not found'));
     }
 
     this.unitPrice = product.price;

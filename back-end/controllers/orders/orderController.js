@@ -31,22 +31,11 @@ const orderController = {
       }
 
 
-       const hasTShirt = items.some(item => item.productType === 'TShirt');
-
-       if (hasTShirt) {
-        if (!shippingInfo || !shippingInfo.street || !shippingInfo.city || 
-            !shippingInfo.state || !shippingInfo.zipCode) {
-          return res.status(400).json({
-            success: false,
-            message: 'Shipping information is required for merchandise orders (street, city, state, zipCode)'
-          });
-        }
-      }
-    let totalAmount = 0;
+      let totalAmount = 0;
       const createdOrderItems = [];
      for (const itemData of items) {
-        const { productId, productType, quantity, unitPrice, selectedSize, selectedColor } = itemData;
-         if (!productId || !productType || !quantity) {
+        const { productId, productType, quantity, unitPrice } = itemData;
+        if (!productId || !productType || !quantity) {
           await session.abortTransaction();
           return res.status(400).json({
             success: false,
@@ -54,13 +43,19 @@ const orderController = {
           });
         }
 
+        if (productType !== 'Plan') {
+          await session.abortTransaction();
+          return res.status(400).json({
+            success: false,
+            message: 'Only training plans are supported'
+          });
+        }
+
         const orderItem = new OrderItem({
           productType,
           productId,
           quantity,
-          unitPrice,
-          selectedSize: productType === 'TShirt' ? selectedSize : undefined,
-          selectedColor: productType === 'TShirt' ? selectedColor : undefined
+          unitPrice
         });
 
         const savedOrderItem = await orderItem.save({ session });
@@ -68,9 +63,7 @@ const orderController = {
         totalAmount += savedOrderItem.totalPrice;
       }
 
-       if (hasTShirt) {
-        totalAmount += shippingCost;
-      }
+      totalAmount += shippingCost;
 
        const year = new Date().getFullYear();
        const count = await Order.countDocuments();
@@ -81,8 +74,8 @@ const orderController = {
         userId,
         orderItems: createdOrderItems,
         orderNumber,
-        shippingInfo: hasTShirt ? shippingInfo : undefined,
-        shippingCost: hasTShirt ? shippingCost : 0,
+        shippingInfo: shippingInfo,
+        shippingCost: shippingCost,
         total: totalAmount
       });
 

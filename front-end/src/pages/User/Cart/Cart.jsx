@@ -233,7 +233,7 @@ export default function CartPage() {
                 onClose={() => {setIsPaymentOpen(false); setCurrentStep(1);}}
                 onBack={() => setCurrentStep(2)}
                 onConfirm={() => setIsPaymentOpen(false)}
-                onHome={() => {setIsPaymentOpen(false); setCurrentStep(1); navigate("/");}}
+                onHome={() => {setIsPaymentOpen(false); setCurrentStep(1); navigate("/user/order-confirmation");}}
                 />
             )}
 

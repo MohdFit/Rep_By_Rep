@@ -5,7 +5,7 @@ import { getSalesOverview } from '../../../services/statsService';
 export default function SalesOverviewChart() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [year, setYear] = useState(new Date().getFullYear());
+  const [year] = useState(new Date().getFullYear());
 
   useEffect(() => {
     const fetchSalesData = async () => {

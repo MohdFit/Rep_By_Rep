@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 
 export default function StatsSection() {
   const stats = [
@@ -23,7 +23,10 @@ export default function StatsSection() {
   const [hasAnimated, setHasAnimated] = useState(false);
   const sectionRef = useRef(null);
 
-  const targetValues = stats.map(stat => parseInt(stat.number.replace(/\D/g, '')));
+  const targetValues = useMemo(
+    () => stats.map(stat => parseInt(stat.number.replace(/\D/g, ''))),
+    [stats]
+  );
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -60,7 +63,7 @@ export default function StatsSection() {
     }
 
     return () => observer.disconnect();
-  }, [hasAnimated]);
+  }, [hasAnimated, targetValues]);
 
   const formatNumber = (value, originalString) => {
     const suffix = originalString.replace(/\d/g, ''); // Extract non-numeric characters

@@ -1,5 +1,4 @@
 const Cart = require('../models/cart');
-const TShirt = require('../models/merch');
 const Plan = require('../models/plan');
 
 const cartController = {
@@ -7,7 +6,7 @@ const cartController = {
   addToCart: async (req, res) => {
     try {
       const { userId } = req.user;
-      const { productId, productType, quantity, selectedSize, selectedColor } = req.body;
+      const { productId, productType, quantity } = req.body;
 
       if (!productId || !productType || !quantity) {
         return res.status(400).json({
@@ -16,18 +15,21 @@ const cartController = {
         });
       }
 
-      // Fetch product to get price
-      let product;
-      if (productType === 'TShirt') {
-        product = await TShirt.findById(productId);
-      } else if (productType === 'Plan') {
-        product = await Plan.findById(productId);
+      // Only support Plans
+      if (productType !== 'Plan') {
+        return res.status(400).json({
+          success: false,
+          message: 'Only training plans are supported'
+        });
       }
+
+      // Fetch plan to get price
+      const product = await Plan.findById(productId);
 
       if (!product) {
         return res.status(404).json({
           success: false,
-          message: `${productType} not found`
+          message: 'Plan not found'
         });
       }
 
@@ -46,8 +48,6 @@ const cartController = {
           productId,
           productType,
           quantity,
-          selectedSize: productType === 'TShirt' ? selectedSize : undefined,
-          selectedColor: productType === 'TShirt' ? selectedColor : undefined,
           price: product.price
         });
       }

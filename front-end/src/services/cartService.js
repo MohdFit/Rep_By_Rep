@@ -12,15 +12,14 @@ const cartService = {
     }
   },
 
-  // Add item to cart
-  addToCart: async (productId, productType, quantity, selectedSize, selectedColor) => {
+  // Add item to cart (plans only)
+  addToCart: async (productId, productType = 'Plan', quantity) => {
     try {
       const response = await api.post('/cart/add', {
         productId,
-        productType,
-        quantity,
-        selectedSize,
-        selectedColor
+
+        productType: productType || 'Plan',
+        quantity
       });
       return response.data;
     } catch (error) {

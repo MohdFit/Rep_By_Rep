@@ -1,5 +1,4 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
 import { useAuth } from "../../context/AuthContext";
 import userAvatar from "../../assets/images/accountSetting/UserProfile.jpg";
 import "../../assets/styles/sidebar.css";

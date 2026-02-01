@@ -13,25 +13,19 @@ const cartSchema = new mongoose.Schema({
     productId: {
       type: mongoose.Schema.Types.ObjectId,
       required: [true, 'Product ID is required'],
-      refPath: 'items.productType'
+      ref: 'Plan'
     },
     productType: {
       type: String,
-      enum: ['TShirt', 'Plan'],
-      required: [true, 'Product type is required']
+      enum: ['Plan'],
+      required: [true, 'Product type is required'],
+      default: 'Plan'
     },
     quantity: {
       type: Number,
       required: [true, 'Quantity is required'],
       min: [1, 'Quantity must be at least 1'],
       default: 1
-    },
-    selectedSize: {
-      type: String,
-      enum: ['XS', 'S', 'M', 'L', 'XL', 'XXL']
-    },
-    selectedColor: {
-      type: String
     },
     price: {
       type: Number,
@@ -52,7 +46,7 @@ const cartSchema = new mongoose.Schema({
   tax: {
     type: Number,
     default: 0,
-    min: [0, 'Tax cannot be negative']
+    min: [0, 'Tax cannot be negative']  
   },
   
   shippingCost: {

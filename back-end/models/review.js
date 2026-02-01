@@ -9,18 +9,18 @@ const reviewSchema = new mongoose.Schema({
     index: true
   },
 
-  // Type of product being reviewed (TShirt or Plan - training program)
+  // Type of product being reviewed (Plan - training program)
   productType: {
     type: String,
     required: [true, 'Product type is required'],
-    enum: ['TShirt', 'Plan'],
-    default: 'Plan' // Default to Plan since we focus on training programs
+    enum: ['Plan'],
+    default: 'Plan'
   },
 
-  // Reference to the product being reviewed (dynamic ref based on productType)
+  // Reference to the plan being reviewed
   productId: {
     type: mongoose.Schema.Types.ObjectId,
-    refPath: 'productType',
+    ref: 'Plan',
     required: [true, 'Product ID is required'],
     index: true
   },

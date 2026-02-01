@@ -22,7 +22,7 @@ const AdminProducts = () => {
   // Fetch plans on mount
   useEffect(() => {
     fetchPlans();
-  }, []);
+  }, [fetchPlans]);
 
   const fetchPlans = useCallback(async () => {
     try {
@@ -120,7 +120,6 @@ const AdminProducts = () => {
   return (
     <div className="p-8 bg-gray-50 min-h-screen">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900">Training Programs</h1>
           <button
@@ -132,14 +131,12 @@ const AdminProducts = () => {
           </button>
         </div>
 
-        {/* Error Message */}
         {error && (
           <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700">
             {error}
           </div>
         )}
 
-        {/* Search Bar */}
         <div className="mb-6 relative">
           <Search size={20} className="absolute left-3 top-3 text-gray-400" />
           <input
@@ -151,7 +148,6 @@ const AdminProducts = () => {
           />
         </div>
 
-        {/* Form Modal */}
         {showForm && (
           <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
             <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
@@ -278,7 +274,6 @@ const AdminProducts = () => {
           </div>
         )}
 
-        {/* Content */}
         {loading ? (
           <div className="text-center py-12 text-gray-500">Loading training programs...</div>
         ) : filteredPlans.length === 0 ? (
@@ -339,7 +334,6 @@ const AdminProducts = () => {
           </div>
         )}
 
-        {/* Stats */}
         <div className="mt-8 grid grid-cols-3 gap-4">
           <div className="bg-white p-4 rounded-lg shadow">
             <p className="text-gray-600 text-sm">Total Programs</p>
