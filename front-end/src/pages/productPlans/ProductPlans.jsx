@@ -10,6 +10,11 @@ import { useCart } from "../../context/CartContext";
 import ProductReviews from "../../components/ProductReviews";
 import heart from "../../assets/images/productPlans/heart.png";
 import wishlistService from "../../services/wishlistService";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
 function ProductPlans() {
   const [plans, setPlans] = useState([]);
@@ -17,6 +22,7 @@ function ProductPlans() {
   const [error, setError] = useState(null);
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [wishlist, setWishlist] = useState([]);
+  const [swiperKey, setSwiperKey] = useState(0);
   const { addToCart } = useCart();
   const navigate = useNavigate();
 
@@ -138,14 +144,14 @@ function ProductPlans() {
   return (
     <>
       <Header />
-      <section className="h-[calc(100vh-36px)] relative w-full font-poppins mb-[50px] sm:mb-[133px]">
+      <section className="h-[calc(40vh+60px)] sm:h-[calc(100vh-36px)] relative w-full font-poppins mb-[30px] sm:mb-[133px]">
         <img
           src={overlay}
           alt="overlay"
           className="absolute left-0 top-0 w-full h-full object-cover"
         />
       </section>
-      <section className="px-[17px] sm:px-[83px] mb-[65px] sm:mb-[145px]">
+      <section className="px-2 sm:px-[83px] mb-[40px] sm:mb-[145px]">
         <FilterPills />
         {loading ? (
           <div className="text-center py-12">
@@ -161,70 +167,83 @@ function ProductPlans() {
             <p className="text-white text-lg">No plans available</p>
           </div>
         ) : (
-          <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-y-[50px] gap-x-[20px]">
-            {plans.map(plan => (
-              <div
-                key={plan._id}
-                className="relative text-white font-poppins cursor-pointer"
-                onClick={() => handleViewDetails(plan)}
-              >
-                <img src={plan.image || box} className="w-full object-cover h-[400px]" alt={plan.name} />
-                <div className="absolute bottom-0 left-0 w-full sm:p-4 p-2">
-                  <h3 className="sm:text-2xl text-normal font-semibold">{plan.name}</h3>
-                  <p className="font-medium sm:text-sm text-[10px]">${plan.price}</p>
-                  <div className="flex justify-between items-center mt-[6px] sm:mt-[18px]">
-                    <button
-                      onClick={(e) => { e.stopPropagation(); handleAddToCart(plan); }}
-                      className="block px-[15px] text-xs font-semibold bg-[#FBF4F24D]/30 sm:px-[10px] p-[7px] sm:w-[180px] text-center border border-customOrange1 rounded-[17px] uppercase hover:bg-customOrange1 transition"
-                    >
-                      add to bag
-                    </button>
-                    <button
-                      onClick={(e) => { e.stopPropagation(); handleBuyNow(plan); }}
-                      className="hidden sm:block ml-2 px-[15px] text-xs font-semibold bg-orange-500 sm:px-[10px] p-[7px] sm:w-[180px] text-center border border-orange-500 rounded-[17px] uppercase hover:bg-orange-600 transition"
-                    >
-                      buy now
-                    </button>
-                    <button
-                      onClick={(e) => { e.stopPropagation(); handleAddToWishlist(plan); }}
-                      className="transition-all duration-200 hover:scale-110"
-                      aria-label={isInWishlist(plan._id) ? "Remove from wishlist" : "Add to wishlist"}
-                    >
-                      <img
-                        src={heart}
-                        className={isInWishlist(plan._id) ? 'sm:w-[30px] sm:h-[30px] w-[15px] h-[14px] brightness-125 drop-shadow-[0_0_8px_rgba(255,107,53,0.6)]' : 'sm:w-[30px] sm:h-[30px] w-[15px] h-[14px] opacity-60'}
-                        alt="wishlist"
-                      />
-                    </button>
+          <div key={swiperKey}>
+            <Swiper
+              modules={[Navigation, Pagination]}
+              slidesPerView={1}
+              spaceBetween={12}
+              navigation={{
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+              }}
+              pagination={{
+                clickable: true,
+                dynamicBullets: true,
+                el: ".swiper-pagination-custom",
+              }}
+              breakpoints={{
+                480: { slidesPerView: 1.1, spaceBetween: 12 },
+                640: { slidesPerView: 2, spaceBetween: 16 },
+                1024: { slidesPerView: 3, spaceBetween: 20 },
+              }}
+              className="pb-20"
+            >
+              {plans.map(plan => (
+                <SwiperSlide key={plan._id}>
+                  <div
+                    className="relative text-white font-poppins cursor-pointer h-full group"
+                    onClick={() => handleViewDetails(plan)}
+                  >
+                    <img src={plan.image || box} className="w-full object-cover rounded-t-lg h-[180px] sm:h-[260px] md:h-[320px] lg:h-[400px] transition-all duration-200" alt={plan.name} />
+                    <div className="absolute bottom-0 left-0 w-full sm:p-4 p-2 bg-gradient-to-t from-black/80 via-black/40 to-transparent rounded-b-lg">
+                      <h3 className="sm:text-2xl text-base font-semibold line-clamp-1">{plan.name}</h3>
+                      <p className="font-medium sm:text-sm text-xs">${plan.price}</p>
+                      <div className="flex flex-wrap justify-between items-center mt-[6px] sm:mt-[18px] gap-2">
+                        <button
+                          onClick={(e) => { e.stopPropagation(); handleAddToCart(plan); }}
+                          className="block px-3 text-xs font-semibold bg-[#FBF4F24D]/30 sm:px-4 py-2 sm:w-[120px] text-center border border-customOrange1 rounded-[17px] uppercase hover:bg-customOrange1 transition"
+                        >
+                          add to bag
+                        </button>
+                        <button
+                          onClick={(e) => { e.stopPropagation(); handleBuyNow(plan); }}
+                          className="hidden sm:block ml-2 px-3 text-xs font-semibold bg-orange-500 sm:px-4 py-2 sm:w-[120px] text-center border border-orange-500 rounded-[17px] uppercase hover:bg-orange-600 transition"
+                        >
+                          buy now
+                        </button>
+                        <button
+                          onClick={(e) => { e.stopPropagation(); handleAddToWishlist(plan); }}
+                          className="transition-all duration-200 hover:scale-110"
+                          aria-label={isInWishlist(plan._id) ? "Remove from wishlist" : "Add to wishlist"}
+                        >
+                          <img
+                            src={heart}
+                            className={isInWishlist(plan._id) ? 'sm:w-[30px] sm:h-[30px] w-[18px] h-[16px] brightness-125 drop-shadow-[0_0_8px_rgba(255,107,53,0.6)]' : 'sm:w-[30px] sm:h-[30px] w-[18px] h-[16px] opacity-60'}
+                            alt="wishlist"
+                          />
+                        </button>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-            ))}
+                </SwiperSlide>
+              ))}
+            </Swiper>
+            <div className="flex justify-center gap-2 mt-8 swiper-pagination-custom"></div>
           </div>
         )}
-        <div className="sm:flex justify-center space-x-4 items-center mt-[120px] hidden">
-          <span className="cursor-pointer text-white bg-gradient-to-b block from-customOrange1 to-customOrange2 rounded-full sm:w-[30px] sm:h-[30px] flex justify-center items-center">
-            1
-          </span>
-          <span className="cursor-pointer">2</span>
-          <span className="cursor-pointer">3</span>
-          <span className="cursor-pointer">4</span>
-          <span className="cursor-pointer">5</span>
-          <span className="cursor-pointer">&rarr;</span>
-        </div>
       </section>
       <FooterWhite />
 
       {selectedPlan && (
         <div
-          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
+          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-2 sm:p-4"
           onClick={handleCloseDetails}
         >
           <div
-            className="bg-[#1a1a1a] rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto text-white"
+            className="bg-[#1a1a1a] rounded-lg max-w-2xl w-full max-h-[95vh] overflow-y-auto text-white"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="sticky top-0 bg-[#1a1a1a] border-b border-orange-500 p-4 flex justify-between items-center">
+            <div className="sticky top-0 bg-[#1a1a1a] border-b border-orange-500 p-4 flex justify-between items-center z-10">
               <h2 className="text-2xl font-bold">{selectedPlan.name}</h2>
               <button
                 onClick={handleCloseDetails}
@@ -234,12 +253,17 @@ function ProductPlans() {
               </button>
             </div>
 
-            <div className="p-6">
+            <div className="p-4 sm:p-6">
               <img
                 src={selectedPlan.image || box}
                 alt={selectedPlan.name}
-                className="w-full h-[400px] object-cover rounded-lg mb-6"
+                className="w-full h-[180px] sm:h-[320px] md:h-[400px] object-cover rounded-lg mb-6"
               />
+
+              {/* Dark filter pills for modal */}
+              <div className="mb-4">
+                <FilterPills dark />
+              </div>
 
               <div className="mb-6">
                 <h3 className="text-xl font-semibold mb-2">{selectedPlan.name}</h3>

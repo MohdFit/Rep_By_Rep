@@ -8,8 +8,8 @@ import TransformationCTA from "./TransformationCTA"
 import Footer from "../../components/Footer"
 export default function Home() {
     return (
-        <div className="bg-homepageColor min-h-screen">
-            <div className="sm:pl-12 sm:pr-12">
+        <div className="bg-homepageColor min-h-screen w-full overflow-x-hidden">
+            <div className="w-full sm:pl-12 sm:pr-12">
                 <Navbar />
                 <HeroSection />
                 <Bio />
