@@ -32,33 +32,29 @@ function App() {
         <CartProvider>
           <div>
             <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/" element={<Home />} />
-          <Route path="/programs" element={<ProductPlans />} />
-          
-          <Route path="/user/wishlist" element={<ProtectedRoute><Wishlist /></ProtectedRoute>} />
-          <Route path="/user/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
-          <Route path="/user/account-settings" element={<ProtectedRoute><AccountSettings /></ProtectedRoute>} />
-          <Route path="/user/order-details" element={<ProtectedRoute><OrderDetails /></ProtectedRoute>} />
-          <Route path="/user/order-confirmation" element={<ProtectedRoute><OrderConfirmation /></ProtectedRoute>} />
-          <Route path="/user/feedback-model" element={<ProtectedRoute><FeedbackModal /></ProtectedRoute>} />
-          <Route path="/user/orders" element={<ProtectedRoute><Order /></ProtectedRoute>} />
-          <Route path="/user/my-orders" element={<ProtectedRoute><Order /></ProtectedRoute>} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/" element={<Home />} />
+              <Route path="/programs" element={<ProductPlans />} />
+              <Route path="/user/wishlist" element={<ProtectedRoute><Wishlist /></ProtectedRoute>} />
+              <Route path="/user/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
+              <Route path="/user/account-settings" element={<ProtectedRoute><AccountSettings /></ProtectedRoute>} />
+              <Route path="/user/order-details" element={<ProtectedRoute><OrderDetails /></ProtectedRoute>} />
+              <Route path="/user/order-confirmation" element={<ProtectedRoute><OrderConfirmation /></ProtectedRoute>} />
+              <Route path="/user/feedback-model" element={<ProtectedRoute><FeedbackModal /></ProtectedRoute>} />
+              <Route path="/user/orders" element={<ProtectedRoute><Order /></ProtectedRoute>} />
+              <Route path="/user/my-orders" element={<ProtectedRoute><Order /></ProtectedRoute>} />
 
-          <Route path="/admin/*" element={<AdminRoute><AdminLayout>
-              <Routes>
+              <Route path="/admin" element={<AdminRoute><AdminLayout /></AdminRoute>}>
                 <Route path="dashboard" element={<AdminDashboard />} />
                 <Route path="orders" element={<AdminOrders />} />
                 <Route path="products" element={<AdminProducts />} />
                 <Route path="users" element={<AdminUsers />} />
                 <Route path="reviews" element={<AdminReviews />} />
                 <Route path="settings" element={<AdminSettings />} />
-              </Routes>
-            </AdminLayout></AdminRoute>}
-        />
-
-        </Routes>
+                
+              </Route>
+            </Routes>
           </div>
         </CartProvider>
       </AuthProvider>

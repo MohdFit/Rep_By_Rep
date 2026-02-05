@@ -1,7 +1,11 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { LayoutDashboard, ShoppingBag, Package, Users, MessageSquare, Settings, LogOut, UserCircle } from 'lucide-react';
 
+import { useAuth } from '../../context/AuthContext';
+
 export default function AdminSidebar() {
+  const { logout } = useAuth();
+  const navigate = useNavigate();
 
   const menuItems = [
     { name: "Dashboard", icon: <LayoutDashboard size={18} />, path: "/admin/dashboard" },
@@ -11,6 +15,12 @@ export default function AdminSidebar() {
     { name: "Reviews & Feedback", icon: <MessageSquare size={18} />, path: "/admin/reviews" },
     { name: "Settings", icon: <Settings size={18} />, path: "/admin/settings" },
   ];
+
+  const handleLogout = async () => {
+    await logout();
+    navigate('/login');
+    
+  };
 
   return (
     <aside className="w-64 mt-[70px] bg-white flex flex-col border-r h-screen">
@@ -46,7 +56,10 @@ export default function AdminSidebar() {
       </nav>
 
       <div className="p-6 mt-auto border-t">
-        <button className="flex items-center gap-2 text-sm text-gray-600 hover:text-red-500 transition">
+        <button
+          className="flex items-center gap-2 text-sm text-gray-600 hover:text-red-500 transition"
+          onClick={handleLogout}
+        >
           <LogOut size={18} />
           <span>Log out</span>
         </button>

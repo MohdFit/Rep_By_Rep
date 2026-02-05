@@ -73,15 +73,24 @@ const AdminOrders = ({ onViewOrder }) => {
   };
 
   const filteredOrders = orders
-    .map(o => ({
-      _raw: o,
-      id: o.orderNumber || o._id || 'N/A',
-      customer: o.user?.name || o.userId || '—',
-      date: new Date(o.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
-      items: o.orderItems?.length || 0,
-      status: o.status || 'Pending',
-      amount: typeof o.total === 'number' ? o.total : Number(o.total || 0)
-    }))
+    .map(o => {
+      // userId is populated as { _id, name, email } or just an id string
+      let customerName = '—';
+      if (o.userId && typeof o.userId === 'object') {
+        customerName = o.userId.name || o.userId.email || o.userId._id || '—';
+      } else if (o.userId) {
+        customerName = o.userId;
+      }
+      return {
+        _raw: o,
+        id: o.orderNumber || o._id || 'N/A',
+        customer: customerName,
+        date: new Date(o.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+        items: o.orderItems?.length || 0,
+        status: o.status || 'Pending',
+        amount: typeof o.total === 'number' ? o.total : Number(o.total || 0)
+      };
+    })
     .filter(order => {
       const matchesSearch = String(order.id).toLowerCase().includes(searchQuery.toLowerCase()) ||
         String(order.customer).toLowerCase().includes(searchQuery.toLowerCase());
@@ -254,6 +263,7 @@ const OrderDetailsPage = ({ order, onBack }) => {
     '/assets/images/admin/adminPage/2.png', // This will be used when index is 1
     '/assets/images/admin/adminPage/3.png',  // This will be used when index is 2
     '/assets/images/admin/adminPage/4.png'  // This will be used when index is 3
+    
   ];
 
 
