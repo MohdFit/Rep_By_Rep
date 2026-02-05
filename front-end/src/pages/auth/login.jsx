@@ -129,6 +129,15 @@ export default function Login() {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
+          <input type = "email"
+          name ="username"
+          autoComplete ="username"
+          value = {email}
+          onChange={(e) => setEmail(e.target.value)}
+          style={{ display :'none'}}
+          tabIndex = {-1}
+          aria-hidden = "true"
+          ></input>
           <label className="text-sm font-medium">Email</label>
           <input
             type="email"
@@ -138,6 +147,7 @@ export default function Login() {
             onChange={(e) => setEmail(e.target.value)}
             disabled={loading}
             required
+            autoComplete="username"
           />
 
           <label className="text-sm font-medium">Password</label>
@@ -149,6 +159,7 @@ export default function Login() {
             onChange={(e) => setPassword(e.target.value)}
             disabled={loading}
             required
+            autoComplete="current-password"
           />
 
           <div className="flex justify-between text-xs">
@@ -242,6 +253,7 @@ export default function Login() {
             onChange={(e) => setEmail(e.target.value)}
             disabled={loading}
             required
+            autoComplete="username"
           />
 
           <label className="text-sm font-medium">Password</label>
@@ -253,6 +265,7 @@ export default function Login() {
             onChange={(e) => setPassword(e.target.value)}
             disabled={loading}
             required
+            autoComplete="current-password"
           />
 
           <div className="flex justify-between text-xs text-gray-500">

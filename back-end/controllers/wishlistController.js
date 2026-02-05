@@ -5,6 +5,10 @@ const wishlistController = {
   // Get wishlist
   getWishlist: async (req, res) => {
     try {
+      if ( !req.user || !req.user.id ){
+        return res.status(401).json({ success : false , message : 'Unauthorized : user not found ' });  
+      }
+   
       const { userId } = req.user;
       const wishlist = await Wishlist.findOrCreateWishlist(userId)
         .populate({ path: 'items.productId', select: 'title price image' });

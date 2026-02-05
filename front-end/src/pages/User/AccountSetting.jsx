@@ -181,6 +181,7 @@ export default function AccountSettings() {
                   value={user.name}
                   onChange={handleProfileChange}
                   disabled={!isEditing}
+                  autoComplete="name"
                 />
               </div>
               <div className="input-group">
@@ -192,6 +193,7 @@ export default function AccountSettings() {
                   value={user.email}
                   onChange={handleProfileChange}
                   disabled={!isEditing}
+                  autoComplete="email"
                 />
               </div>
             </div>
@@ -201,11 +203,12 @@ export default function AccountSettings() {
                 <label>Phone Number</label>
                 <input
                   name="phone"
-                  type="text"
+                  type="tel"
                   placeholder="Your Phone"
                   value={user.phone}
                   onChange={handleProfileChange}
                   disabled={!isEditing}
+                  autoComplete="tel"
                 />
               </div>
               <div className="input-group">
@@ -217,6 +220,7 @@ export default function AccountSettings() {
                   value={user.address}
                   onChange={handleProfileChange}
                   disabled={!isEditing}
+                  autoComplete="address-level2"
                 />
               </div>
             </div>
@@ -261,6 +265,7 @@ export default function AccountSettings() {
                 placeholder="Enter current password"
                 value={passwords.current}
                 onChange={handlePasswordChange}
+                autoComplete="current-password"
               />
             </div>
             <div className="input-group">
@@ -271,6 +276,7 @@ export default function AccountSettings() {
                 placeholder="Enter new password"
                 value={passwords.newPass}
                 onChange={handlePasswordChange}
+                autoComplete="new-password"
               />
             </div>
             <div className="input-group">
@@ -281,6 +287,7 @@ export default function AccountSettings() {
                 placeholder="Confirm new password"
                 value={passwords.confirm}
                 onChange={handlePasswordChange}
+                autoComplete="new-password"
               />
             </div>
 
@@ -308,7 +315,7 @@ export default function AccountSettings() {
             className="btn-change"
             style={{ backgroundColor: '#dc2626', borderColor: '#dc2626' }}
           >
-            🚪 Logout
+             Logout
           </button>
         </div>
       </div>

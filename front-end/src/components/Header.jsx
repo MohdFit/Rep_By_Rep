@@ -29,8 +29,11 @@ function Header({
         const res = await wishlistService.getWishlist();
         if (res?.success) {
           setWishlistCount((res.data?.items || []).length);
+        } else {
+          setWishlistCount(0);
         }
-      } catch (_) {
+      } catch (err ) {
+        // Optionally show a toast or log error
         setWishlistCount(0);
       }
     };
@@ -70,7 +73,7 @@ function Header({
 
         <div className="flex flex-col items-center">
           <Link to="/">
-            <img src="/images/logo.png" alt="logo" className="h-[20px]" />
+            <img src="/images/logo.png" alt="REP BY REP " className="h-[44px] w-auto" />
           </Link>
 
           {show === "menu" && (
