@@ -94,14 +94,14 @@ export default function Navbar() {
                     className="block px-4 py-3 text-white hover:bg-gradient-to-r hover:from-orange-500/20 hover:to-orange-600/20 hover:text-orange-400 transition-all font-medium"
                     onClick={() => setUserDropdownOpen(false)}
                   >
-                    💼 Account Settings
+                     Account Settings
                   </Link>
                   <Link 
                     to="/user/my-orders" 
                     className="block px-4 py-3 text-white hover:bg-gradient-to-r hover:from-orange-500/20 hover:to-orange-600/20 hover:text-orange-400 transition-all font-medium"
                     onClick={() => setUserDropdownOpen(false)}
                   >
-                    📦 My Orders
+                     My Orders
                   </Link>
                   <button 
                     onClick={async () => {
@@ -111,7 +111,7 @@ export default function Navbar() {
                     }}
                     className="w-full text-left px-4 py-3 text-white hover:bg-red-500/20 hover:text-red-400 transition-all border-t border-gray-600 font-medium"
                   >
-                    🚪 Log Out
+                     Log Out
                   </button>
                 </>
               ) : (
@@ -121,14 +121,14 @@ export default function Navbar() {
                     className="block px-4 py-3 text-white hover:bg-gradient-to-r hover:from-orange-500/20 hover:to-orange-600/20 hover:text-orange-400 transition-all font-medium"
                     onClick={() => setUserDropdownOpen(false)}
                   >
-                    🔑 Login
+                     Login
                   </Link>
                   <Link 
                     to="/register" 
                     className="block px-4 py-3 text-white hover:bg-gradient-to-r hover:from-orange-500/20 hover:to-orange-600/20 hover:text-orange-400 transition-all font-medium"
                     onClick={() => setUserDropdownOpen(false)}
                   >
-                    ✍️ Register
+                     Register
                   </Link>
                 </>
               )}

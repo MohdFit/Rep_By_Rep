@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import { useAuth } from "../../context/AuthContext";
 import authUtils from "../../utils/authUtils";
 import api from "../../api/axios";
+import { Facebook, Apple, Chrome } from "lucide-react";
 
 import bgLaptop from "../../assets/images/gym-background.png";
 import mobileBg from "../../assets/images/mobileBg.png";
@@ -128,6 +129,15 @@ export default function Login() {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
+          <input type = "email"
+          name ="username"
+          autoComplete ="username"
+          value = {email}
+          onChange={(e) => setEmail(e.target.value)}
+          style={{ display :'none'}}
+          tabIndex = {-1}
+          aria-hidden = "true"
+          ></input>
           <label className="text-sm font-medium">Email</label>
           <input
             type="email"
@@ -137,6 +147,7 @@ export default function Login() {
             onChange={(e) => setEmail(e.target.value)}
             disabled={loading}
             required
+            autoComplete="username"
           />
 
           <label className="text-sm font-medium">Password</label>
@@ -148,6 +159,7 @@ export default function Login() {
             onChange={(e) => setPassword(e.target.value)}
             disabled={loading}
             required
+            autoComplete="current-password"
           />
 
           <div className="flex justify-between text-xs">
@@ -168,15 +180,30 @@ export default function Login() {
         </form>
 
         <p className="text-center my-4 text-sm">or continue with</p>
-        <div className="flex justify-center gap-4">
-          <button className="hover:opacity-80" disabled>
-            <img src="/facebook-icon.png" alt="Facebook" className="h-8 w-8" />
+        <div className="flex justify-center gap-6">
+          <button 
+            type="button"
+            className="p-3 rounded-full bg-blue-600 hover:bg-blue-700 transition text-white"
+            disabled
+            title="Coming soon"
+          >
+            <Facebook size={20} />
           </button>
-          <button className="hover:opacity-80" disabled>
-            <img src="/apple-icon.png" alt="Apple" className="h-8 w-8" />
+          <button 
+            type="button"
+            className="p-3 rounded-full bg-gray-800 hover:bg-gray-900 transition text-white"
+            disabled
+            title="Coming soon"
+          >
+            <Apple size={20} />
           </button>
-          <button className="hover:opacity-80" disabled>
-            <img src="/google-icon.png" alt="Google" className="h-8 w-8" />
+          <button 
+            type="button"
+            className="p-3 rounded-full bg-red-500 hover:bg-red-600 transition text-white"
+            disabled
+            title="Coming soon"
+          >
+            <Chrome size={20} />
           </button>
         </div>
         <p className="text-center text-xs text-gray-300 mt-2 mb-20">Social login coming soon</p>
@@ -226,6 +253,7 @@ export default function Login() {
             onChange={(e) => setEmail(e.target.value)}
             disabled={loading}
             required
+            autoComplete="username"
           />
 
           <label className="text-sm font-medium">Password</label>
@@ -237,6 +265,7 @@ export default function Login() {
             onChange={(e) => setPassword(e.target.value)}
             disabled={loading}
             required
+            autoComplete="current-password"
           />
 
           <div className="flex justify-between text-xs text-gray-500">
@@ -260,15 +289,30 @@ export default function Login() {
         </form>
 
         <p className="text-center text-sm text-gray-500">or continue with</p>
-        <div className="flex justify-center gap-4">
-          <button className="hover:opacity-80" disabled>
-            <img src="/facebook-icon.png" alt="Facebook" className="h-8 w-8" />
+        <div className="flex justify-center gap-6">
+          <button 
+            type="button"
+            className="p-3 rounded-full bg-blue-600 hover:bg-blue-700 transition text-white"
+            disabled
+            title="Coming soon"
+          >
+            <Facebook size={24} />
           </button>
-          <button className="hover:opacity-80" disabled>
-            <img src="/apple-icon.png" alt="Apple" className="h-8 w-8" />
+          <button 
+            type="button"
+            className="p-3 rounded-full bg-gray-800 hover:bg-gray-900 transition text-white"
+            disabled
+            title="Coming soon"
+          >
+            <Apple size={24} />
           </button>
-          <button className="hover:opacity-80" disabled>
-            <img src="/google-icon.png" alt="Google" className="h-8 w-8" />
+          <button 
+            type="button"
+            className="p-3 rounded-full bg-red-500 hover:bg-red-600 transition text-white"
+            disabled
+            title="Coming soon"
+          >
+            <Chrome size={24} />
           </button>
         </div>
         <p className="text-center text-xs text-gray-400 mt-2">Social login coming soon</p>

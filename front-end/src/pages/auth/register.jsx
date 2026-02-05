@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import { useAuth } from "../../context/AuthContext";
 import authUtils from "../../utils/authUtils";
 import api from "../../api/axios.js";
+import { Facebook, Apple, Chrome } from "lucide-react";
 
 import bgLaptop from "../../assets/images/gym-background.png";
 import mobileBg from "../../assets/images/mobileBg.png";
@@ -187,15 +188,30 @@ export default function Register() {
         </form>
 
         <p className="text-center my-4 text-sm">or continue with</p>
-        <div className="flex justify-center gap-4">
-          <button className="hover:opacity-80" disabled>
-            <img src="/facebook-icon.png" alt="Facebook" className="h-8 w-8" />
+        <div className="flex justify-center gap-6">
+          <button 
+            type="button"
+            className="p-3 rounded-full bg-blue-600 hover:bg-blue-700 transition text-white"
+            disabled
+            title="Coming soon"
+          >
+            <Facebook size={20} />
           </button>
-          <button className="hover:opacity-80" disabled>
-            <img src="/apple-icon.png" alt="Apple" className="h-8 w-8" />
+          <button 
+            type="button"
+            className="p-3 rounded-full bg-gray-800 hover:bg-gray-900 transition text-white"
+            disabled
+            title="Coming soon"
+          >
+            <Apple size={20} />
           </button>
-          <button className="hover:opacity-80" disabled>
-            <img src="/google-icon.png" alt="Google" className="h-8 w-8" />
+          <button 
+            type="button"
+            className="p-3 rounded-full bg-red-500 hover:bg-red-600 transition text-white"
+            disabled
+            title="Coming soon"
+          >
+            <Chrome size={20} />
           </button>
         </div>
         <p className="text-center text-xs text-gray-300 mt-2 mb-12">Social login coming soon</p>
@@ -292,15 +308,30 @@ export default function Register() {
         </form>
 
         <p className="text-center text-sm text-gray-500">or continue with</p>
-        <div className="flex justify-center gap-4">
-          <button className="hover:opacity-80" disabled>
-            <img src="/facebook-icon.png" alt="Facebook" className="h-8 w-8" />
+        <div className="flex justify-center gap-6">
+          <button 
+            type="button"
+            className="p-3 rounded-full bg-blue-600 hover:bg-blue-700 transition text-white"
+            disabled
+            title="Coming soon"
+          >
+            <Facebook size={24} />
           </button>
-          <button className="hover:opacity-80" disabled>
-            <img src="/apple-icon.png" alt="Apple" className="h-8 w-8" />
+          <button 
+            type="button"
+            className="p-3 rounded-full bg-gray-800 hover:bg-gray-900 transition text-white"
+            disabled
+            title="Coming soon"
+          >
+            <Apple size={24} />
           </button>
-          <button className="hover:opacity-80" disabled>
-            <img src="/google-icon.png" alt="Google" className="h-8 w-8" />
+          <button 
+            type="button"
+            className="p-3 rounded-full bg-red-500 hover:bg-red-600 transition text-white"
+            disabled
+            title="Coming soon"
+          >
+            <Chrome size={24} />
           </button>
         </div>
         <p className="text-center text-xs text-gray-400 mt-2">Social login coming soon</p>
