@@ -50,11 +50,15 @@ const loginUser = async (req, res) => {
     user.lastLogin = new Date();
     await user.save();
 
-    
    
     const tokens = TokenService.generateTokenPair(user._id, user.role);
     const userResponse = user.toJSON();
 
+      // Ensure role is always present in the user response 
+    if (!userResponse.role && user.role) {
+      userResponse.role = user.role;
+    }
+  
     res.status(200).json({
       success: true,
       message: 'Login successful',
